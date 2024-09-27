@@ -1,0 +1,124 @@
+/* General body styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e0f7fa; /* Light blue background */
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main content area */
+main {
+  padding: 20px;
+  background-color: #f0f4f8; /* Light blue-gray background */
+  border-radius: 8px;
+}
+
+/* Task card container */
+.task-card {
+  background-color: #ffffff; /* White background */
+  border: 1px solid #007bb5; /* Blue border */
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Task card hover effects */
+.task-card:hover {
+  transform: translateY(-5px); /* Slightly lift the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Task card heading */
+.task-card h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #007bb5; /* Blue color for headings */
+}
+
+/* Task card description */
+.task-card p {
+  color: #333; /* Dark gray text color */
+  margin-bottom: 8px;
+}
+
+/* Status label */
+.task-card .status {
+  font-weight: bold;
+  color: #007bb5; /* Blue color for status */
+}
+
+/* Buttons inside task card */
+.task-card button {
+  margin-right: 8px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bb5; /* Blue background */
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.task-card button:hover {
+  background-color: #005f8b; /* Darker blue for hover */
+}
+
+/* Task form container */
+.task-form {
+  background-color: #ffffff; /* White background */
+  border: 1px solid #007bb5; /* Blue border */
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form heading */
+.task-form h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #007bb5; /* Blue color for headings */
+}
+
+/* Form field styles */
+.task-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.task-form input,
+.task-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.task-form input:focus,
+.task-form textarea:focus {
+  border-color: #007bb5; /* Blue border on focus */
+  outline: none;
+}
+
+/* Form buttons */
+.task-form button {
+  background-color: #007bb5; /* Blue background */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.task-form button:hover {
+  background-color: #005f8b; /* Darker blue on hover */
+}
