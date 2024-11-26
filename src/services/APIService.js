@@ -1,5 +1,9 @@
-export class APIService {
-    static async makeRequest(endpoint, options = {}, accessToken) {
+class APIService {
+    constructor(baseURL) {
+        this.baseURL = baseURL;
+    }
+
+    async makeRequest(endpoint, options = {}, accessToken) {
         const headers = {
             ...options.headers,
             Authorization: `Bearer ${accessToken}`,
@@ -7,7 +11,7 @@ export class APIService {
         };
 
         try {
-            const response = await fetch(endpoint, {
+            const response = await fetch(`${this.baseURL}${endpoint}`, {
                 ...options,
                 headers,
             });
@@ -23,3 +27,5 @@ export class APIService {
         }
     }
 }
+
+export default APIService;

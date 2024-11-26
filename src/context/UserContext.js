@@ -25,25 +25,24 @@ export const UserProvider = ({ children }) => {
 
     const { newUser: handleNewItem } = useRouteContext();
 
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/users');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const result = await response.json();
+                setData(result);
+                setLoading(false);
+            } catch (err) {
+                setError(err.message);
+                setLoading(false);
+            }
+        };
 
-    // useEffect(() => {
-    //     const fetchPosts = async () => {
-    //         try {
-    //             const response = await fetch('https://jsonplaceholder.typicode.com/users');
-    //             if (!response.ok) {
-    //                 throw new Error('Failed to fetch data');
-    //             }
-    //             const result = await response.json();
-    //             setData(result);
-    //             setLoading(false);
-    //         } catch (err) {
-    //             setError(err.message);
-    //             setLoading(false);
-    //         }
-    //     };
-
-    //     fetchPosts();
-    // }, []);
+        fetchPosts();
+    }, []);
 
     // If still loading, return a loading state
     const loadingMsg = 'Loading users data...';

@@ -4,19 +4,19 @@ import ErrorPlaceholder from '../components/ErrorPlaceholder';
 import EmptyPlaceholder from '../components/EmptyPlaceholder';
 
 import { useRouteContext } from '../context/RouteContext';
-import { useStaticHelpDataContext } from '../context/StaticHelpDataContext';
+// import { useStaticHelpDataContext } from '../context/StaticHelpDataContext';
 import { useStaticCommunityContext } from '../context/StaticCommunityContext';
 import { useAPIAuth } from '../context/APIAuthContext';
 import APIService from '../services/APIService';
 
-const OfferContext = createContext();
+const CommunityContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 const apiService = new APIService(API_BASE_URL);
 
-export const useOfferContext = () => useContext(OfferContext);
+export const useCommunityContext = () => useContext(CommunityContext);
 
-export const OfferProvider = ({ children }) => {
+export const CommunityProvider = ({ children }) => {
     const { getAccessToken } = useAPIAuth();
 
     const [data, setData] = useState([]);
@@ -31,18 +31,10 @@ export const OfferProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const { offerHelp: handleNewItem } = useRouteContext();
-    const { selectedCategory: catId, selectedType: typeId } = useStaticHelpDataContext();
+    const { newCommunity: handleNewItem } = useRouteContext();
     const { selectedCommunity: communityId, selectedSubCommunity: subCommunityId } = useStaticCommunityContext();
 
     let filteredItems = data;
-
-    if (catId !== null) {
-        filteredItems = data.filter(item => item.category === catId);
-    }
-    if (typeId !== null) {
-        filteredItems = data.filter(item => item.type === typeId);
-    }
 
     if (communityId !== null) {
         filteredItems = data.filter(item => item.community === communityId);
@@ -58,8 +50,7 @@ export const OfferProvider = ({ children }) => {
             setLoading(true);
 
             const accessToken = await getAccessToken();
-
-            const response = await apiService.makeRequest('/offer/', {}, accessToken);
+            const response = await apiService.makeRequest('/volunteer/', {}, accessToken);
 
             if (response.status === 'success') {
                 setData(response.data || []);
@@ -82,7 +73,7 @@ export const OfferProvider = ({ children }) => {
     const createItem = async (newItem) => {
         try {
             const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest('/offer/', {
+            const response = await apiService.makeRequest('/volunteer/', {
                 method: 'POST',
                 body: JSON.stringify(newItem),
             }, accessToken);
@@ -102,7 +93,7 @@ export const OfferProvider = ({ children }) => {
     const updateItem = async (id, updatedData) => {
         try {
             const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/offer/${id}/`, {
+            const response = await apiService.makeRequest(`/volunteer/${id}/`, {
                 method: 'PUT',
                 body: JSON.stringify(updatedData),
             }, accessToken);
@@ -122,7 +113,7 @@ export const OfferProvider = ({ children }) => {
     const deleteItem = async (id) => {
         try {
             const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/offer/${id}/`, {
+            const response = await apiService.makeRequest(`/volunteer/${id}/`, {
                 method: 'DELETE',
             }, accessToken);
 
@@ -143,17 +134,17 @@ export const OfferProvider = ({ children }) => {
     }, [getAccessToken]);
 
     // If still loading, return a loading state
-    const loadingMsg = 'Loading help offers data...';
-    if (loading) return <LoadingPlaceholder message={loadingMsg} />
+    const loadingMsg = 'Loading communities data...';
+    if (loading) return <LoadingPlaceholder message={loadingMsg} />;
 
     // If there is an error, display it
-    if (error) return <ErrorPlaceholder error={error} />
+    if (error) return <ErrorPlaceholder error={error} retry={fetchData} />;
 
     // If data has not been fetched (null or empty), return a message
-    if (!data || data.length === 0) return <EmptyPlaceholder newItem={handleNewItem} />
+    if (!data || data.length === 0) return <EmptyPlaceholder newItem={handleNewItem} retry={fetchData} />;
 
     return (
-        <OfferContext.Provider value={{
+        <CommunityContext.Provider value={{
             data,
             setData,
             filteredItems,
@@ -167,8 +158,8 @@ export const OfferProvider = ({ children }) => {
             deleteItem,
         }}>
             {children}
-        </OfferContext.Provider >
+        </CommunityContext.Provider>
     );
 };
 
-export default OfferContext;
+export default CommunityContext;
