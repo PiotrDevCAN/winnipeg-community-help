@@ -1,11 +1,15 @@
 import React from 'react';
-import { Flex } from 'antd';
-import ContactForm from '../components/ContactForm';
+import { Flex, Divider, Form } from 'antd';
+import SuggestionForm from '../components/SuggestionForm';
 
 const ContactPage = () => {
+
+  const [form] = Form.useForm();
+
   return (
-    <Flex gap="middle" align="center" vertical>
-      <ContactForm />
+    <Flex align="center" vertical>
+      {/* <Divider /> */}
+      <SuggestionForm form={form} formName="contact" />
     </Flex>
   );
 };

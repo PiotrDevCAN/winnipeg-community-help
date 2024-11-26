@@ -5,9 +5,8 @@ import {
     Form,
     Input,
     Select,
+    DatePicker,
 } from 'antd';
-
-import communitiesData from '../../data/communitiesData';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -70,46 +69,6 @@ const EditForm = () => {
         value: website,
     }));
 
-    // const commuinities = communitiesData.map((value, index) => {
-    //     const item = {
-    //         value: value.id,
-    //         label: value.name,
-    //     };
-    //     return item;
-    // });
-
-    const commuinities =
-        [
-            {
-                label: <span>manager</span>,
-                title: 'manager',
-                options: [
-                    {
-                        label: <span>Jack</span>,
-                        value: 'Jack',
-                    },
-                    {
-                        label: <span>Lucy</span>,
-                        value: 'Lucy',
-                    },
-                ],
-            },
-            {
-                label: <span>engineer</span>,
-                title: 'engineer',
-                options: [
-                    {
-                        label: <span>Chloe</span>,
-                        value: 'Chloe',
-                    },
-                    {
-                        label: <span>Lucas</span>,
-                        value: 'Lucas',
-                    },
-                ],
-            },
-        ]
-
     return (
         <Form
             {...formItemLayout}
@@ -120,7 +79,7 @@ const EditForm = () => {
                 prefix: '1',
             }}
             style={{
-                maxWidth: 700,
+                maxWidth: 360,
             }}
             scrollToFirstError
         >
@@ -148,6 +107,51 @@ const EditForm = () => {
                 ]}
             >
                 <Input />
+            </Form.Item>
+
+            <Form.Item
+                name="nickname"
+                label="Nickname"
+                tooltip="What do you want others to call you?"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your nickname!',
+                        whitespace: true,
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+
+            <Form.Item
+                name="gender"
+                label="Gender"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please select gender!',
+                    },
+                ]}
+            >
+                <Select placeholder="select your gender">
+                    <Option value="male">Male</Option>
+                    <Option value="female">Female</Option>
+                    <Option value="other">Other</Option>
+                </Select>
+            </Form.Item>
+
+            <Form.Item
+                name="birthDate"
+                label="Date of Birth"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your birth date!',
+                    },
+                ]}
+            >
+                <DatePicker />
             </Form.Item>
 
             <Form.Item

@@ -12,40 +12,6 @@ import {
     Select,
 } from 'antd';
 const { Option } = Select;
-const residences = [
-    {
-        value: 'zhejiang',
-        label: 'Zhejiang',
-        children: [
-            {
-                value: 'hangzhou',
-                label: 'Hangzhou',
-                children: [
-                    {
-                        value: 'xihu',
-                        label: 'West Lake',
-                    },
-                ],
-            },
-        ],
-    },
-    {
-        value: 'jiangsu',
-        label: 'Jiangsu',
-        children: [
-            {
-                value: 'nanjing',
-                label: 'Nanjing',
-                children: [
-                    {
-                        value: 'zhonghuamen',
-                        label: 'Zhong Hua Men',
-                    },
-                ],
-            },
-        ],
-    },
-];
 const formItemLayout = {
     labelCol: {
         xs: {
@@ -88,8 +54,8 @@ const RegisterForm = () => {
                     width: 70,
                 }}
             >
-                <Option value="86">+86</Option>
-                <Option value="87">+87</Option>
+                <Option value="1">+1</Option>
+                <Option value="48">+48</Option>
             </Select>
         </Form.Item>
     );
@@ -125,7 +91,7 @@ const RegisterForm = () => {
             onFinish={onFinish}
             initialValues={{
                 residence: ['zhejiang', 'hangzhou', 'xihu'],
-                prefix: '86',
+                prefix: '1',
             }}
             style={{
                 maxWidth: 600,
@@ -202,20 +168,6 @@ const RegisterForm = () => {
             </Form.Item>
 
             <Form.Item
-                name="residence"
-                label="Habitual Residence"
-                rules={[
-                    {
-                        type: 'array',
-                        required: true,
-                        message: 'Please select your habitual residence!',
-                    },
-                ]}
-            >
-                <Cascader options={residences} />
-            </Form.Item>
-
-            <Form.Item
                 name="phone"
                 label="Phone Number"
                 rules={[
@@ -227,24 +179,6 @@ const RegisterForm = () => {
             >
                 <Input
                     addonBefore={prefixSelector}
-                    style={{
-                        width: '100%',
-                    }}
-                />
-            </Form.Item>
-
-            <Form.Item
-                name="donation"
-                label="Donation"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input donation amount!',
-                    },
-                ]}
-            >
-                <InputNumber
-                    addonAfter={suffixSelector}
                     style={{
                         width: '100%',
                     }}
@@ -316,22 +250,6 @@ const RegisterForm = () => {
                         <Button>Get captcha</Button>
                     </Col>
                 </Row>
-            </Form.Item>
-
-            <Form.Item
-                name="agreement"
-                valuePropName="checked"
-                rules={[
-                    {
-                        validator: (_, value) =>
-                            value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
-                    },
-                ]}
-                {...tailFormItemLayout}
-            >
-                <Checkbox>
-                    I have read the <a href="">agreement</a>
-                </Checkbox>
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
                 <Button type="primary" htmlType="submit">

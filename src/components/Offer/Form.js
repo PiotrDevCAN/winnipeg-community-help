@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     AutoComplete,
     Button,
@@ -7,11 +7,6 @@ import {
     Select,
 } from 'antd';
 
-import mainCommunities from '../../data/mainCommunitiesData';
-import subCommunitiesData from '../../data/communitiesData';
-import helpTypesData from '../../data/helpTypesData';
-
-const { Option } = Select;
 const formItemLayout = {
     labelCol: {
         xs: {
@@ -43,7 +38,8 @@ const tailFormItemLayout = {
     },
 };
 
-const NewCommunityForm = () => {
+const NewOfferForm = ({ catId, typeId }) => {
+
     const [form] = Form.useForm();
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
@@ -58,64 +54,10 @@ const NewCommunityForm = () => {
                 // prefix: '1',
             }}
             style={{
-                maxWidth: 700,
+                maxWidth: 1200,
             }}
             scrollToFirstError
         >
-            <Form.Item
-                name="mainCommunity"
-                label="Main Community"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input first name!',
-                    },
-                ]}
-            >
-                <Select
-                    // defaultValue="jack"
-                    // style={{ width: 120 }}
-                    // onChange={handleChange}
-                    options={mainCommunities}
-                />
-            </Form.Item>
-
-            <Form.Item
-                name="subCommunity"
-                label="Sub Community"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input first name!',
-                    },
-                ]}
-            >
-                <Select
-                    // defaultValue="jack"
-                    // style={{ width: 120 }}
-                    // onChange={handleChange}
-                    options={subCommunitiesData}
-                />
-            </Form.Item>
-
-            <Form.Item
-                name="helpType"
-                label="Help Type"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input first name!',
-                    },
-                ]}
-            >
-                <Select
-                    // defaultValue="jack"
-                    // style={{ width: 120 }}
-                    // onChange={handleChange}
-                    options={helpTypesData}
-                />
-            </Form.Item>
-
             <Form.Item
                 name="description"
                 label="Describe what you can offer"
@@ -137,4 +79,4 @@ const NewCommunityForm = () => {
         </Form>
     );
 };
-export default NewCommunityForm;
+export default NewOfferForm;

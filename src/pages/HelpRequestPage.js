@@ -1,10 +1,11 @@
 import React from 'react';
-import { Flex } from 'antd';
-import RequestForm from '../components/Help/Form';
+import { Flex, Divider } from 'antd';
+import RequestForm from '../components/Request/Form';
 
 const HelpRequestPage = () => {
   return (
     <Flex gap="middle" align="center" vertical>
+      <Divider />
       <RequestForm />
     </Flex>
   );

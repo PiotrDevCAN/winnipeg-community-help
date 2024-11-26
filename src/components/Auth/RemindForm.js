@@ -1,6 +1,7 @@
 import React from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Flex } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { Button, Form, Input } from 'antd';
+
 const RemindForm = () => {
     const onFinish = (values) => {
         console.log('Received values of form: ', values);

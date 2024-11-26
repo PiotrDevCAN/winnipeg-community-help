@@ -7,8 +7,7 @@ import {
     Select,
 } from 'antd';
 
-import mainCommunities from '../../data/mainCommunitiesData';
-// import communitiesData from '../../data/communitiesData';
+import { useStaticCommunityContext } from '../../context/StaticCommunityContext';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -71,6 +70,10 @@ const NewCommunityForm = () => {
         label: website,
         value: website,
     }));
+
+    
+    const { mainCommunities, communities } = useStaticCommunityContext();
+
     return (
         <Form
             {...formItemLayout}
@@ -81,7 +84,7 @@ const NewCommunityForm = () => {
                 prefix: '1',
             }}
             style={{
-                maxWidth: 700,
+                maxWidth: 1200,
             }}
             scrollToFirstError
         >

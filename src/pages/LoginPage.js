@@ -1,20 +1,16 @@
-import React, { useState } from 'react';
-import { Flex } from 'antd';
+import React from 'react';
+import { Divider } from 'antd';
+import AuthForm from '../components/Auth/AuthForm';
 import { Navigate } from 'react-router-dom';
-import LoginForm from '../components/Auth/LoginForm';
+import { useAuthContext } from '../context/AuthContext';
 
 const LoginPage = () => {
-  const [user, setUser] = useState(false);
+  const { isAuthenticated } = useAuthContext();
 
-  if (user) {
-    return <Navigate to="/profile" replace={true} />;
-  }
-
-  return (
-    <Flex gap="middle" align="center" vertical>
-      <LoginForm />
-    </Flex>
-  );
+  return !isAuthenticated ? <>
+    <Divider />
+    <AuthForm />
+  </> : <Navigate to="/myProfile" />;
 };
 
 export default LoginPage;

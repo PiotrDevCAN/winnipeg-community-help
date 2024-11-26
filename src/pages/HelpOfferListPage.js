@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Flex, Divider } from 'antd';
+import { OfferProvider } from '../context/OfferContext';
 import ListTable from '../components/Offer/ListTable';
-import Pagination from '../components/Pagination';
+import { usePageHeaderContext } from '../context/PageHeaderContext';
+import CategoryFilter from '../components/Filters/CategoryFilter';
+import CommunityFilter from '../components/Filters/CommunityFilter';
+import ClearFilters from '../components/ClearFilters';
 
 const HelpOfferListPage = () => {
-  return (
-    <div>
-      <div className="overflow-x-auto font-[sans-serif]">
 
+  const { setComponent1, setComponent2, setComponent3 } = usePageHeaderContext();
+  useEffect(() => {
+    setComponent1(<CategoryFilter />);
+  }, [setComponent1]);
+
+  useEffect(() => {
+    setComponent2(<CommunityFilter />);
+  }, [setComponent2]);
+
+  useEffect(() => {
+    setComponent3(<ClearFilters />);
+  }, [setComponent3]);
+
+  return (
+    <Flex gap="middle" align="center" vertical>
+      <Divider />
+      <OfferProvider>
         <ListTable />
-        <Pagination />
-        
-      </div>
-    </div>
+      </OfferProvider>
+    </Flex>
   );
 };
 

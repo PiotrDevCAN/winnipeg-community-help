@@ -1,21 +1,24 @@
-import React from 'react';
-import ListTable from '../components/Community/ListTable';
-import Pagination from '../components/Pagination';
-
-import { CommunityProvider } from '../context/CommunityContext';
+import React, { useEffect } from 'react';
+import { Flex, Divider } from 'antd';
+import { VolunteerProvider } from '../context/VolunteerContext';
+import ListTable from '../components/Volunteer/ListTable';
+import { usePageHeaderContext } from '../context/PageHeaderContext';
+import CommunityFilter from '../components/Filters/CommunityFilter';
 
 const VolunteerListPage = () => {
+
+  const { setComponent1 } = usePageHeaderContext();
+  useEffect(() => {
+    setComponent1(<CommunityFilter />);
+  }, [setComponent1]);
+
   return (
-    <div>
-      <div className="overflow-x-auto font-[sans-serif]">
-
-        <CommunityProvider>
-          <ListTable />
-        </CommunityProvider>
-        <Pagination />
-
-      </div>
-    </div>
+    <Flex gap="middle" align="center" vertical>
+      <Divider />
+      <VolunteerProvider>
+        <ListTable />
+      </VolunteerProvider>
+    </Flex>
   );
 };
 

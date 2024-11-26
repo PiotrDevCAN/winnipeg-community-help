@@ -1,125 +1,157 @@
-import { HomeOutlined, AppstoreOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { AppstoreAddOutlined } from '@ant-design/icons';
 import { ContactsOutlined } from '@mui/icons-material';
+import { MdOutlineVolunteerActivism, MdVolunteerActivism, MdOutlineContactSupport, MdOutlinePolicy, MdPolicy } from "react-icons/md";
+import { TbBuildingCommunity, TbLayoutCards } from "react-icons/tb";
+import { FaHome, FaListUl, FaDonate } from "react-icons/fa";
+import { RiUserHeartLine } from "react-icons/ri";
 
 const menuDataNew = [
     {
-        label: (
-            <a href="/home" rel="noopener noreferrer">
-                Home
-            </a>
-        ),
         key: 'home',
-        icon: <HomeOutlined />,
+        label: 'Home',
+        icon: <FaHome />,
+        children: [
+            {
+                key: 'homeOpt',
+                label: 'Home',
+                icon: <FaHome />,
+                path: '/',
+            },
+            {
+                key: 'about',
+                label: 'About Us',
+                icon: <ContactsOutlined />,
+                path: '/about',
+            },
+            {
+                key: 'contactUs',
+                label: 'Contact Us',
+                icon: <MdOutlineContactSupport />,
+                path: '/contact',
+            },
+            {
+                key: 'donateUs',
+                label: 'Donate Us',
+                icon: <FaDonate />,
+                path: '/donate',
+            },
+            {
+                key: 'privacyPolicy',
+                label: 'Privacy Policy',
+                icon: <MdOutlinePolicy />,
+                path: '/dataPrivacy',
+            },
+            {
+                key: 'deletionPolicy',
+                label: 'Data Deletion Policy',
+                icon: <MdPolicy />,
+                path: '/dataDeletion',
+            },
+        ],
     },
     {
+        key: 'request',
         label: 'Need help',
-        key: 'help',
-        icon: <MailOutlined />,
+        icon: <MdOutlineVolunteerActivism />,
         children: [
             {
-                label: (
-                    <a href="/request/new" rel="noopener noreferrer">
-                        New help request
-                    </a>
-                ),
                 key: 'newHelpRequest',
+                label: 'New help request',
+                icon: <AppstoreAddOutlined />,
+                path: '/request/new',
             },
             {
-                label: (
-                    <a href="/request/list" rel="noopener noreferrer">
-                        All help requests
-                    </a>
-                ),
-                key: 'helpRequest',
+                key: 'helpRequestsCards',
+                label: 'All help requests',
+                icon: <FaListUl />,
+                path: '/request/cards',
+            },
+            {
+                key: 'helpRequestsList',
+                label: 'Manage help requests - for admins',
+                icon: <TbLayoutCards />,
+                path: '/request/list',
+                admins: 'true',
             },
         ],
     },
     {
-        label: 'Offer help',
         key: 'offer',
-        icon: <AppstoreOutlined />,
+        label: 'Offer help',
+        icon: <MdVolunteerActivism />,
         children: [
             {
-                label: (
-                    <a href="/offer/new" rel="noopener noreferrer">
-                        New help offer
-                    </a>
-                ),
                 key: 'newHelpOffer',
+                label: 'New help offer',
+                icon: <AppstoreAddOutlined />,
+                path: '/offer/new',
             },
             {
-                label: (
-                    <a href="/offer/list" rel="noopener noreferrer">
-                        All help offers
-                    </a>
-                ),
-                key: 'helpOffer',
+                key: 'helpOffersCards',
+                label: 'All help offers',
+                icon: <FaListUl />,
+                path: '/offer/cards',
+            },
+            {
+                key: 'helpOffersList',
+                label: 'Manage help offers - for admins',
+                icon: <TbLayoutCards />,
+                path: '/offer/list',
+                admins: 'true',
             },
         ],
     },
     {
-        label: 'Communities',
-        key: 'community',
-        icon: <UserOutlined />,
-        children: [
-            {
-                label: (
-                    <a href="/community/new" rel="noopener noreferrer">
-                        New community
-                    </a>
-                ),
-                key: 'newCommunity',
-            },
-            {
-                label: (
-                    <a href="/community/list" rel="noopener noreferrer">
-                        All registered communities
-                    </a>
-                ),
-                key: 'communities',
-            },
-        ],
-    },
-    {
+        key: 'volunteers',
         label: 'Volunteers',
-        key: 'volunteer',
-        icon: <UserOutlined />,
+        icon: <RiUserHeartLine />,
         children: [
             {
-                label: (
-                    <a href="/volunteer/new" rel="noopener noreferrer">
-                        New volunteer
-                    </a>
-                ),
                 key: 'newVolunteer',
+                label: 'New volunteer',
+                icon: <AppstoreAddOutlined />,
+                path: '/volunteer/new',
             },
             {
-                label: (
-                    <a href="/volunteer/list" rel="noopener noreferrer">
-                        All registered volunteers
-                    </a>
-                ),
-                key: 'volunteers',
+                key: 'volunteersCards',
+                label: 'All registered volunteers',
+                icon: <FaListUl />,
+                path: '/volunteer/cards',
+            },
+            {
+                key: 'volunteersList',
+                label: 'Manage volunteers - for admins',
+                icon: <TbLayoutCards />,
+                path: '/volunteer/list',
+                admins: 'true',
             },
         ],
     },
     {
-        label: (
-            <a href="/contact" rel="noopener noreferrer">
-                Contact Us
-            </a>
-        ),
-        key: 'contactUs',
-        icon: <AppstoreOutlined />,
-    },
-    {
-        label: (
-            <a href="/about" rel="noopener noreferrer">
-                About Us
-            </a>
-        ),
-        key: 'aboutUs',
-        icon: <ContactsOutlined />,
+        key: 'communities',
+        label: 'Communities',
+        icon: <TbBuildingCommunity />,
+        children: [
+            {
+                key: 'newCommunity',
+                label: 'New community',
+                icon: <AppstoreAddOutlined />,
+                path: '/community/new',
+            },
+            {
+                key: 'communitiesCards',
+                label: 'All registered communities',
+                icon: <FaListUl />,
+                path: '/community/cards',
+            },
+            {
+                key: 'communitiesList',
+                label: 'Manage communities - for admins',
+                icon: <TbLayoutCards />,
+                path: '/community/list',
+                admins: 'true',
+            },
+        ],
     },
 ];
 

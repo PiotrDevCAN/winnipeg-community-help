@@ -1,0 +1,12 @@
+specVersion: "v1beta"
+serviceId: "nodejs-winnipeg-community-help"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "nodejs-winnipeg-community-help-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]

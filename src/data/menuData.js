@@ -1,11 +1,12 @@
 const menuData = [
-    { name: 'Home', href: '/home', current: true },
-    { name: 'Need help', href: '/request/new', current: false },
-    { name: 'Offer help', href: '/offer/new', current: false },
-    { name: 'Communities', href: '/community/list', current: false },
-    { name: 'Volunteers', href: '/volunteer/list', current: false },
-    { name: 'Contact Us', href: '/contact', current: false },
-    { name: 'About Us', href: '/about', current: false },
+    { name: 'Home', href: '/' },
+    { name: 'Need help', href: '/request/new' },
+    { name: 'Offer help', href: '/offer/new' },
+    { name: 'Communities', href: '/community/cards' },
+    { name: 'Volunteers', href: '/volunteer/cards' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Contact Us', href: '/contact' },
+    { name: 'Donate Us', href: '/donate' },
 ]
 
 export default menuData;
