@@ -36,18 +36,19 @@ const Footer = () => {
 
                 <Col xs={24} sm={20}>
                     <ul style={listStyle}>
-                        {data.map((item) => (
-                            <li key={item.name}>
-                                <a
-                                    href={item.href}
-                                    style={listElementStyle}
-                                    onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
-                                    onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
-                                >
-                                    {item.name}
-                                </a>
-                            </li>
-                        ))}
+                        {data.map(
+                            (item, index) => (
+                                <li key={index}>
+                                    <a
+                                        href={item.href}
+                                        style={listElementStyle}
+                                        onMouseEnter={(e) => (e.target.style.textDecoration = "underline")}
+                                        onMouseLeave={(e) => (e.target.style.textDecoration = "none")}
+                                    >
+                                        {item.name}
+                                    </a>
+                                </li>
+                            ))}
                     </ul>
 
                     <Divider style={{ borderColor: "#4b5563", margin: "24px 0" }} />

@@ -2,8 +2,8 @@ import React from 'react';
 import { Carousel } from 'antd';
 import { Button, Flex, Typography, Avatar } from 'antd';
 
-import { useNavigate } from 'react-router-dom';
 import { useVolunteerContext } from '../../context/VolunteerContext';
+import { useRouteContext } from '../../context/RouteContext';
 import { RiUserHeartLine } from "react-icons/ri";
 
 const { Title, Paragraph } = Typography;
@@ -15,10 +15,10 @@ const avatarStyle = {
 const Volunteer = () => {
 
     const { currentItems: data } = useVolunteerContext();
+    const { volunteerDetails } = useRouteContext();
 
-    const navigate = useNavigate();
     const handleCardClick = (id) => {
-        navigate('/volunteer/view/' + id);
+        volunteerDetails(id);
     };
 
     return (

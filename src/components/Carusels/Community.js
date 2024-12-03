@@ -2,8 +2,8 @@ import React from 'react';
 import { Carousel } from 'antd';
 import { Button, Flex, Typography, Avatar } from 'antd';
 
-import { useNavigate } from 'react-router-dom';
 import { useCommunityContext } from '../../context/CommunityContext';
+import { useRouteContext } from '../../context/RouteContext';
 import { TbBuildingCommunity } from "react-icons/tb";
 
 const { Title, Paragraph } = Typography;
@@ -15,10 +15,10 @@ const avatarStyle = {
 const Community = () => {
 
     const { currentItems: data } = useCommunityContext();
+    const { communityDetails } = useRouteContext();
 
-    const navigate = useNavigate();
     const handleCardClick = (id) => {
-        navigate('/community/view/' + id);
+        communityDetails(id);
     };
 
     return (

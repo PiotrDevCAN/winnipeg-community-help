@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Flex, Divider } from 'antd';
+import { Row } from 'antd';
 import { VolunteerProvider } from '../context/VolunteerContext';
 import Cards from '../components/Volunteer/Cards';
 import Pagination from '../components/Volunteer/Pagination';
@@ -11,14 +11,18 @@ const VolunteerCardsPage = () => {
   const { setComponent1 } = usePageHeaderContext();
   useEffect(() => {
     setComponent1(<CommunityFilter />);
+
+    return () => {
+      setComponent1(null);
+    };
   }, [setComponent1]);
 
   return (
     <>
       <VolunteerProvider>
-        <Flex gap="middle" wrap style={{ paddingBottom: 20 }}>
+        <Row gutter={16}>
           <Cards />
-        </Flex>
+        </Row>
         <Pagination />
       </VolunteerProvider>
     </>

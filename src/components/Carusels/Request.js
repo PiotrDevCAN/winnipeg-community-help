@@ -2,8 +2,8 @@ import React from 'react';
 import { Carousel } from 'antd';
 import { Button, Flex, Typography, Avatar } from 'antd';
 
-import { useNavigate } from 'react-router-dom';
 import { useRequestContext } from '../../context/RequestContext';
+import { useRouteContext } from '../../context/RouteContext';
 import { MdOutlineVolunteerActivism } from "react-icons/md";
 
 const { Title, Paragraph } = Typography;
@@ -15,10 +15,10 @@ const avatarStyle = {
 const Request = () => {
 
     const { currentItems: data } = useRequestContext();
+    const { requestHelpDetails } = useRouteContext();
 
-    const navigate = useNavigate();
     const handleCardClick = (id) => {
-        navigate('/request/view/' + id);
+        requestHelpDetails(id);
     };
 
     return (

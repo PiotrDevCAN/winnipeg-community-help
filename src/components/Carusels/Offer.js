@@ -2,8 +2,8 @@ import React from 'react';
 import { Carousel } from 'antd';
 import { Button, Flex, Typography, Avatar } from 'antd';
 
-import { useNavigate } from 'react-router-dom';
 import { useOfferContext } from '../../context/OfferContext';
+import { useRouteContext } from '../../context/RouteContext';
 import { MdVolunteerActivism } from "react-icons/md";
 
 const { Title, Paragraph } = Typography;
@@ -15,10 +15,10 @@ const avatarStyle = {
 const Offer = () => {
 
     const { currentItems: data } = useOfferContext();
+    const { offerHelpDetails } = useRouteContext();
 
-    const navigate = useNavigate();
     const handleCardClick = (id) => {
-        navigate('/offer/view/' + id);
+        offerHelpDetails(id);
     };
 
     return (

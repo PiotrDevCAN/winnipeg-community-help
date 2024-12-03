@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { Flex, Layout, Space } from 'antd';
+import { Layout } from 'antd';
 import HeaderContent from './Header';
 import PageHeader from './PageHeader';
 import FooterContent from './Footer';
@@ -13,13 +13,7 @@ import AppBreadcrumbHeader from './AppBreadcrumbHeader';
 const { Header, Content, Footer } = Layout;
 
 const headerStyle = {
-    display: 'flex',
-    alignItems: 'center',
     height: '115px',
-    width: '100%',
-    // position: 'sticky',
-    // top: 0,
-    // zIndex: 1,
 }
 
 const contentStyle = {
@@ -71,40 +65,15 @@ const BaseLayout = ({ ...props }) => {
     const pageName = currentRoute?.name || 'Page Not Found';
     const section = currentRoute?.section || 'Default';
 
-    const [isParentReady, setIsParentReady] = useState(false);
-
-    useEffect(() => {
-        setIsParentReady(true); // Set state after parent logic completes
-    }, []);
-
-    const { setComponent1, setComponent2, setComponent3 } = usePageHeaderContext();
-    useEffect(() => {
-        // Reset context value to null whenever the location changes
-        setComponent1(null);
-    }, [location, setComponent1]);
-
-    useEffect(() => {
-        // Reset context value to null whenever the location changes
-        setComponent2(null);
-    }, [location, setComponent2]);
-
-    useEffect(() => {
-        // Reset context value to null whenever the location changes
-        setComponent3(null);
-    }, [location, setComponent3]);
-
-    return isParentReady ? (
+    return (
         <Layout>
             <Header style={headerStyle}>
                 <HeaderContent />
             </Header>
 
             <Content style={contentStyle}>
-
                 <AppBreadcrumbHeader />
-
                 <PageHeader PageName={pageName} Section={section} />
-
                 {children}
             </Content>
 
@@ -116,7 +85,7 @@ const BaseLayout = ({ ...props }) => {
                 <ContextMenu />
             </DonateProvider>
         </Layout>
-    ) : null;
+    );
 };
 
 export default BaseLayout;

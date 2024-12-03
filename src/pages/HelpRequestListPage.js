@@ -12,15 +12,15 @@ const HelpRequestListPage = () => {
   const { setComponent1, setComponent2, setComponent3 } = usePageHeaderContext();
   useEffect(() => {
     setComponent1(<CategoryFilter />);
-  }, [setComponent1]);
-
-  useEffect(() => {
     setComponent2(<CommunityFilter />);
-  }, [setComponent2]);
-
-  useEffect(() => {
     setComponent3(<ClearFilters />);
-  }, [setComponent3]);
+
+    return () => {
+      setComponent1(null);
+      setComponent2(null);
+      setComponent3(null);
+    };
+  }, [setComponent1, setComponent2, setComponent3]);
 
   return (
     <Flex gap="middle" align="center" vertical>

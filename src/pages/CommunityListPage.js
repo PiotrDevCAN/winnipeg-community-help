@@ -10,6 +10,10 @@ const CommunityListPage = () => {
   const { setComponent1 } = usePageHeaderContext();
   useEffect(() => {
     setComponent1(<CommunityFilter />);
+
+    return () => {
+      setComponent1(null);
+    };
   }, [setComponent1]);
 
   return (

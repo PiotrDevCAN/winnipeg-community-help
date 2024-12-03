@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Flex, Divider } from 'antd';
+import { Row } from 'antd';
 import { OfferProvider } from '../context/OfferContext';
 import Cards from '../components/Offer/Cards';
 import Pagination from '../components/Offer/Pagination';
@@ -13,22 +13,22 @@ const HelpOfferCardsPage = () => {
   const { setComponent1, setComponent2, setComponent3 } = usePageHeaderContext();
   useEffect(() => {
     setComponent1(<CategoryFilter />);
-  }, [setComponent1]);
-
-  useEffect(() => {
     setComponent2(<CommunityFilter />);
-  }, [setComponent2]);
-
-  useEffect(() => {
     setComponent3(<ClearFilters />);
-  }, [setComponent3]);
+
+    return () => {
+      setComponent1(null);
+      setComponent2(null);
+      setComponent3(null);
+    };
+  }, [setComponent1, setComponent2, setComponent3]);
 
   return (
     <>
       <OfferProvider>
-        <Flex gap="middle" wrap style={{ paddingBottom: 20 }}>
+        <Row gutter={16}>
           <Cards />
-        </Flex>
+        </Row>
         <Pagination />
       </OfferProvider>
     </>

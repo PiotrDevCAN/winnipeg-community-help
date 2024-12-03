@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Flex, Divider } from 'antd';
+import { Row } from 'antd';
 import { CommunityProvider } from '../context/CommunityContext';
 import Cards from '../components/Community/Cards';
 import Pagination from '../components/Community/Pagination';
@@ -11,14 +11,18 @@ const CommunityCardsPage = () => {
   const { setComponent1 } = usePageHeaderContext();
   useEffect(() => {
     setComponent1(<CommunityFilter />);
+
+    return () => {
+      setComponent1(null);
+    };
   }, [setComponent1]);
 
   return (
     <>
       <CommunityProvider>
-        <Flex gap="middle" wrap style={{ paddingBottom: 20 }}>
+        <Row gutter={16}>
           <Cards />
-        </Flex>
+        </Row>
         <Pagination />
       </CommunityProvider>
     </>

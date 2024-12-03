@@ -1,15 +1,13 @@
-import { Card, Col, Divider, Row, Typography } from 'antd';
+import { Card, Col, Row, Typography } from 'antd';
 import { usePageHeaderContext } from '../../context/PageHeaderContext';
 
-const { Title, Paragraph, Text, Link } = Typography;
+const { Title } = Typography;
 
 const style = {
-    // background: '#0092ff',
     padding: '8px 0',
 };
 
 const headerStyle = {
-    // color: '#3b82f6',
     margin: '0px',
 };
 

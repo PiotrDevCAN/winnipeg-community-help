@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flex, Divider, Row, Col, Card, Typography } from 'antd';
+import { Divider, Row, Col, Card, Typography } from 'antd';
 import { useStaticHelpDataContext } from '../context/StaticHelpDataContext';
 import { useStaticCommunityContext } from '../context/StaticCommunityContext';
 
@@ -56,16 +56,16 @@ const CategoryTypeSelector = ({ children }) => {
     switch (currentStep) {
         case 0:
             content =
-                <Flex gap="middle" wrap style={{ paddingBottom: 20 }}>
+                <Row gutter={16}>
                     <CategoryCards onSelect={categorySelect} />
-                </Flex>
+                </Row>
             break;
         case 1:
             if (catId !== "") {
                 content =
-                    <Flex gap="middle" wrap style={{ paddingBottom: 20 }}>
+                    <Row gutter={16}>
                         <TypeCards onSelect={typeSelect} />
-                    </Flex>
+                    </Row>
             } else {
                 content = <p>Please select category first</p>;
             }

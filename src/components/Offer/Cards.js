@@ -1,14 +1,13 @@
 import React from 'react';
-import { Avatar, Card, Divider } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Avatar, Card, Divider, Col } from 'antd';
 import { useOfferContext } from '../../context/OfferContext';
+import { useRouteContext } from '../../context/RouteContext';
 import { MdVolunteerActivism } from "react-icons/md";
 
 const { Meta } = Card;
 
 const cardStyle = {
-    width: '32%',
-    minWidth: 220,
+    marginBottom: 16,
 };
 
 const avatarStyle = {
@@ -20,46 +19,47 @@ const avatarStyle = {
 const Cards = ({ onSelect }) => {
 
     const { currentItems: data } = useOfferContext();
+    const { offerHelpDetails } = useRouteContext();
 
-    const navigate = useNavigate();
     const handleCardClick = (id) => {
-        navigate('/offer/view/' + id);
+        offerHelpDetails(id);
     };
 
     return (
         <>
             {data.map(
                 (item, index) => (
-                    <Card
-                        title="Help Offer Card"
-                        className="card-with-colorful-header"
-                        key={index}
-                        hoverable
-                        style={cardStyle}
-                        onClick={() => handleCardClick(item.id)}
-                    >
-                        <Meta
-                            avatar={<Avatar
-                                icon={<MdVolunteerActivism style={avatarStyle} />}
-                                shape='square'
-                            />}
-                            title={item.label}
-                            description={
-                                <>
-                                    <p>{item.community ?? 'community'}</p>
-                                    <p>{item.subCommunity ?? 'sub community'}</p>
-                                    <p>{item.category ?? 'category'}</p>
-                                    <p>{item.type ?? 'type'}</p>
-                                    <br></br>
-                                    <p><b>{item.requestor ?? 'requestor'}</b></p>
-                                    <Divider />
+                    <Col key={index} xs={24} sm={12} md={12} lg={8} xl={8}>
+                        <Card
+                            title="Help Offer Card"
+                            className="card-with-colorful-header"
+                            hoverable
+                            style={cardStyle}
+                            onClick={() => handleCardClick(item.id)}
+                        >
+                            <Meta
+                                avatar={<Avatar
+                                    icon={<MdVolunteerActivism style={avatarStyle} />}
+                                    shape='square'
+                                />}
+                                title={item.label}
+                                description={
+                                    <>
+                                        <p>{item.community ?? 'community'}</p>
+                                        <p>{item.subCommunity ?? 'sub community'}</p>
+                                        <p>{item.category ?? 'category'}</p>
+                                        <p>{item.type ?? 'type'}</p>
+                                        <br></br>
+                                        <p><b>{item.requestor ?? 'requestor'}</b></p>
+                                        <Divider />
 
-                                    <p>{item.status ?? 'status'}</p>
-                                    <p>{item.created ?? 'created'}</p>
-                                </>
-                            }
-                        />
-                    </Card>
+                                        <p>{item.status ?? 'status'}</p>
+                                        <p>{item.created ?? 'created'}</p>
+                                    </>
+                                }
+                            />
+                        </Card>
+                    </Col>
                 )
             )}
         </>

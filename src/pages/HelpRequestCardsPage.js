@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Flex, Divider } from 'antd';
+import { Row } from 'antd';
 import { RequestProvider } from '../context/RequestContext';
 import Cards from '../components/Request/Cards';
 import Pagination from '../components/Request/Pagination';
@@ -13,22 +13,22 @@ const HelpRequestCardsPage = () => {
   const { setComponent1, setComponent2, setComponent3 } = usePageHeaderContext();
   useEffect(() => {
     setComponent1(<CategoryFilter />);
-  }, [setComponent1]);
-
-  useEffect(() => {
     setComponent2(<CommunityFilter />);
-  }, [setComponent2]);
-
-  useEffect(() => {
     setComponent3(<ClearFilters />);
-  }, [setComponent3]);
+
+    return () => {
+      setComponent1(null);
+      setComponent2(null);
+      setComponent3(null);
+    };
+  }, [setComponent1, setComponent2, setComponent3]);
 
   return (
     <>
       <RequestProvider>
-        <Flex gap="middle" wrap style={{ paddingBottom: 20 }}>
+        <Row gutter={16}>
           <Cards />
-        </Flex>
+        </Row>
         <Pagination />
       </RequestProvider>
     </>

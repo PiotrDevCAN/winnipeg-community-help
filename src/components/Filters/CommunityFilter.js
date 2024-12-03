@@ -38,8 +38,6 @@ const CommunityFilter = () => {
             setSubCommunityOptions([]);
         } else {
             const tempSubCommunities = getSubCommunities(tempValue);
-            console.log('tempSubCommunities');
-            console.log(tempSubCommunities);
             setSelectedCommunity(tempValue);
             setSubCommunityOptions(tempSubCommunities || []);
         }

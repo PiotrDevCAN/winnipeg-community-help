@@ -11,7 +11,6 @@ const AppBreadcrumbHeader = () => {
             justify="space-between"
             style={{
                 padding: "16px 32px",
-                // border: '3px solid blue'
             }}
         >
             <AppBreadcrumb />
