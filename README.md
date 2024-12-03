@@ -120,4 +120,6 @@ We are grateful to the Winnipeg community and all contributors who help make thi
 ---  
 
 **Contact**  
-For questions or support, please reach out to [your-email@example.com](mailto:piotr.tajanowicz@gmail.com).  
+For questions or support, please reach out to [piotr.tajanowicz@gmail.com](mailto:piotr.tajanowicz@gmail.com).  
+
+---
