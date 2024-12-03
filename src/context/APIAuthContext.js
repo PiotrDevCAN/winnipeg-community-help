@@ -93,11 +93,10 @@ export const APIAuthProvider = ({ children }) => {
     // Check for accessToken on initial load
     useEffect(() => {
         if (!isAuthenticated()) {
-            console.log('No access token, need to log in');
-            // Optionally, show login page or initiate login process
+            // console.log('No access token, need to log in');
             login(appUser, appPassword);
         } else {
-            console.log('Access token exists, no need to log in again');
+            // console.log('Access token exists, no need to log in again');
         }
     }, [isAuthenticated]);
 

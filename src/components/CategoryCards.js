@@ -1,13 +1,9 @@
 import React from 'react';
-import { Avatar, Card, Flex, Divider } from 'antd';
+import { Avatar, Card, Divider } from 'antd';
 import { useStaticHelpDataContext } from '../context/StaticHelpDataContext';
 import { TbCategory } from "react-icons/tb";
 
 const { Meta } = Card;
-
-const cardStyle = {
-    minWidth: 220
-};
 
 const avatarStyle = {
     width: 35,
@@ -24,10 +20,12 @@ const CategoryCards = ({ onSelect }) => {
     };
 
     return (
-        <Flex gap="middle" wrap justify='space-between'>
+        <>
             {data.map(
                 (item) => {
                     return <Card
+                        title="Help Category"
+                        className="card-with-colorful-header"
                         key={item.id}
                         hoverable
                         bordered
@@ -58,7 +56,7 @@ const CategoryCards = ({ onSelect }) => {
                     </Card>
                 }
             )}
-        </Flex>
+        </>
     )
 }
 

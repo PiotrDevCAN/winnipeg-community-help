@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Card, Flex } from 'antd';
+import { Avatar, Card, Divider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useCommunityContext } from '../../context/CommunityContext';
 import { TbBuildingCommunity } from "react-icons/tb";
@@ -27,10 +27,12 @@ const Cards = ({ onSelect }) => {
     };
 
     return (
-        <Flex gap="middle" wrap justify='space-between'>
+        <>
             {data.map(
                 (item, index) => (
                     <Card
+                        title="Community Card"
+                        className="card-with-colorful-header"
                         key={index}
                         hoverable
                         style={cardStyle}
@@ -44,17 +46,19 @@ const Cards = ({ onSelect }) => {
                             title={item.label}
                             description={
                                 <>
-                                    <p>Name of community</p>
-                                    <p>Piotr</p>
+                                    <p>{item.alias}</p>
+                                    <p>{item.email}</p>
+                                    <p>{item.phone_number}</p>
+                                    <p>{item.website}</p>
                                     <p>{item.description}</p>
-                                    <p>04/12/2004</p>
+                                    <p>{item.created_at}</p>
                                 </>
                             }
                         />
                     </Card>
                 )
             )}
-        </Flex>
+        </>
     )
 }
 

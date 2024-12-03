@@ -4,14 +4,12 @@ import ErrorPlaceholder from '../components/ErrorPlaceholder';
 import EmptyPlaceholder from '../components/EmptyPlaceholder';
 
 import { useRouteContext } from '../context/RouteContext';
-// import { useStaticHelpDataContext } from '../context/StaticHelpDataContext';
 import { useStaticCommunityContext } from '../context/StaticCommunityContext';
 import { useAPIAuth } from '../context/APIAuthContext';
 import APIService from '../services/APIService';
 
 const VolunteerContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
 const apiService = new APIService(API_BASE_URL);
 
 export const useVolunteerContext = () => useContext(VolunteerContext);
@@ -20,6 +18,7 @@ export const VolunteerProvider = ({ children }) => {
     const { getAccessToken } = useAPIAuth();
 
     const [data, setData] = useState([]);
+    const [item, setItem] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setPageSize] = useState(9);
 
@@ -40,7 +39,7 @@ export const VolunteerProvider = ({ children }) => {
         filteredItems = data.filter(item => item.community === communityId);
     }
     if (subCommunityId !== null) {
-        filteredItems = data.filter(item => item.subCommunity === subCommunityId);
+        filteredItems = data.filter(item => item.sub_community_id === subCommunityId);
     }
 
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
@@ -60,13 +59,39 @@ export const VolunteerProvider = ({ children }) => {
             }
 
             if (response.pagination) {
-                console.log('Pagination Info:', response.pagination);
+                // console.log('Pagination Info - volunteers:', response.pagination);
             }
         } catch (err) {
             console.error('Error fetching data:', err);
             setError(err.message || 'An error occurred while fetching data');
         } finally {
             setLoading(false);
+        }
+    };
+
+
+    const getVolunteer = (id) => {
+        const volunteer = data.find(item => item.id === id);
+        return volunteer;
+    };
+
+    const getItem = async (id) => {
+        try {
+            const accessToken = await getAccessToken();
+            const response = await apiService.makeRequest(`/volunteer/${id}/`, {
+                method: 'GET',
+            }, accessToken);
+
+            if (response.status === 'success') {
+                const result = response.data
+                setItem(result);
+            } else {
+                console.error(response.message || 'Failed to fetch item');
+                setError(response.message);
+            }
+        } catch (err) {
+            console.error('Error fetching item:', err);
+            setError(err.message || 'An error occurred while fetching an item');
         }
     };
 
@@ -153,6 +178,9 @@ export const VolunteerProvider = ({ children }) => {
             setPageSize,
             currentPage,
             paginate,
+            item,
+            getItem,
+            getVolunteer,
             createItem,
             updateItem,
             deleteItem,

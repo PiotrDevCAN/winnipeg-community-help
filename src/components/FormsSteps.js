@@ -70,18 +70,20 @@ const FormsSteps = ({ step, percent, onChange }) => {
         }
     };
 
-    return (
-        <Card bordered={true}>
-            {contextHolder}
-            <Steps
-                current={step}
-                percent={percent}
-                onChange={handleStepChange}
-                size="small"
-                labelPlacement="vertical"
-                items={items}
-            />
-        </Card>
+    return (<Card
+        title="Main Category / Type Selection"
+        className="card-with-colorful-header"
+        bordered={true}>
+        {contextHolder}
+        <Steps
+            current={step}
+            percent={percent}
+            onChange={handleStepChange}
+            size="small"
+            labelPlacement="vertical"
+            items={items}
+        />
+    </Card>
     );
 };
 

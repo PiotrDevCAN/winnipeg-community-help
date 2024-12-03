@@ -42,9 +42,13 @@ const Community = () => {
                                     icon={<TbBuildingCommunity />}
                                 />
                                 <Title level={2}>
-                                    Community: {item.label}
+                                    {item.label}
                                 </Title>
-                                <Button type="primary" size="large" onClick={() => handleCardClick(item.key)}>
+                                <Paragraph>{item.alias ?? 'alias'}</Paragraph>
+                                <Paragraph>{item.email ?? 'e-mail'}</Paragraph>
+                                <Paragraph>{item.label ?? 'community'}</Paragraph>
+                                <Paragraph>{item.sub_community_name ?? 'sub community'}</Paragraph>                              
+                                <Button type="primary" size="large" onClick={() => handleCardClick(item.id)}>
                                     View
                                 </Button>
                             </Flex>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dropdown, Flex, message, Space, Button, Select } from 'antd';
+import { Dropdown, Flex, message, Space, Button, Select, Row, Col } from 'antd';
 
 import { TbCategory } from "react-icons/tb";
 import { VscTypeHierarchySub } from "react-icons/vsc";
@@ -16,8 +16,18 @@ const CategoryFilter = () => {
         loadingCategories, loadingTypes,
     } = useStaticHelpDataContext();
 
-    const categoriesOptionsData = SelectAllOption.concat(categoriesData);
-    const typeOptionsData = SelectAllOption.concat(typeOptions);
+    const updatedCategoriesData = categoriesData.map(item => {
+        let value = item.id;
+        return { ...item, value };
+    });
+
+    const updatedTypesData = typeOptions.map(item => {
+        let value = item.id;
+        return { ...item, value };
+    });
+
+    const categoriesOptionsData = SelectAllOption.concat(updatedCategoriesData);
+    const typeOptionsData = SelectAllOption.concat(updatedTypesData);
 
     const handleCategoryChange = (value) => {
         const tempValue = parseInt(value);
@@ -41,31 +51,35 @@ const CategoryFilter = () => {
     };
 
     return (
-        <Space>
-            <Select
-                value={selectedCategory}
-                suffixIcon={<TbCategory />}
-                showSearch
-                placeholder="Select a Category"
-                optionFilterProp="label"
-                onChange={handleCategoryChange}
-                options={categoriesOptionsData}
-                loading={loadingCategories}
-                style={{ width: '320px' }}
-            />
-            <Select
-                value={selectedType}
-                suffixIcon={<VscTypeHierarchySub />}
-                showSearch
-                placeholder="Select a Type"
-                optionFilterProp="label"
-                onChange={handleTypeChange}
-                onSelect={handleTypeChange}
-                options={typeOptionsData}
-                loading={loadingTypes}
-                style={{ width: '320px' }}
-            />
-        </Space >
+        <Row gutter={16}>
+            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Select
+                    value={selectedCategory}
+                    suffixIcon={<TbCategory />}
+                    showSearch
+                    placeholder="Select a Category"
+                    optionFilterProp="label"
+                    onChange={handleCategoryChange}
+                    options={categoriesOptionsData}
+                    loading={loadingCategories}
+                    style={{ width: '100%' }}
+                />
+            </Col>
+            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                <Select
+                    value={selectedType}
+                    suffixIcon={<VscTypeHierarchySub />}
+                    showSearch
+                    placeholder="Select a Type"
+                    optionFilterProp="label"
+                    onChange={handleTypeChange}
+                    onSelect={handleTypeChange}
+                    options={typeOptionsData}
+                    loading={loadingTypes}
+                    style={{ width: '100%' }}
+                />
+            </Col>
+        </Row>
     );
 };
 

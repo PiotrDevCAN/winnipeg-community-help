@@ -2,11 +2,11 @@ import React, { useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
-import { useOfferContext } from '../../context/OfferContext';
+import { useStaticHelpDataContext } from '../../context/StaticHelpDataContext';
 
 const ListTable = () => {
 
-    const { filteredItems: data } = useOfferContext();
+    const { categoriesData: data } = useStaticHelpDataContext();
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -114,6 +114,7 @@ const ListTable = () => {
                 text
             ),
     });
+
     const columns = [
         {
             title: 'Id',
@@ -125,12 +126,12 @@ const ListTable = () => {
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Title',
-            dataIndex: 'title',
-            key: 'title',
-            width: '30%',
-            ...getColumnSearchProps('title'),
-            sorter: (a, b) => a.title.length - b.title.length,
+            title: 'Label',
+            dataIndex: 'label',
+            key: 'label',
+            width: '20%',
+            ...getColumnSearchProps('label'),
+            sorter: (a, b) => a.label.length - b.label.length,
             sortDirections: ['descend', 'ascend'],
         },
         {
@@ -140,60 +141,6 @@ const ListTable = () => {
             width: '30%',
             ...getColumnSearchProps('description'),
             sorter: (a, b) => a.description.length - b.description.length,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Category',
-            dataIndex: 'category_name',
-            key: 'category_name',
-            width: '30%',
-            ...getColumnSearchProps('category_name'),
-            sorter: (a, b) => a.category_name.length - b.category_name.length,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Type',
-            dataIndex: 'type_name',
-            key: 'type_name',
-            width: '30%',
-            ...getColumnSearchProps('type_name'),
-            sorter: (a, b) => a.type_name.length - b.type_name.length,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Community',
-            dataIndex: 'label',
-            key: 'label',
-            width: '30%',
-            ...getColumnSearchProps('label'),
-            sorter: (a, b) => a.label.length - b.label.length,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Sub Community',
-            dataIndex: 'sub_community_name',
-            key: 'sub_community_name',
-            width: '30%',
-            ...getColumnSearchProps('sub_community_name'),
-            sorter: (a, b) => a.sub_community_name.length - b.sub_community_name.length,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            width: '30%',
-            ...getColumnSearchProps('status'),
-            sorter: (a, b) => a.status.length - b.status.length,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
-            title: 'Created',
-            dataIndex: 'created_at',
-            key: 'created_at',
-            width: '30%',
-            ...getColumnSearchProps('created_at'),
-            sorter: (a, b) => a.created_at.length - b.created_at.length,
             sortDirections: ['descend', 'ascend'],
         },
     ];

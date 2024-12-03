@@ -114,7 +114,17 @@ const ListTable = () => {
                 text
             ),
     });
+
     const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
+            width: '5%',
+            ...getColumnSearchProps('id'),
+            sorter: (a, b) => a.id.length - b.id.length,
+            sortDirections: ['descend', 'ascend'],
+        },
         {
             title: 'Name',
             dataIndex: 'label',
@@ -134,15 +144,6 @@ const ListTable = () => {
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Leader',
-            dataIndex: 'leader',
-            key: 'leader',
-            width: '30%',
-            ...getColumnSearchProps('leader'),
-            sorter: (a, b) => a.leader.length - b.leader.length,
-            sortDirections: ['descend', 'ascend'],
-        },
-        {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
@@ -153,11 +154,11 @@ const ListTable = () => {
         },
         {
             title: 'Phone',
-            dataIndex: 'phone',
-            key: 'phone',
+            dataIndex: 'phone_number',
+            key: 'phone_number',
             width: '30%',
-            ...getColumnSearchProps('phone'),
-            sorter: (a, b) => a.phone.length - b.phone.length,
+            ...getColumnSearchProps('phone_number'),
+            sorter: (a, b) => a.phone_number.length - b.phone_number.length,
             sortDirections: ['descend', 'ascend'],
         },
         {
@@ -180,17 +181,18 @@ const ListTable = () => {
         },
         {
             title: 'Created',
-            dataIndex: 'created',
-            key: 'created',
+            dataIndex: 'created_at',
+            key: 'created_at',
             width: '30%',
-            ...getColumnSearchProps('created'),
-            sorter: (a, b) => a.created.length - b.created.length,
+            ...getColumnSearchProps('created_at'),
+            sorter: (a, b) => a.created_at.length - b.created_at.length,
             sortDirections: ['descend', 'ascend'],
         },
     ];
     return <Table
         columns={columns}
         dataSource={data}
+        rowKey="id"
         pagination={{
             position: ['none', 'bottomCenter'],
         }}

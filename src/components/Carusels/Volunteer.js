@@ -42,13 +42,13 @@ const Volunteer = () => {
                                     icon={<RiUserHeartLine />}
                                 />
                                 <Title level={2}>
-                                    Volunteer: {item.label}
+                                    {`${item.first_name} ${item.last_name}`}
                                 </Title>
-                                {/* <Paragraph>Name of community</Paragraph>
-                                    <Paragraph>Piotr</Paragraph>
-                                    <Paragraph>Open</Paragraph>
-                                    <Paragraph>04/12/2004</Paragraph> */}
-                                <Button type="primary" size="large" onClick={() => handleCardClick(item.key)}>
+                                <Paragraph>{item.nick ?? 'nick'}</Paragraph>
+                                <Paragraph>{item.email ?? 'e-mail'}</Paragraph>
+                                <Paragraph>{item.community_name ?? 'community'}</Paragraph>
+                                <Paragraph>{item.sub_community_name ?? 'sub community'}</Paragraph>
+                                <Button type="primary" size="large" onClick={() => handleCardClick(item.id)}>
                                     View
                                 </Button>
                             </Flex>

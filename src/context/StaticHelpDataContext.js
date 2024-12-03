@@ -1,22 +1,79 @@
-import React, { createContext, useContext, useState } from 'react';
-import categories from '../data/helpCategoriesData';
-import types from '../data/helpTypesData';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+import { useAPIAuth } from '../context/APIAuthContext';
+import APIService from '../services/APIService';
 
 const StaticHelpDataContext = createContext();
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const apiService = new APIService(API_BASE_URL);
 
 export const useStaticHelpDataContext = () => useContext(StaticHelpDataContext);
 
 export const StaticHelpProvider = ({ children }) => {
+    const { getAccessToken } = useAPIAuth();
 
-    const [categoriesData, setCategoriesData] = useState(categories);
-    const [typesData, setTypesData] = useState(types);
+    const [categoriesData, setCategoriesData] = useState([]);
+    const [typesData, setTypesData] = useState([]);
 
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
     const [typeOptions, setTypeOptions] = useState([]);
 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
     const [loadingCategories, setLoadingCategories] = useState(false);
     const [loadingTypes, setLoadingTypes] = useState(false);
+
+    const fetchCategoryData = async () => {
+        try {
+            setLoading(true);
+
+            const accessToken = await getAccessToken();
+            const response = await apiService.makeRequest('/help-category/', {}, accessToken);
+
+            if (response.status === 'success') {
+                setCategoriesData(response.data || []);
+            } else {
+                console.error(response.message || 'Unknown error occurred');
+                setError(response.message);
+            }
+
+            if (response.pagination) {
+                // console.log('Pagination Info - category:', response.pagination);
+            }
+        } catch (err) {
+            console.error('Error fetching data:', err);
+            setError(err.message || 'An error occurred while fetching data');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchTypeData = async () => {
+        try {
+            setLoading(true);
+
+            const accessToken = await getAccessToken();
+            const response = await apiService.makeRequest('/help-type/', {}, accessToken);
+
+            if (response.status === 'success') {
+                setTypesData(response.data || []);
+            } else {
+                console.error(response.message || 'Unknown error occurred');
+                setError(response.message);
+            }
+
+            if (response.pagination) {
+                // console.log('Pagination Info - types:', response.pagination);
+            }
+        } catch (err) {
+            console.error('Error fetching data:', err);
+            setError(err.message || 'An error occurred while fetching data');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const getCategory = (id) => {
         const category = categoriesData.find(item => item.id === id);
@@ -29,7 +86,7 @@ export const StaticHelpProvider = ({ children }) => {
     }
 
     const getTypes = (id) => {
-        const result = typesData.filter(item => item.categoryId === id);
+        const result = typesData.filter(item => item.category_id === id);
         return result;
     }
 
@@ -37,6 +94,11 @@ export const StaticHelpProvider = ({ children }) => {
         const result = getTypes(id);
         return result.length;
     }
+
+    useEffect(() => {
+        fetchTypeData();
+        fetchCategoryData();
+    }, [getAccessToken]);
 
     return (
         <StaticHelpDataContext.Provider value={{
@@ -49,8 +111,10 @@ export const StaticHelpProvider = ({ children }) => {
             getType,
             getTypes,
             countTypes,
-            loadingCategories, 
-            loadingTypes,
+            loadingCategories, setLoadingCategories,
+            loadingTypes, setLoadingTypes,
+            loading,
+            error,
         }}>
             {children}
         </StaticHelpDataContext.Provider>

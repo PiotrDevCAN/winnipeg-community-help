@@ -1,13 +1,9 @@
 import React from 'react';
-import { Avatar, Card, Flex, Divider } from 'antd';
+import { Avatar, Card, Divider } from 'antd';
 import { useStaticHelpDataContext } from '../context/StaticHelpDataContext';
 import { VscTypeHierarchySub } from "react-icons/vsc";
 
 const { Meta } = Card;
-
-const cardStyle = {
-    minWidth: 220
-};
 
 const avatarStyle = {
     width: 35,
@@ -26,11 +22,13 @@ const TypeCards = ({ onSelect }) => {
     const data = getTypes(catId);
 
     return (
-        <Flex gap="middle" wrap justify='space-between'>
+        <>
             {data.map(
                 (item) => {
                     const tempCategory = getCategory(catId);
                     return <Card
+                        title="Help Type"
+                        className="card-with-colorful-header"
                         key={item.id}
                         hoverable
                         bordered
@@ -62,7 +60,7 @@ const TypeCards = ({ onSelect }) => {
                     </Card>
                 }
             )}
-        </Flex>
+        </>
     )
 }
 

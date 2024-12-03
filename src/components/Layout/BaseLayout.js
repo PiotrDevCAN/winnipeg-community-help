@@ -67,8 +67,9 @@ const BaseLayout = ({ ...props }) => {
     // Get the current route
     let currentRoute = getCurrentRoute(location, routes);
 
-    // Get the current page name
+    // Get the current page name and section
     const pageName = currentRoute?.name || 'Page Not Found';
+    const section = currentRoute?.section || 'Default';
 
     const [isParentReady, setIsParentReady] = useState(false);
 
@@ -102,7 +103,7 @@ const BaseLayout = ({ ...props }) => {
 
                 <AppBreadcrumbHeader />
 
-                <PageHeader PageName={pageName} />
+                <PageHeader PageName={pageName} Section={section} />
 
                 {children}
             </Content>

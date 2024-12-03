@@ -66,13 +66,6 @@ const menuDataNew = [
                 icon: <FaListUl />,
                 path: '/request/cards',
             },
-            {
-                key: 'helpRequestsList',
-                label: 'Manage help requests - for admins',
-                icon: <TbLayoutCards />,
-                path: '/request/list',
-                admins: 'true',
-            },
         ],
     },
     {
@@ -91,13 +84,6 @@ const menuDataNew = [
                 label: 'All help offers',
                 icon: <FaListUl />,
                 path: '/offer/cards',
-            },
-            {
-                key: 'helpOffersList',
-                label: 'Manage help offers - for admins',
-                icon: <TbLayoutCards />,
-                path: '/offer/list',
-                admins: 'true',
             },
         ],
     },
@@ -118,13 +104,6 @@ const menuDataNew = [
                 icon: <FaListUl />,
                 path: '/volunteer/cards',
             },
-            {
-                key: 'volunteersList',
-                label: 'Manage volunteers - for admins',
-                icon: <TbLayoutCards />,
-                path: '/volunteer/list',
-                admins: 'true',
-            },
         ],
     },
     {
@@ -144,15 +123,57 @@ const menuDataNew = [
                 icon: <FaListUl />,
                 path: '/community/cards',
             },
+        ],
+    },
+    {
+        key: 'admins',
+        label: 'Administration',
+        icon: <TbBuildingCommunity />,
+        children: [
+            {
+                key: 'helpCategoriesList',
+                label: 'Manage help categories',
+                icon: <TbLayoutCards />,
+                path: '/helpCategory/list',
+                admins: 'true',
+            },
+            {
+                key: 'helpTypesList',
+                label: 'Manage help types',
+                icon: <TbLayoutCards />,
+                path: '/helpType/list',
+                admins: 'true',
+            },
+            {
+                key: 'helpRequestsList',
+                label: 'Manage help requests',
+                icon: <TbLayoutCards />,
+                path: '/request/list',
+                admins: 'true',
+            },
+            {
+                key: 'helpOffersList',
+                label: 'Manage help offers',
+                icon: <TbLayoutCards />,
+                path: '/offer/list',
+                admins: 'true',
+            },
+            {
+                key: 'volunteersList',
+                label: 'Manage volunteers',
+                icon: <TbLayoutCards />,
+                path: '/volunteer/list',
+                admins: 'true',
+            },
             {
                 key: 'communitiesList',
-                label: 'Manage communities - for admins',
+                label: 'Manage communities',
                 icon: <TbLayoutCards />,
                 path: '/community/list',
                 admins: 'true',
             },
         ],
-    },
+    }
 ];
 
 export default menuDataNew;

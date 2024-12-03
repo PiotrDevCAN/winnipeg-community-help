@@ -11,14 +11,8 @@ import RequestsCarusel from '../Carusels/Request';
 import VolunteersCarusel from '../Carusels/Volunteer';
 import CommunitiesCarusel from '../Carusels/Community';
 
-const wrapperStyleDark = {
-    marginBottom: 8,
-    backgroundColor: "#364d79 ",
-}
-
-const wrapperStyleLight = {
-    marginBottom: 8,
-    backgroundColor: "#a3b9cc",
+const wrapperStyle = {
+    marginBottom: 16,
 }
 
 const HomeContentCarusels = () => {
@@ -26,17 +20,11 @@ const HomeContentCarusels = () => {
     return (
         <>
             <Card
-                style={wrapperStyleDark}
-                className="carusel-card"
-            >
-                <OfferProvider>
-                    <OffersCarusel />
-                </OfferProvider>
-            </Card>
-
-            <Card
-                style={wrapperStyleLight}
-                className="carusel-card"
+                title="Help Requests"
+                className="gradientBg odd"
+                size="small"
+                align="center"
+                style={wrapperStyle}
             >
                 <RequestProvider>
                     <RequestsCarusel />
@@ -44,8 +32,23 @@ const HomeContentCarusels = () => {
             </Card>
 
             <Card
-                style={wrapperStyleDark}
-                className="carusel-card"
+                title="Help Offers"
+                className="gradientBg even"
+                size="small"
+                align="center"
+                style={wrapperStyle}
+            >
+                <OfferProvider>
+                    <OffersCarusel />
+                </OfferProvider>
+            </Card>
+
+            <Card
+                title="Volunteers"
+                className="gradientBg odd"
+                size="small"
+                align="center"
+                style={wrapperStyle}
             >
                 <VolunteerProvider>
                     <VolunteersCarusel />
@@ -53,8 +56,11 @@ const HomeContentCarusels = () => {
             </Card>
 
             <Card
-                style={wrapperStyleLight}
-                className="carusel-card"
+                title="Communities"
+                className="gradientBg even"
+                size="small"
+                align="center"
+                style={wrapperStyle}
             >
                 <CommunityProvider>
                     <CommunitiesCarusel />

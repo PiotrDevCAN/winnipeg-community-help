@@ -14,14 +14,14 @@ const VolunteerCardsPage = () => {
   }, [setComponent1]);
 
   return (
-    <Flex gap="middle" align="center" vertical>
-      {/* <Divider /> */}
+    <>
       <VolunteerProvider>
-        <Cards />
+        <Flex gap="middle" wrap style={{ paddingBottom: 20 }}>
+          <Cards />
+        </Flex>
         <Pagination />
       </VolunteerProvider>
-      <Divider />
-    </Flex>
+    </>
   );
 };
 

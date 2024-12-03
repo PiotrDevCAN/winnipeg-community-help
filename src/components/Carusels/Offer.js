@@ -42,13 +42,13 @@ const Offer = () => {
                                     icon={<MdVolunteerActivism />}
                                 />
                                 <Title level={2}>
-                                    Help Offer: {item.label}
+                                    {item.title}
                                 </Title>
-                                {/* <Paragraph>{item.community ?? 'community'}</Paragraph>
-                                    <Paragraph>{item.subCommunity ?? 'sub community'}</Paragraph>
-                                    <Paragraph>{item.category ?? 'category'}</Paragraph>
-                                    <Paragraph>{item.type ?? 'type'}</Paragraph> */}
-                                <Button type="primary" size="large" onClick={() => handleCardClick(item.key)}>
+                                <Paragraph>{item.label ?? 'community'}</Paragraph>
+                                <Paragraph>{item.sub_community_name ?? 'sub community'}</Paragraph>
+                                <Paragraph>{item.category_name ?? 'category'}</Paragraph>
+                                <Paragraph>{item.type_name ?? 'type'}</Paragraph>
+                                <Button type="primary" size="large" onClick={() => handleCardClick(item.id)}>
                                     View
                                 </Button>
                             </Flex>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Card, Flex } from 'antd';
+import { Avatar, Card, Divider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useVolunteerContext } from '../../context/VolunteerContext';
 import { RiUserHeartLine } from "react-icons/ri";
@@ -27,10 +27,12 @@ const Cards = ({ onSelect }) => {
     };
 
     return (
-        <Flex gap="middle" wrap justify='space-between'>
+        <>
             {data.map(
                 (item, index) => (
                     <Card
+                        title="Volunteer Card"
+                        className="card-with-colorful-header"
                         key={index}
                         hoverable
                         style={cardStyle}
@@ -41,20 +43,24 @@ const Cards = ({ onSelect }) => {
                                 icon={<RiUserHeartLine style={avatarStyle} />}
                                 shape='square'
                             />}
-                            title="Volunteer Card"
+                            title={`${item.first_name} ${item.last_name}`}
                             description={
                                 <>
-                                    <p>Name of community</p>
-                                    <p>Piotr</p>
-                                    <p>Open</p>
-                                    <p>04/12/2004</p>
+                                    <p>{item.community_name}</p>
+                                    <p>{item.sub_community_name}</p>
+                                    <p>{item.nick}</p>
+                                    <p>{item.email}</p>
+                                    <p>{item.phone_number}</p>
+                                    <p>{item.website}</p>
+                                    <p>{item.description}</p>
+                                    <p>{item.created_at}</p>
                                 </>
                             }
                         />
                     </Card>
                 )
             )}
-        </Flex>
+        </>
     )
 }
 

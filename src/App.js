@@ -16,10 +16,10 @@ import './App.css';
 const App = () => {
   return (
     <Router>
-      <StaticCommunityProvider>
-        <StaticHelpProvider>
-          <AuthProvider>
-            <APIAuthProvider>
+      <AuthProvider>
+        <APIAuthProvider>
+          <StaticCommunityProvider>
+            <StaticHelpProvider>
               <RouteProvider>
                 <PageHeaderProvider>
                   <BaseLayout>
@@ -27,10 +27,10 @@ const App = () => {
                   </BaseLayout>
                 </PageHeaderProvider>
               </RouteProvider>
-            </APIAuthProvider>
-          </AuthProvider>
-        </StaticHelpProvider>
-      </StaticCommunityProvider>
+            </StaticHelpProvider>
+          </StaticCommunityProvider>
+        </APIAuthProvider>
+      </AuthProvider>
       <CookieConsent />
     </Router>
   );

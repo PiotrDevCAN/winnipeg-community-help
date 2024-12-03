@@ -21,6 +21,7 @@ const Pagination = ({ data, itemsPerPage, setPageSize, currentPage, paginate }) 
             showSizeChanger
             onShowSizeChange={onShowSizeChange}
             onChange={onChange}
+            style={{ paddingBottom: 20 }}
         />
     )
 };

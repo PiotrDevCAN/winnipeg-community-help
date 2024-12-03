@@ -71,8 +71,8 @@ const NewCommunityForm = () => {
         value: website,
     }));
 
-    
-    const { mainCommunities, communities } = useStaticCommunityContext();
+
+    const { mainCommunitiesData, communitiesData } = useStaticCommunityContext();
 
     return (
         <Form
@@ -88,7 +88,7 @@ const NewCommunityForm = () => {
             }}
             scrollToFirstError
         >
-            
+
             <Form.Item
                 name="mainCommunity"
                 label="Main Community"
@@ -103,7 +103,7 @@ const NewCommunityForm = () => {
                     // defaultValue="jack"
                     // style={{ width: 120 }}
                     // onChange={handleChange}
-                    options={mainCommunities}
+                    options={mainCommunitiesData}
                 />
             </Form.Item>
 
@@ -199,8 +199,8 @@ const NewCommunityForm = () => {
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit">
-                    Create community
+                <Button type="primary" htmlType="submit" className="colorful-background">
+                    Register community
                 </Button>
             </Form.Item>
         </Form>

@@ -9,15 +9,30 @@ const style = {
 };
 
 const headerStyle = {
-    color: '#3b82f6',
+    // color: '#3b82f6',
     margin: '0px',
 };
 
-const PageHeader = ({ PageName }) => {
+const PageHeader = ({ PageName, Section }) => {
 
     const { component1, component2, component3 } = usePageHeaderContext();
 
     let content;
+
+    let cardStyleClass;
+    switch (Section) {
+        case 'request':
+        case 'offer':
+        case 'volunteer':
+        case 'community':
+        case 'category':
+        case 'type':
+            cardStyleClass = "";
+            break;
+        default:
+            cardStyleClass = "pageHeaderCard";
+            break;
+    }
 
     if (component1 && component2 && component3) {
         content =
@@ -65,9 +80,12 @@ const PageHeader = ({ PageName }) => {
     }
 
     return (
-        <Card style={{
-            marginBottom: 8,
-        }}>
+        <Card
+            className={cardStyleClass}
+            style={{
+                marginBottom: 8,
+            }}
+        >
             <Row gutter={16}>
                 {content}
             </Row>

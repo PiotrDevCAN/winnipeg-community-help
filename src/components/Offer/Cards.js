@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Card, Flex, Divider } from 'antd';
+import { Avatar, Card, Divider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useOfferContext } from '../../context/OfferContext';
 import { MdVolunteerActivism } from "react-icons/md";
@@ -27,14 +27,16 @@ const Cards = ({ onSelect }) => {
     };
 
     return (
-        <Flex gap="middle" wrap justify='space-between'>
+        <>
             {data.map(
                 (item, index) => (
                     <Card
+                        title="Help Offer Card"
+                        className="card-with-colorful-header"
                         key={index}
                         hoverable
                         style={cardStyle}
-                        onClick={() => handleCardClick(item.key)}
+                        onClick={() => handleCardClick(item.id)}
                     >
                         <Meta
                             avatar={<Avatar
@@ -60,7 +62,7 @@ const Cards = ({ onSelect }) => {
                     </Card>
                 )
             )}
-        </Flex>
+        </>
     )
 }
 

@@ -26,7 +26,7 @@ const handleMenuClick = (e) => {
 const FiltersDropdownsSection = () => {
 
     const { categoriesData, typesData } = useStaticHelpDataContext();
-    const { mainCommunities, communities } = useStaticCommunityContext();
+    const { mainCommunitiesData, communitiesData } = useStaticCommunityContext();
 
     const menuCategoriesProps = {
         items: categoriesData,
@@ -36,12 +36,12 @@ const FiltersDropdownsSection = () => {
         items: typesData,
         onClick: handleMenuClick,
     };
-    const menuMainCommunitiesProps = {
-        items: mainCommunities,
+    const menumainCommunitiesDataProps = {
+        items: mainCommunitiesData,
         onClick: handleMenuClick,
     };
     const menuCommunitiesProps = {
-        items: communities,
+        items: communitiesData,
         onClick: handleMenuClick,
     };
 
@@ -53,7 +53,7 @@ const FiltersDropdownsSection = () => {
             <Dropdown.Button menu={menuTypesProps} placement="bottom" icon={<VscTypeHierarchySub />} onClick={handleButtonClick}>
                 Type
             </Dropdown.Button>
-            <Dropdown.Button menu={menuMainCommunitiesProps} placement="bottom" icon={<TbBuildingCommunity />} onClick={handleButtonClick}>
+            <Dropdown.Button menu={menumainCommunitiesDataProps} placement="bottom" icon={<TbBuildingCommunity />} onClick={handleButtonClick}>
                 Community
             </Dropdown.Button>
             <Dropdown.Button menu={menuCommunitiesProps} placement="bottom" icon={<RiCommunityLine />} onClick={handleButtonClick}>

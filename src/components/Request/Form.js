@@ -72,7 +72,7 @@ const NewRequestForm = ({ catId, typeId }) => {
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" className="colorful-background">
                     Submit request
                 </Button>
             </Form.Item>

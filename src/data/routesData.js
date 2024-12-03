@@ -35,6 +35,9 @@ import DataPrivacyPage from './../pages/DataPrivacyPage';
 import DataDeletionPage from './../pages/DataDeletionPage';
 import NotFoundPage from '../pages/NotFoundPage';
 
+import HelpCategoryListPage from '../pages/HelpCategoryListPage'; // list
+import HelpTypeListPage from '../pages/HelpTypeListPage'; // list
+
 const routesData = [
     // Home
     { path: "/", section: 'home', name: "Winnipeg Cares - local communities help centre", Component: HomePage },
@@ -42,26 +45,26 @@ const routesData = [
     // Help request
     { path: "/request/new", section: 'request', protect: true, name: "Ask for help in your community", Component: HelpRequestSelectionPage },
     { path: "/request/new/basic", section: 'request', protect: true, name: "Ask for help in your community", Component: HelpRequestPage },
-    { path: "/request/view/:itemId", section: 'request', protect: true, name: "View record", Component: HelpRequestPage },
+    { path: "/request/view/:itemId", section: 'request', protect: true, name: "View help request record", Component: HelpRequestPage },
     { path: "/request/list", section: 'request', protect: true, name: "List of help requests", Component: HelpRequestListPage },
     { path: "/request/cards", section: 'request', protect: true, name: "Cards of help requests", Component: HelpRequestCardsPage },
 
     // Help Offer
     { path: "/offer/new", section: 'offer', protect: true, name: "Offer help to your community", Component: HelpOfferSelectionPage },
     { path: "/offer/new/basic", section: 'offer', protect: true, name: "Offer help to your community", Component: HelpOfferPage },
-    { path: "/offer/view/:itemId", section: 'offer', protect: true, name: "View record", Component: HelpOfferPage },
+    { path: "/offer/view/:itemId", section: 'offer', protect: true, name: "View help offer record", Component: HelpOfferPage },
     { path: "/offer/list", section: 'offer', protect: true, name: "List of help offers", Component: HelpOfferListPage },
     { path: "/offer/cards", section: 'offer', protect: true, name: "Cards of help offers", Component: HelpOfferCardsPage },
 
     // Community
     { path: "/community/new", section: 'community', protect: true, name: "Register new community", Component: CommunityPage },
-    { path: "/community/view/:itemId", section: 'community', protect: true, name: "View record", Component: CommunityPage },
+    { path: "/community/view/:itemId", section: 'community', protect: true, name: "View community record", Component: CommunityPage },
     { path: "/community/list", section: 'community', protect: true, name: "List of communities", Component: CommunityListPage },
     { path: "/community/cards", section: 'community', protect: true, name: "Cards of communities", Component: CommunityCardsPage },
 
     // Volunteer
     { path: "/volunteer/new", section: 'volunteer', protect: true, name: "Register new volunteer", Component: VolunteerPage },
-    { path: "/volunteer/view/:itemId", section: 'volunteer', protect: true, name: "View record", Component: VolunteerPage },
+    { path: "/volunteer/view/:itemId", section: 'volunteer', protect: true, name: "View volunteer record", Component: VolunteerPage },
     { path: "/volunteer/list", section: 'volunteer', protect: true, name: "List of volunteers", Component: VolunteerListPage },
     { path: "/volunteer/cards", section: 'volunteer', protect: true, name: "Cards of volunteers", Component: VolunteerCardsPage },
 
@@ -76,13 +79,15 @@ const routesData = [
     { path: "/myHelpOffers", section: 'auth', protect: true, name: "My help offers", Component: MyHelpOffers },
     { path: "/myCommunity", section: 'auth', protect: true, name: "My community", Component: MyCommunityPage },
     
-
+    { path: "/helpCategory/list", section: 'category', protect: true, name: "List of help categories", Component: HelpCategoryListPage },
+    { path: "/helpType/list", section: 'type', protect: true, name: "List of help types", Component: HelpTypeListPage },
+    
     // Auxiliary
     { path: "/about", section: 'about', name: "About Us", Component: AboutPage },
     { path: "/contact", section: 'contact', name: "Contact Us", Component: ContactPage },
     { path: "/donate", section: 'donate', name: "Donate Us", Component: DonatePage },
-    { path: "/dataPrivacy", section: 'contact', name: "Winnipeg Cares Privacy Policy", Component: DataPrivacyPage },
-    { path: "/dataDeletion", section: 'contact', name: "Winnipeg Cares Data Deletion Policy", Component: DataDeletionPage },
+    { path: "/dataPrivacy", section: 'contact', name: "Privacy Policy", Component: DataPrivacyPage },
+    { path: "/dataDeletion", section: 'contact', name: "Data Deletion Policy", Component: DataDeletionPage },
     { path: "*", name: "Page Not Found", Component: NotFoundPage },
 ];
 

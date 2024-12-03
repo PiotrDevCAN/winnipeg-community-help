@@ -1,13 +1,18 @@
 import React from 'react';
-import { Flex, Divider } from 'antd';
-import RequestForm from '../components/Request/Form';
+import { useParams } from 'react-router-dom';
+import { RequestProvider } from '../context/RequestContext';
+import { CommunityProvider } from '../context/CommunityContext';
+import RequestPreview from '../components/Request/Preview';
 
 const HelpRequestPage = () => {
+  const { itemId } = useParams();
+
   return (
-    <Flex gap="middle" align="center" vertical>
-      <Divider />
-      <RequestForm />
-    </Flex>
+    <RequestProvider>
+      <CommunityProvider>
+        <RequestPreview itemId={itemId} />
+      </CommunityProvider>
+    </RequestProvider>
   );
 };
 

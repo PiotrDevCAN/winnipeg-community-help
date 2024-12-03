@@ -24,14 +24,14 @@ const HelpOfferCardsPage = () => {
   }, [setComponent3]);
 
   return (
-    <Flex gap="middle" align="center" vertical>
-      {/* <Divider /> */}
+    <>
       <OfferProvider>
-        <Cards />
+        <Flex gap="middle" wrap style={{ paddingBottom: 20 }}>
+          <Cards />
+        </Flex>
         <Pagination />
       </OfferProvider>
-      <Divider />
-    </Flex>
+    </>
   );
 };
 

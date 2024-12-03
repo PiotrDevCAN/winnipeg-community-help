@@ -55,11 +55,17 @@ const CategoryTypeSelector = ({ children }) => {
 
     switch (currentStep) {
         case 0:
-            content = <CategoryCards onSelect={categorySelect} />;
+            content =
+                <Flex gap="middle" wrap style={{ paddingBottom: 20 }}>
+                    <CategoryCards onSelect={categorySelect} />
+                </Flex>
             break;
         case 1:
             if (catId !== "") {
-                content = <TypeCards onSelect={typeSelect} />;
+                content =
+                    <Flex gap="middle" wrap style={{ paddingBottom: 20 }}>
+                        <TypeCards onSelect={typeSelect} />
+                    </Flex>
             } else {
                 content = <p>Please select category first</p>;
             }
@@ -80,24 +86,31 @@ const CategoryTypeSelector = ({ children }) => {
                 content = <>
                     <Row gutter={16}>
                         <Col span={12}>
-                            <Card bordered={true}>
-                                <Title level={4}>Preselected community and sub community</Title>
-                                <Title level={5}>Community: {selectedCommunity.label}</Title>
-                                <Title level={5}>Sub Community: {selectedSubCommunity.label}</Title>
+                            <Card
+                                title="Selected Category / Type"
+                                className="card-with-colorful-header"
+                                bordered={true}>
+                                <Title level={5}>Category: {selectedCategory.label}</Title>
+                                <Title level={5}>Type: {selectedType.label}</Title>
                             </Card>
                         </Col>
                         <Col span={12}>
-                            <Card bordered={true}>
-                                <Title level={4}>Preselected category and type</Title>
-                                <Title level={5}>Category: {selectedCategory.label}</Title>
-                                <Title level={5}>Type: {selectedType.label}</Title>
+                            <Card
+                                title="Selected Community / Sub-community"
+                                className="card-with-colorful-header"
+                                bordered={true}>
+                                <Title level={5}>Community: {selectedCommunity?.label || "Default selectedCommunity Label"}</Title>
+                                <Title level={5}>Sub Community: {selectedSubCommunity?.label || "Default selectedSubCommunity Label"}</Title>
                             </Card>
                         </Col>
                     </Row>
                     <Divider />
                     <Row gutter={16}>
                         <Col span={24}>
-                            <Card bordered={true}>
+                            <Card
+                                title="Additional Details"
+                                className="card-with-colorful-header"
+                                bordered={true}>
                                 {/* {children} */}
                                 {childrenWithProps}
                             </Card>
@@ -117,7 +130,7 @@ const CategoryTypeSelector = ({ children }) => {
 
     return (
         <>
-            <Divider />
+            {/* <Divider /> */}
             <FormsSteps step={currentStep} percent={percent} onChange={onStepChange} />
             <Divider />
             {content}

@@ -24,14 +24,14 @@ const HelpRequestCardsPage = () => {
   }, [setComponent3]);
 
   return (
-    <Flex gap="middle" align="center" vertical>
-      {/* <Divider /> */}
+    <>
       <RequestProvider>
-        <Cards />
+        <Flex gap="middle" wrap style={{ paddingBottom: 20 }}>
+          <Cards />
+        </Flex>
         <Pagination />
       </RequestProvider>
-      <Divider />
-    </Flex>
+    </>
   );
 };
 

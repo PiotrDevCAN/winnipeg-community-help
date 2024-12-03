@@ -4,14 +4,12 @@ import ErrorPlaceholder from '../components/ErrorPlaceholder';
 import EmptyPlaceholder from '../components/EmptyPlaceholder';
 
 import { useRouteContext } from '../context/RouteContext';
-// import { useStaticHelpDataContext } from '../context/StaticHelpDataContext';
 import { useStaticCommunityContext } from '../context/StaticCommunityContext';
 import { useAPIAuth } from '../context/APIAuthContext';
 import APIService from '../services/APIService';
 
 const CommunityContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
 const apiService = new APIService(API_BASE_URL);
 
 export const useCommunityContext = () => useContext(CommunityContext);
@@ -20,6 +18,7 @@ export const CommunityProvider = ({ children }) => {
     const { getAccessToken } = useAPIAuth();
 
     const [data, setData] = useState([]);
+    const [item, setItem] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setPageSize] = useState(9);
 
@@ -40,7 +39,7 @@ export const CommunityProvider = ({ children }) => {
         filteredItems = data.filter(item => item.community === communityId);
     }
     if (subCommunityId !== null) {
-        filteredItems = data.filter(item => item.subCommunity === subCommunityId);
+        filteredItems = data.filter(item => item.sub_community_id === subCommunityId);
     }
 
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
@@ -60,13 +59,38 @@ export const CommunityProvider = ({ children }) => {
             }
 
             if (response.pagination) {
-                console.log('Pagination Info:', response.pagination);
+                // console.log('Pagination Info - communities:', response.pagination);
             }
         } catch (err) {
             console.error('Error fetching data:', err);
             setError(err.message || 'An error occurred while fetching data');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const getCommunity = (id) => {
+        const community = data.find(item => item.id === id);
+        return community;
+    };
+
+    const getItem = async (id) => {
+        try {
+            const accessToken = await getAccessToken();
+            const response = await apiService.makeRequest(`/community/${id}/`, {
+                method: 'GET',
+            }, accessToken);
+
+            if (response.status === 'success') {
+                const result = response.data
+                setItem(result);
+            } else {
+                console.error(response.message || 'Failed to fetch item');
+                setError(response.message);
+            }
+        } catch (err) {
+            console.error('Error fetching item:', err);
+            setError(err.message || 'An error occurred while fetching an item');
         }
     };
 
@@ -153,6 +177,9 @@ export const CommunityProvider = ({ children }) => {
             setPageSize,
             currentPage,
             paginate,
+            item,
+            getItem,
+            getCommunity,
             createItem,
             updateItem,
             deleteItem,

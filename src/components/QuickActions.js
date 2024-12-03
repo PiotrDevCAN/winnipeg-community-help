@@ -14,12 +14,12 @@ const QuickActions = () => {
     return (
         <>
             <Tooltip title="Rise new request for help">
-                <Button onClick={askForHelp} type="primary" icon={<AppstoreAddOutlined />} style={shortCutStyle}>
+                <Button onClick={askForHelp} type="primary" icon={<AppstoreAddOutlined />} style={shortCutStyle} className="colorful-background">
                     Ask for help
                 </Button>
             </Tooltip>
             <Tooltip title="Tell community you are open to help">
-                <Button onClick={offerHelp} type="primary" icon={<AppstoreAddOutlined />} style={shortCutStyle}>
+                <Button onClick={offerHelp} type="primary" icon={<AppstoreAddOutlined />} style={shortCutStyle} className="colorful-background">
                     Offer help
                 </Button>
             </Tooltip>

@@ -35,7 +35,7 @@ const ClearFilters = () => {
 
     return (
         <Space>
-            <Button onClick={handleClearFilters} block type="primary" htmlType="submit">
+            <Button onClick={handleClearFilters} block type="primary" htmlType="submit" className="colorful-background">
                 Clear filters
             </Button>
         </Space >

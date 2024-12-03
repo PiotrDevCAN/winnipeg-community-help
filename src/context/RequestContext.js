@@ -11,7 +11,6 @@ import APIService from '../services/APIService';
 
 const RequestContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
 const apiService = new APIService(API_BASE_URL);
 
 export const useRequestContext = () => useContext(RequestContext);
@@ -20,6 +19,7 @@ export const RequestProvider = ({ children }) => {
     const { getAccessToken } = useAPIAuth();
 
     const [data, setData] = useState([]);
+    const [item, setItem] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setPageSize] = useState(9);
 
@@ -38,17 +38,17 @@ export const RequestProvider = ({ children }) => {
     let filteredItems = data;
 
     if (catId !== null) {
-        filteredItems = data.filter(item => item.category === catId);
+        filteredItems = data.filter(item => item.category_id === catId);
     }
     if (typeId !== null) {
-        filteredItems = data.filter(item => item.type === typeId);
+        filteredItems = data.filter(item => item.type_id === typeId);
     }
 
     if (communityId !== null) {
-        filteredItems = data.filter(item => item.community === communityId);
+        filteredItems = data.filter(item => item.community_id === communityId);
     }
     if (subCommunityId !== null) {
-        filteredItems = data.filter(item => item.subCommunity === subCommunityId);
+        filteredItems = data.filter(item => item.sub_community_id === subCommunityId);
     }
 
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
@@ -68,13 +68,38 @@ export const RequestProvider = ({ children }) => {
             }
 
             if (response.pagination) {
-                console.log('Pagination Info:', response.pagination);
+                // console.log('Pagination Info - requests:', response.pagination);
             }
         } catch (err) {
             console.error('Error fetching data:', err);
             setError(err.message || 'An error occurred while fetching data');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const getRequest = (id) => {
+        const request = data.find(item => item.id === id);
+        return request;
+    };
+
+    const getItem = async (id) => {
+        try {
+            const accessToken = await getAccessToken();
+            const response = await apiService.makeRequest(`/request/${id}/`, {
+                method: 'GET',
+            }, accessToken);
+
+            if (response.status === 'success') {
+                const result = response.data
+                setItem(result);
+            } else {
+                console.error(response.message || 'Failed to fetch item');
+                setError(response.message);
+            }
+        } catch (err) {
+            console.error('Error fetching item:', err);
+            setError(err.message || 'An error occurred while fetching an item');
         }
     };
 
@@ -161,6 +186,9 @@ export const RequestProvider = ({ children }) => {
             setPageSize,
             currentPage,
             paginate,
+            item,
+            getItem,
+            getRequest,
             createItem,
             updateItem,
             deleteItem,

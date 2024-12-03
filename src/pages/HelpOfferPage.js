@@ -1,13 +1,18 @@
-import React, { useEffect } from 'react';
-import { Flex, Divider } from 'antd';
-import OfferForm from '../components/Offer/Form';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { OfferProvider } from '../context/OfferContext';
+import { CommunityProvider } from '../context/CommunityContext';
+import OfferPreview from '../components/Offer/Preview';
 
 const HelpOfferPage = () => {
+  const { itemId } = useParams();
+
   return (
-    <Flex gap="middle" align="center" vertical>
-      <Divider />
-      <OfferForm />
-    </Flex>
+    <OfferProvider>
+      <CommunityProvider>
+        <OfferPreview itemId={itemId} />
+      </CommunityProvider>
+    </OfferProvider>
   );
 };
 

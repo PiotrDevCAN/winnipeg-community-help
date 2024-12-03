@@ -9,8 +9,9 @@
 }
 
 .gutter-row {
-  background: '#0092ff';
-  padding: '8px 0';
+  background: '#f4f4f4';
+  /* background: '#0092ff'; */
+  /* padding: '8px 0'; */
 }
 
 #map-container {
@@ -21,4 +22,39 @@
 .carusel-card .ant-card-body {
   padding-top: 0;
   padding-bottom: 0;
+}
+
+.card-with-colorful-header .ant-card-head {
+  background: linear-gradient(135deg, #004dd3 0%, #04befe 100%);
+  color: #fff;
+  font-weight: bold;
+}
+.card-with-colorful-header .ant-card-head-title {
+  color: #fff;
+}
+
+.ant-btn.colorful-background {
+  background: linear-gradient(135deg, #004dd3 0%, #04befe 100%);
+  color: #fff;
+}
+
+.pageHeaderCard {
+  background: linear-gradient(135deg, #004dd3 0%, #04befe 100%);
+}
+
+.pageHeaderCard .ant-typography {
+  color: #fff;
+}
+
+.ant-menu .ant-menu-submenu-selected, 
+.ant-menu .ant-menu-item-selected {
+  background: linear-gradient(135deg, #004dd3 0%, #04befe 100%);
+}
+
+.gradientBg.odd {
+  background: linear-gradient(135deg, #dadada 0%, #fff 100%);
+}
+
+.gradientBg.even {
+  background: linear-gradient(135deg, #fff 0%, #dadada 100%);
 }

@@ -71,7 +71,7 @@ const NewVolunteerForm = () => {
         value: website,
     }));
 
-    const { mainCommunities, communities } = useStaticCommunityContext();
+    const { mainCommunitiesData, communitiesData } = useStaticCommunityContext();
 
     return (
         <Form
@@ -102,7 +102,7 @@ const NewVolunteerForm = () => {
                     // defaultValue="jack"
                     // style={{ width: 120 }}
                     // onChange={handleChange}
-                    options={mainCommunities}
+                    options={mainCommunitiesData}
                 />
             </Form.Item>
 
@@ -120,17 +120,17 @@ const NewVolunteerForm = () => {
                     // defaultValue="jack"
                     // style={{ width: 120 }}
                     // onChange={handleChange}
-                    options={communities}
+                    options={communitiesData}
                 />
             </Form.Item>
 
             <Form.Item
-                name="fullName"
-                label="Full Name"
+                name="FirstName"
+                label="First Name"
                 rules={[
                     {
                         required: true,
-                        message: 'Please input full name!',
+                        message: 'Please input first name!',
                     },
                 ]}
             >
@@ -138,13 +138,26 @@ const NewVolunteerForm = () => {
             </Form.Item>
 
             <Form.Item
-                name="alias"
-                label="Alias"
+                name="lastName"
+                label="Last Name"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input last name!',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+
+            <Form.Item
+                name="nick"
+                label="Nick"
                 tooltip="What do you want others to call you?"
                 rules={[
                     {
                         required: true,
-                        message: 'Please input your alias!',
+                        message: 'Please input your nick!',
                         whitespace: true,
                     },
                 ]}
@@ -216,7 +229,7 @@ const NewVolunteerForm = () => {
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" className="colorful-background">
                     Register volunteer
                 </Button>
             </Form.Item>

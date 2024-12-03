@@ -133,13 +133,11 @@ const UserActions = () => {
                     menu={menuAuthProps}
                     trigger={['click']}
                 >
-                    <Tooltip title="Displays personalized options such as a dashboard, account settings, notifications, and a logout button, enabling users to manage their profiles and access exclusive features." >
+                    {/* <Tooltip title="Displays personalized options such as a dashboard, account settings, notifications, and a logout button, enabling users to manage their profiles and access exclusive features." > */}
                         <Button type="default" shape="circle" icon={<SiAircanada />} style={redIconStyle} />
-                    </Tooltip>
+                    {/* </Tooltip> */}
                 </Dropdown>
-
             ) : (
-
                 <Dropdown
                     menu={menuNotAuthProps}
                     trigger={['click']}
@@ -148,7 +146,7 @@ const UserActions = () => {
                         <Button type="default" shape="circle" icon={<UserAddOutlined />} style={iconStyle} />
                     </Tooltip>
                 </Dropdown>
-            )};
+            )}
         </>
     );
 };
