@@ -1,5 +1,3 @@
-Here's an appealing README file template for the Winnipeg Cares app repository: 
-
 ---
 
 # **Winnipeg Cares** 🌟  
