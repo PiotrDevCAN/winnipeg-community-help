@@ -16,6 +16,10 @@ const avatarStyle = {
     backgroundColor: '#1677ff',
 }
 
+const dividerStyle = {
+    margin: "8px 0"
+}
+
 const Cards = ({ onSelect }) => {
 
     const { currentItems: data } = useVolunteerContext();
@@ -45,14 +49,15 @@ const Cards = ({ onSelect }) => {
                                 title={`${item.first_name} ${item.last_name}`}
                                 description={
                                     <>
-                                        <p>{item.community_name}</p>
-                                        <p>{item.sub_community_name}</p>
-                                        <p>{item.nick}</p>
-                                        <p>{item.email}</p>
-                                        <p>{item.phone_number}</p>
-                                        <p>{item.website}</p>
-                                        <p>{item.description}</p>
-                                        <p>{item.created_at}</p>
+                                        <p>Community: <b>{item.community_name}</b></p>
+                                        <p>Sub Community: <b>{item.sub_community_name}</b></p>
+                                        <Divider style={dividerStyle} />
+                                        <p>Nick: <b>{item.nick}</b></p>
+                                        <p>E-mail: <b>{item.email}</b></p>
+                                        <p>Phone Number: <b>{item.phone_number}</b></p>
+                                        <p>Website: <b>{item.website}</b></p>
+                                        <p>Description: <b>{item.description}</b></p>
+                                        <p>Created: <b>{item.created_at}</b></p>
                                     </>
                                 }
                             />

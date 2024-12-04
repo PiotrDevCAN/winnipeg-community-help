@@ -10,7 +10,7 @@ const AboutUs = () => {
             <Card bordered={false}>
                 {/* About Section */}
                 <Paragraph>
-                    <Title level={3}>About Winnipeg Cares</Title>
+                    <Title level={2}>About Winnipeg Cares</Title>
                     Welcome to <strong>Winnipeg Cares</strong>, the heart of Winnipeg’s community connections.
                     Our platform is built to inspire collaboration, provide support, and foster resilience across
                     our vibrant city. We aim to empower residents and organizations by offering a digital hub where

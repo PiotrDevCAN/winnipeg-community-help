@@ -9,7 +9,7 @@ const DataDeletion = () => {
         <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
             <Card bordered={false}>
                 <Paragraph>
-                    <Title level={3}>Introduction</Title>
+                    <Title level={2}>Introduction</Title>
                     At Winnipeg Cares, we are committed to respecting the privacy of our users and safeguarding personal data. This Data Deletion Policy outlines the procedures for users to request the deletion of their data and describes how we handle these requests.
                 </Paragraph>
 

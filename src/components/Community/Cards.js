@@ -16,6 +16,10 @@ const avatarStyle = {
     backgroundColor: '#1677ff',
 }
 
+const dividerStyle = {
+    margin: "8px 0"
+}
+
 const Cards = ({ onSelect }) => {
 
     const { currentItems: data } = useCommunityContext();
@@ -45,12 +49,13 @@ const Cards = ({ onSelect }) => {
                                 title={item.label}
                                 description={
                                     <>
-                                        <p>{item.alias}</p>
-                                        <p>{item.email}</p>
-                                        <p>{item.phone_number}</p>
-                                        <p>{item.website}</p>
-                                        <p>{item.description}</p>
-                                        <p>{item.created_at}</p>
+                                        <p>Alias: <b>{item.alias}</b></p>
+                                        <Divider style={dividerStyle} />
+                                        <p>E-mail: <b>{item.email}</b></p>
+                                        <p>Phone Number: <b>{item.phone_number}</b></p>
+                                        <p>Website: <b>{item.website}</b></p>
+                                        <p>Description: <b>{item.description}</b></p>
+                                        <p>Created: <b>{item.created_at}</b></p>
                                     </>
                                 }
                             />

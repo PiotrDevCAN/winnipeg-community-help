@@ -8,7 +8,7 @@ const DonateUs = () => {
     return (
         <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
             <Card bordered={false}>
-                <Title level={1}>Support Winnipeg Cares</Title>
+                <Title level={2}>Support Winnipeg Cares</Title>
                 <Paragraph style={{ fontSize: "18px", margin: "20px 0" }}>
                     At <strong>Winnipeg Cares</strong>, we are committed to making life easier for our community.
                     Your support helps us maintain and grow our platform, ensuring that everyone in Winnipeg

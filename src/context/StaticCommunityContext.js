@@ -28,6 +28,7 @@ export const StaticCommunityProvider = ({ children }) => {
     const fetchMainCommunityData = async () => {
         try {
             setLoading(true);
+            setLoadingCommunities(true);
 
             const accessToken = await getAccessToken();
             const response = await apiService.makeRequest('/main-community/', {}, accessToken);
@@ -47,12 +48,14 @@ export const StaticCommunityProvider = ({ children }) => {
             setError(err.message || 'An error occurred while fetching data');
         } finally {
             setLoading(false);
+            setLoadingCommunities(false);
         }
     };
 
     const fetchSubCommunityData = async () => {
         try {
             setLoading(true);
+            setLoadingSubCommunities(true);
 
             const accessToken = await getAccessToken();
             const response = await apiService.makeRequest('/community/', {}, accessToken);
@@ -72,6 +75,7 @@ export const StaticCommunityProvider = ({ children }) => {
             setError(err.message || 'An error occurred while fetching data');
         } finally {
             setLoading(false);
+            setLoadingSubCommunities(false);
         }
     };
 

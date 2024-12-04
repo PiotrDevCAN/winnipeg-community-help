@@ -9,7 +9,7 @@ const DataPrivacy = () => {
         <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
             <Card bordered={false}>
                 <Paragraph>
-                    <Title level={3}>Introduction</Title>
+                    <Title level={2}>Introduction</Title>
                     Welcome to Winnipeg Cares. This policy outlines how we collect, use, protect, and manage your personal information. By using Winnipeg Cares, you agree to the terms described here.
                 </Paragraph>
 

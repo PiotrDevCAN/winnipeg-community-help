@@ -16,6 +16,10 @@ const avatarStyle = {
     backgroundColor: '#1677ff',
 }
 
+const dividerStyle = {
+    margin: "8px 0"
+}
+
 const Cards = ({ onSelect }) => {
 
     const { currentItems: data } = useRequestContext();
@@ -45,16 +49,17 @@ const Cards = ({ onSelect }) => {
                                 title={item.name}
                                 description={
                                     <>
-                                        <p>{item.community ?? 'community'}</p>
-                                        <p>{item.subCommunity ?? 'sub community'}</p>
-                                        <p>{item.category ?? 'category'}</p>
-                                        <p>{item.type ?? 'type'}</p>
-                                        <br></br>
-                                        <p><b>{item.requestor ?? 'requestor'}</b></p>
-                                        <Divider />
-
-                                        <p>{item.status ?? 'status'}</p>
-                                        <p>{item.created ?? 'created'}</p>
+                                        <p><b>{item.description ?? 'description'}</b></p>
+                                        <Divider style={dividerStyle} />
+                                        <p>Requestor: <b>{item.requestor ?? 'John Dou'}</b></p>
+                                        <Divider style={dividerStyle} />
+                                        <p>Community: <b>{item.label ?? 'community'}</b></p>
+                                        <p>Sub Community: <b>{item.sub_community_name ?? 'sub community'}</b></p>
+                                        <p>Category: <b>{item.category_name ?? 'category'}</b></p>
+                                        <p>Type: <b>{item.type_name ?? 'type'}</b></p>
+                                        <Divider style={dividerStyle} />
+                                        <p>Status: <b>{item.status ?? 'status'}</b></p>
+                                        <p>Created: <b>{item.created ?? 'created'}</b></p>
                                     </>
                                 }
                             />
