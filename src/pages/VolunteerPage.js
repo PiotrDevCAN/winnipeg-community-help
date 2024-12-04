@@ -1,13 +1,15 @@
 import React from 'react';
-import { Flex, Divider } from 'antd';
-import NewVolunteerForm from '../components/Volunteer/Form';
+import { useParams } from 'react-router-dom';
+import { VolunteerProvider } from '../context/VolunteerContext';
+import VolunteerPreview from '../components/Volunteer/Preview';
 
 const VolunteerPage = () => {
+  const { itemId } = useParams();
+
   return (
-    <Flex gap="middle" align="center" vertical>
-      <Divider />
-      <NewVolunteerForm />
-    </Flex>
+    <VolunteerProvider>
+      <VolunteerPreview itemId={itemId} />
+    </VolunteerProvider>
   );
 };
 

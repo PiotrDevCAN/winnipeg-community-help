@@ -3,6 +3,7 @@ import { Flex, Divider, Card, Button, Row, Col, Typography } from 'antd';
 import { useOfferContext } from '../../context/OfferContext';
 import { useStaticHelpDataContext } from '../../context/StaticHelpDataContext';
 import { useStaticCommunityContext } from '../../context/StaticCommunityContext';
+import OfferDetails from '../Offer/Preview/Details';
 import PreviewMap from '../../components/Map/PreviewMap';
 
 const { Text, Link } = Typography;
@@ -94,15 +95,7 @@ const Preview = ({ itemId }) => {
         <Row gutter={16} style={{ marginBottom: "16px" }}>
             <Col xs={20} sm={16} md={12} lg={12} xl={12}>
                 <Flex gap="middle" vertical style={{ height: '100%' }}>
-                    <Card
-                        className="card-with-colorful-header"
-                        title="Help Offer Details"
-                    >
-                        <p>Title: <Text strong>{item.title}</Text></p>
-                        <p>Description: <Text strong>{item.description}</Text></p>
-                        <p>Status: <Text strong>{item.status}</Text></p>
-                        <p>Created: <Text strong>{item.created_at}</Text></p>
-                    </Card>
+                    <OfferDetails item={item} />
                     <Card
                         className="card-with-colorful-header"
                         title="Map Card"

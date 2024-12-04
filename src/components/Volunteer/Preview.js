@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Flex, Divider, Card, Button, Row, Col, Typography } from 'antd';
-import { useRequestContext } from '../../context/RequestContext';
+import { useVolunteerContext } from '../../context/VolunteerContext';
 import { useStaticHelpDataContext } from '../../context/StaticHelpDataContext';
 import { useStaticCommunityContext } from '../../context/StaticCommunityContext';
-import RequestDetails from '../Request/Preview/Details';
+import VolunteerDetails from '../Volunteer/Preview/Details';
 import PreviewMap from '../../components/Map/PreviewMap';
 
 const { Text, Link } = Typography;
 
 const Preview = ({ itemId }) => {
 
-    const { item, getItem } = useRequestContext();
+    const { item, getItem } = useVolunteerContext();
 
     const [mainCommunity, setMainCommunity] = useState(null);
     const [subCommunity, setSubCommunity] = useState(null);
@@ -29,6 +29,10 @@ const Preview = ({ itemId }) => {
 
     const { getCategory, getType } = useStaticHelpDataContext();
     const { getCommunity, getSubCommunity } = useStaticCommunityContext();
+
+    const dividerStyle = {
+        margin: "8px 0"
+    }
 
     const handleMapPreview = () => {
         alert('Functionality not implemented yet');
@@ -95,7 +99,7 @@ const Preview = ({ itemId }) => {
         <Row gutter={16} style={{ marginBottom: "16px" }}>
             <Col xs={20} sm={16} md={12} lg={12} xl={12}>
                 <Flex gap="middle" vertical style={{ height: '100%' }}>
-                    <RequestDetails item={item} />
+                    <VolunteerDetails item={item} />
                     <Card
                         className="card-with-colorful-header"
                         title="Map Card"
@@ -120,20 +124,29 @@ const Preview = ({ itemId }) => {
                 <Flex gap="middle" vertical>
                     <Card
                         className="card-with-colorful-header"
-                        title="Requestor Details"
+                        title="Volunteer's Help Requests"
                         actions={[
                             <Button type="primary" size="default" className="colorful-background">
-                                View Profile
-                            </Button>,
+                                All Help Requests
+                            </Button>
+                        ]}
+                    >
+                        <p>List of Help Requests raised by Volunteer</p>
+                        <Divider style={dividerStyle} />
+                        <p>Number of items: <Text strong>0</Text></p>
+                    </Card>
+                    <Card
+                        className="card-with-colorful-header"
+                        title="Volunteer's Help Offers"
+                        actions={[
                             <Button type="primary" size="default" className="colorful-background">
                                 All Help Offers
                             </Button>
                         ]}
                     >
-                        <p>First Name: <Text strong>Requestor's first name</Text></p>
-                        <p>Last Name: <Text strong>Requestor's last name</Text></p>
-                        <p>Nick: <Text strong>Requestor's nick</Text></p>
-                        <p>E-mail: <Text strong>Requestor's e-mail</Text></p>
+                        <p>List of Help Offers responded by Volunteer</p>
+                        <Divider style={dividerStyle} />
+                        <p>Number of items: <Text strong>0</Text></p>
                     </Card>
                     <Card
                         className="card-with-colorful-header"
@@ -168,40 +181,6 @@ const Preview = ({ itemId }) => {
                                 <p>Description: <Text strong>{subCommunity?.description}</Text></p>
                             </>
                             : <p>Error in obtaining Sub Community data</p>
-                        }
-                    </Card>
-                    <Card
-                        className="card-with-colorful-header"
-                        title="Related Help Category and Type"
-                        actions={[
-                            <Button type="primary" size="default" className="colorful-background">
-                                All Help Requests
-                            </Button>,
-                            <Button type="primary" size="default" className="colorful-background">
-                                All Help Offers
-                            </Button>,
-                            <Button type="primary" size="default" className="colorful-background">
-                                All Requestors
-                            </Button>,
-                            <Button type="primary" size="default" className="colorful-background">
-                                All Volunteers
-                            </Button>
-                        ]}
-                    >
-                        {!errorCategory ?
-                            <>
-                                <p>Category: <Text strong>{category?.label}</Text></p>
-                                <p>Description: <Text strong>{category?.description}</Text></p>
-                            </>
-                            : <p>Error in obtaining Category data</p>
-                        }
-
-                        {!errorType ?
-                            <>
-                                <p>Type: <Text strong>{type?.label}</Text></p>
-                                <p>Description: <Text strong>{type?.description}</Text></p>
-                            </>
-                            : <p>Error in obtaining Type data</p>
                         }
                     </Card>
                 </Flex>

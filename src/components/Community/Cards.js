@@ -1,65 +1,18 @@
 import React from 'react';
-import { Avatar, Card, Divider, Col } from 'antd';
+import { Col } from 'antd';
 import { useCommunityContext } from '../../context/CommunityContext';
-import { useRouteContext } from '../../context/RouteContext';
-import { TbBuildingCommunity } from "react-icons/tb";
-
-const { Meta } = Card;
-
-const cardStyle = {
-    marginBottom: 16,
-};
-
-const avatarStyle = {
-    width: 35,
-    height: 35,
-    backgroundColor: '#1677ff',
-}
-
-const dividerStyle = {
-    margin: "8px 0"
-}
+import CommunityCard from '../Community/Card';
 
 const Cards = ({ onSelect }) => {
 
     const { currentItems: data } = useCommunityContext();
-    const { communityDetails } = useRouteContext();
-
-    const handleCardClick = (id) => {
-        communityDetails(id);
-    };
 
     return (
         <>
             {data.map(
                 (item, index) => (
                     <Col key={index} xs={24} sm={12} md={12} lg={8} xl={8}>
-                        <Card
-                            title="Community Card"
-                            className="card-with-colorful-header"
-                            hoverable
-                            style={cardStyle}
-                            onClick={() => handleCardClick(item.id)}
-                        >
-                            <Meta
-                                avatar={<Avatar
-                                    icon={<TbBuildingCommunity style={avatarStyle} />}
-                                    shape='square'
-                                />}
-                                title={item.label}
-                                description={
-                                    <>
-                                        <p>Alias: <b>{item.alias}</b></p>
-                                        <Divider style={dividerStyle} />
-                                        <p>E-mail: <b>{item.email}</b></p>
-                                        <p>Phone Number: <b>{item.phone_number}</b></p>
-                                        <p>Website: <b>{item.website}</b></p>
-                                        <p>Description: <b>{item.description}</b></p>
-                                        <p>Created: <b>{item.created_at}</b></p>
-                                    </>
-                                }
-                            />
-                        </Card>
+                        <CommunityCard item={item} />
                     </Col>
                 )
             )}

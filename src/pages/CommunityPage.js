@@ -1,13 +1,15 @@
 import React from 'react';
-import { Flex, Divider } from 'antd';
-import NewCommunityForm from '../components/Community/Form';
+import { useParams } from 'react-router-dom';
+import { CommunityProvider } from '../context/CommunityContext';
+import CommunityPreview from '../components/Community/Preview';
 
 const Page = () => {
+  const { itemId } = useParams();
+
   return (
-    <Flex gap="middle" align="center" vertical>
-      <Divider />
-      <NewCommunityForm />
-    </Flex>
+    <CommunityProvider>
+      <CommunityPreview itemId={itemId} />
+    </CommunityProvider>
   );
 };
 
