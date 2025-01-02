@@ -4,6 +4,8 @@
 # **Winnipeg Cares** 🌟  
 *A community-driven platform to connect, support, and uplift the people of Winnipeg.*
 
+*Live preview*
+<a href="https://winnipeg-carres.vercel.app/">https://winnipeg-carres.vercel.app/</a> 
 ---
 
 ## 🚀 **About Winnipeg Cares**  
