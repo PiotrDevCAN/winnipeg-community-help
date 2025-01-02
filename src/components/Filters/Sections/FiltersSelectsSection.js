@@ -1,8 +1,8 @@
 import React from 'react';
 import { Space } from 'antd';
 
-import CategoryFilter from '../CategoryFilter';
-import CommunityFilter from '../CommunityFilter';
+import CategoryFilter from '@/CategoryFilter';
+import CommunityFilter from '@/components/CommunityFilter';
 
 const FiltersSelectsSection = () => {
     return (

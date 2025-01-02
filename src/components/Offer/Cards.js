@@ -1,11 +1,8 @@
 import React from 'react';
 import { Col } from 'antd';
-import { useOfferContext } from '../../context/OfferContext';
-import OfferCard from '../Offer/Card';
+import OfferCard from '@/components/Offer/Card';
 
-const Cards = ({ onSelect }) => {
-
-    const { currentItems: data } = useOfferContext();
+const Cards = ({ data, onSelect }) => {
 
     return (
         <>

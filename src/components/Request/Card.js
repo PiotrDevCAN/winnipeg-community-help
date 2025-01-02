@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Divider, Card, Typography } from 'antd';
-import { useRouteContext } from '../../context/RouteContext';
+import { useRouteContext } from '@/context/RouteContext';
 import { MdOutlineVolunteerActivism } from "react-icons/md";
 
 const { Meta } = Card;
@@ -19,7 +19,7 @@ const dividerStyle = {
     margin: "8px 0"
 }
 
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const RequestCard = ({ item }) => {
 

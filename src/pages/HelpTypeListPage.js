@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
-import { Flex, Divider } from 'antd';
-import ListTable from '../components/HelpType/ListTable';
+import React from 'react';
+import { useHelpTypeContext, HelpTypeProvider } from '@/context/HelpTypeContext';
+import ListTable from '@/components/HelpType/ListTable';
+import GenericListPage from '@/components/Layout/GenericListPage';
 
 const HelpTypeListPage = () => {
 
   return (
-    <Flex gap="middle" align="center" vertical>
-      <Divider />
-      <ListTable />
-    </Flex>
+    <HelpTypeProvider>
+      <GenericListPage
+        handleNewItem=""
+        useContextHook={useHelpTypeContext}
+        ListTableComponent={ListTable}
+      />
+    </HelpTypeProvider>
   );
 };
 

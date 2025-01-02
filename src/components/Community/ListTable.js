@@ -2,15 +2,13 @@ import React, { useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
-import { useCommunityContext } from '../../context/CommunityContext';
 
-const ListTable = () => {
-
-    const { data } = useCommunityContext();
+const ListTable = ({ data }) => {
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -189,6 +187,7 @@ const ListTable = () => {
             sortDirections: ['descend', 'ascend'],
         },
     ];
+
     return <Table
         columns={columns}
         dataSource={data}

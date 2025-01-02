@@ -1,15 +1,16 @@
 import React from 'react';
-import LogoutForm from '../components/Auth/LogoutForm';
-import { Divider } from 'antd';
+import { Flex } from 'antd';
+import LogoutForm from '@/components/Auth/LogoutForm';
+import { Navigate } from 'react-router-dom';
+import { useAuthContext } from '@/context/AuthContext';
 
 const LogoutPage = () => {
+  const { isAuthenticated } = useAuthContext();
 
-  return (
-    <>
-      <Divider />
+  return isAuthenticated ?
+    <Flex align="center" vertical>
       <LogoutForm />
-    </>
-  );
+    </Flex> : <Navigate to="/login" />;
 };
 
 export default LogoutPage;

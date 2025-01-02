@@ -1,16 +1,17 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { VolunteerProvider } from '../context/VolunteerContext';
-import VolunteerPreview from '../components/Volunteer/Preview';
+import { useVolunteerContext } from '@/context/VolunteerContext';
+import VolunteerPreview from '@/components/Volunteer/Preview';
+import VolunteerForm from '@/components/Volunteer/Form';
+import GenericRecordPage from '@/components/Layout/GenericRecordPage';
 
-const VolunteerPage = () => {
-  const { itemId } = useParams();
-
-  return (
-    <VolunteerProvider>
-      <VolunteerPreview itemId={itemId} />
-    </VolunteerProvider>
-  );
-};
+const VolunteerPage = ({ mode }) => (
+  <GenericRecordPage
+    objectType="volunteer"
+    useContextHook={useVolunteerContext}
+    mode={mode}
+    PreviewComponent={VolunteerPreview}
+    FormComponent={VolunteerForm}
+  />
+);
 
 export default VolunteerPage;

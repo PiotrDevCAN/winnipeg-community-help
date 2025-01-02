@@ -1,5 +1,6 @@
+import React from 'react';
 import { Card, Col, Row, Typography } from 'antd';
-import { usePageHeaderContext } from '../../context/PageHeaderContext';
+import { usePageHeaderContext } from '@/context/PageHeaderContext';
 
 const { Title } = Typography;
 
@@ -13,7 +14,7 @@ const headerStyle = {
 
 const PageHeader = ({ PageName, Section }) => {
 
-    const { component1, component2, component3 } = usePageHeaderContext();
+    const { component1, component2, component3, component4, component5 } = usePageHeaderContext();
 
     let content;
 
@@ -23,6 +24,7 @@ const PageHeader = ({ PageName, Section }) => {
         case 'offer':
         case 'volunteer':
         case 'community':
+        case 'user':
         case 'category':
         case 'type':
             cardStyleClass = "";
@@ -32,29 +34,7 @@ const PageHeader = ({ PageName, Section }) => {
             break;
     }
 
-    if (component1 && component2 && component3) {
-        content =
-            <>
-                <Col className="gutter-row" span={9}>
-                    <div style={style}>
-                        <Title level={2} style={headerStyle}>{PageName}</Title>
-                    </div>
-                </Col>
-                <Col className="gutter-row" span={15}>
-                    <div style={style}>
-                        {component1}
-                    </div>
-                    {/* <Divider /> */}
-                    <div style={style}>
-                        {component2}
-                    </div>
-                    {/* <Divider /> */}
-                    <div style={style}>
-                        {component3}
-                    </div>
-                </Col>
-            </>
-    } else if (component1 || component2 || component3) {
+    if (component1 || component2 || component3 || component4 || component5) {
         content = <>
             <Col className="gutter-row" span={9}>
                 <div style={style}>
@@ -62,12 +42,32 @@ const PageHeader = ({ PageName, Section }) => {
                 </div>
             </Col>
             <Col className="gutter-row" span={15}>
-                <div style={style}>
-                    {component1}
-                    {component2}
-                    {component3}
-                </div>
-            </Col>
+                {component1 ? (
+                    <div style={style}>
+                        {component1}
+                    </div>
+                ) : ''}
+                {component2 ? (
+                    <div style={style}>
+                        {component2}
+                    </div>
+                ) : ''}
+                {component3 ? (
+                    <div style={style}>
+                        {component3}
+                    </div>
+                ) : ''}
+                {component4 ? (
+                    <div style={style}>
+                        {component4}
+                    </div>
+                ) : ''}
+                {component5 ? (
+                    <div style={style}>
+                        {component5}
+                    </div>
+                ) : ''}
+            </Col >
         </>
     } else {
         content = <Col className="gutter-row" span={24}>

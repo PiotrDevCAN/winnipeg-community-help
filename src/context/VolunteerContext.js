@@ -1,12 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import LoadingPlaceholder from '../components/LoadingPlaceholder';
-import ErrorPlaceholder from '../components/ErrorPlaceholder';
-import EmptyPlaceholder from '../components/EmptyPlaceholder';
-
-import { useRouteContext } from '../context/RouteContext';
-import { useStaticCommunityContext } from '../context/StaticCommunityContext';
-import { useAPIAuth } from '../context/APIAuthContext';
-import APIService from '../services/APIService';
+import React, { createContext, useContext, useState, useCallback } from 'react';
+import { useStaticCommunityContext } from '@/context/StaticCommunityContext';
+import { useAPIAuth } from '@/context/APIAuthContext';
+import APIService from '@/services/APIService';
 
 const VolunteerContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -15,12 +10,16 @@ const apiService = new APIService(API_BASE_URL);
 export const useVolunteerContext = () => useContext(VolunteerContext);
 
 export const VolunteerProvider = ({ children }) => {
-    const { getAccessToken } = useAPIAuth();
+    const { isReady, getAccessToken } = useAPIAuth();
+
+    const [selectedVolunteer, setSelectedVolunteer] = useState(null);
 
     const [data, setData] = useState([]);
     const [item, setItem] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setPageSize] = useState(9);
+
+    const [numberOfVolunteers, setNumberOfVolunteers] = useState(0);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -30,8 +29,7 @@ export const VolunteerProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const { newVolunteer: handleNewItem } = useRouteContext();
-    const { selectedCommunity: communityId, selectedSubCommunity: subCommunityId } = useStaticCommunityContext();
+    const { selectedCommunityId: communityId, selectedSubCommunityId: subCommunityId } = useStaticCommunityContext();
 
     let filteredItems = data;
 
@@ -44,56 +42,64 @@ export const VolunteerProvider = ({ children }) => {
 
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
-    const fetchData = async () => {
-        try {
-            setLoading(true);
+    const fetchData = useCallback(async () => {
+        if (isReady) {
+            try {
+                setLoading(true);
 
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest('/volunteer/', {}, accessToken);
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest('/volunteer/', {}, accessToken);
 
-            if (response.status === 'success') {
-                setData(response.data || []);
-            } else {
-                console.error(response.message || 'Unknown error occurred');
-                setError(response.message);
+                if (response.status === 'success') {
+                    setData(response.data || []);
+                } else {
+                    console.error(response.message || 'Unknown error occurred');
+                    setError(response.message);
+                }
+
+                if (response.pagination) {
+                    // console.log('Pagination Info - volunteers:', response.pagination);
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setError(err.message || 'An error occurred while fetching data');
+            } finally {
+                setLoading(false);
             }
-
-            if (response.pagination) {
-                // console.log('Pagination Info - volunteers:', response.pagination);
-            }
-        } catch (err) {
-            console.error('Error fetching data:', err);
-            setError(err.message || 'An error occurred while fetching data');
-        } finally {
-            setLoading(false);
-        }
-    };
-
+        };
+    }, [isReady]);
 
     const getVolunteer = (id) => {
-        const volunteer = data.find(item => item.id === id);
+        const volunteerId = parseInt(id);
+        const volunteer = data.find(item => item.id === volunteerId);
         return volunteer;
     };
 
-    const getItem = async (id) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/volunteer/${id}/`, {
-                method: 'GET',
-            }, accessToken);
+    const getItem = useCallback(async (id) => {
+        if (isReady) {
+            try {
+                setLoading(true);
 
-            if (response.status === 'success') {
-                const result = response.data
-                setItem(result);
-            } else {
-                console.error(response.message || 'Failed to fetch item');
-                setError(response.message);
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest(`/volunteer/${id}/`, {
+                    method: 'GET',
+                }, accessToken);
+
+                if (response.status === 'success') {
+                    const result = response.data
+                    setItem(result);
+                } else {
+                    console.error(response.message || 'Failed to fetch item');
+                    setError(response.message);
+                }
+            } catch (err) {
+                console.error('Error fetching item:', err);
+                setError(err.message || 'An error occurred while fetching an item');
+            } finally {
+                setLoading(false);
             }
-        } catch (err) {
-            console.error('Error fetching item:', err);
-            setError(err.message || 'An error occurred while fetching an item');
         }
-    };
+    }, [isReady]);
 
     const createItem = async (newItem) => {
         try {
@@ -154,40 +160,107 @@ export const VolunteerProvider = ({ children }) => {
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, [getAccessToken]);
+    const getOffersNumber = useCallback(async (id) => {
+        // try {
+        // const accessToken = await getAccessToken();
+        // const response = await apiService.makeRequest(`/volunteer/${id}/offers`, {
+        //     method: 'GET',
+        // }, accessToken);
 
-    // If still loading, return a loading state
-    const loadingMsg = 'Loading volunteers data...';
-    if (loading) return <LoadingPlaceholder message={loadingMsg} />
+        // if (response.status === 'success') {
+        //     const result = response.data
+        //     // setTypeData(result);
+        //     return result;
+        // } else {
+        //     console.error(response.message || 'Failed to fetch item');
+        //     setError(response.message);
+        // }
+        return id;
+        // } catch (err) {
+        //     console.error('Error fetching item:', err);
+        //     setError(err.message || 'An error occurred while fetching an item');
+        // }
+    }, []);
 
-    // If there is an error, display it
-    if (error) return <ErrorPlaceholder error={error} />
+    const getRequestsNumber = useCallback(async (id) => {
+        // try {
+        // const accessToken = await getAccessToken();
+        // const response = await apiService.makeRequest(`/volunteer/${id}/requests`, {
+        //     method: 'GET',
+        // }, accessToken);
 
-    // If data has not been fetched (null or empty), return a message
-    if (!data || data.length === 0) return <EmptyPlaceholder newItem={handleNewItem} />
+        // if (response.status === 'success') {
+        //     const result = response.data
+        //     // setTypeData(result);
+        //     return result;
+        // } else {
+        //     console.error(response.message || 'Failed to fetch item');
+        //     setError(response.message);
+        // }
+        return id;
+        // } catch (err) {
+        //     console.error('Error fetching item:', err);
+        //     setError(err.message || 'An error occurred while fetching an item');
+        // }
+    }, []);
+
+    const getVolunteersInCommunityNumber = useCallback(async (id) => {
+        if (isReady) {
+            try {
+                setLoading(true);
+
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest(`/volunteer/list/community/${id}/`, {}, accessToken);
+
+                if (response.status === 'success') {
+                    setNumberOfVolunteers(response.data.amount || 0);
+                } else {
+                    console.error(response.message || 'Unknown error occurred');
+                    setError(response.message);
+                }
+
+                if (response.pagination) {
+                    // console.log('Pagination Info - users:', response.pagination);
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setError(err.message || 'An error occurred while fetching data');
+            } finally {
+                setLoading(false);
+            }
+        };
+    }, [isReady]);
+
+    const value = {
+        data,
+        setData,
+        fetchData,
+        filteredItems,
+        currentItems,
+        itemsPerPage,
+        setPageSize,
+        currentPage,
+        paginate,
+        item,
+        getItem,
+        getVolunteer,
+        createItem,
+        updateItem,
+        deleteItem,
+        getOffersNumber,
+        getRequestsNumber,
+        getVolunteersInCommunityNumber,
+        numberOfVolunteers,
+        selectedVolunteer, setSelectedVolunteer,
+        loading,
+        error,
+    };
 
     return (
-        <VolunteerContext.Provider value={{
-            data,
-            setData,
-            filteredItems,
-            currentItems,
-            itemsPerPage,
-            setPageSize,
-            currentPage,
-            paginate,
-            item,
-            getItem,
-            getVolunteer,
-            createItem,
-            updateItem,
-            deleteItem,
-        }}>
+        <VolunteerContext.Provider value={value}>
             {children}
         </VolunteerContext.Provider >
     );
-}
+};
 
 export default VolunteerContext;

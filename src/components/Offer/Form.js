@@ -38,7 +38,7 @@ const tailFormItemLayout = {
     },
 };
 
-const NewOfferForm = ({ catId, typeId }) => {
+const OfferForm = ({ item, catId, typeId, mode }) => {
 
     const [form] = Form.useForm();
     const onFinish = (values) => {
@@ -72,11 +72,16 @@ const NewOfferForm = ({ catId, typeId }) => {
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit" className="colorful-background">
-                    Submit offer
-                </Button>
+                {mode === 'new' ?
+                    <Button type="primary" htmlType="submit" className="colorful-background">
+                        Register offer
+                    </Button> :
+                    <Button type="primary" htmlType="submit" className="colorful-background">
+                        Update offer
+                    </Button>
+                }
             </Form.Item>
         </Form>
     );
 };
-export default NewOfferForm;
+export default OfferForm;

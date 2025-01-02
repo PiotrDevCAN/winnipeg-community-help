@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "antd";
-import { useDonateContex } from '../../context/DonateContext';
+import { useDonateContex } from '@/context/DonateContext';
 
 const buttonStyle = {
   backgroundColor: "#ff813f",

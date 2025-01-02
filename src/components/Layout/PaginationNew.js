@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pagination as PaginationAnt } from 'antd';
-import { useVolunteerContext } from '../../context/VolunteerContext';
+import { useVolunteerContext } from '@/context/VolunteerContext';
 
 const Pagination = () => {
 

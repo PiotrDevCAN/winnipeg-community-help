@@ -2,11 +2,8 @@ import React, { useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
-import { useStaticHelpDataContext } from '../../context/StaticHelpDataContext';
 
-const ListTable = () => {
-
-    const { typesData: data } = useStaticHelpDataContext();
+const ListTable = ({ data }) => {
 
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
@@ -162,6 +159,7 @@ const ListTable = () => {
             sortDirections: ['descend', 'ascend'],
         },
     ];
+
     return <Table
         columns={columns}
         dataSource={data}

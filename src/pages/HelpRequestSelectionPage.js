@@ -1,6 +1,6 @@
 import React from 'react';
-import CategoryTypeSelector from '../components/CategoryTypeSelector';
-import RequestForm from '../components/Request/Form';
+import CategoryTypeSelector from '@/components/CategoryTypeSelector';
+import RequestForm from '@/components/Request/Form';
 
 const HelpRequestSelectionPage = () => {
   return (

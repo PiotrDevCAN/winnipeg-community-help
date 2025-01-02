@@ -1,7 +1,5 @@
 import { useState } from 'react';
-// import { createUserWithEmailAndPassword } from 'firebase/auth';
-// import { auth, googleProvider, facebookProvider } from "../../services/firebaseService";
-import { emailRegisterAction } from '../../services/authService';
+import { emailRegisterAction } from '@/services/authService';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');

@@ -6,7 +6,7 @@ import { RiUserHeartLine } from "react-icons/ri";
 import { TbBuildingCommunity } from "react-icons/tb";
 import { FloatButton } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import SuggestionModal from '../Modals/SuggestionModal';
+import SuggestionModal from '@/components/Modals/SuggestionModal';
 
 const Navigation = () => {
 

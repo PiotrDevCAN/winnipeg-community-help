@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Redirect } from 'react-router-dom';
-import { validateIdParam } from './utils/paramValidator';
+import { validateIdParam } from '@/utils/paramValidator';
 
 // HOC to validate params before rendering
 const withParamValidation = (Component) => {

@@ -9,8 +9,20 @@ import {
     Input,
     InputNumber,
     Row,
+    DatePicker,
     Select,
+    Divider,
+    Flex,
+    message,
 } from 'antd';
+import { useAuthContext } from '@/context/AuthContext';
+import { useUserContext } from '@/context/UserContext';
+import { useRouteContext } from '@/context/RouteContext';
+import ReCAPTCHA from 'react-google-recaptcha';
+import RemindPassword from '@/components/Buttons/RemindPassword';
+import Login from '@/components/Buttons/Login';
+import CreateAccount from '@/components/Buttons/CreateAccount';
+
 const { Option } = Select;
 const formItemLayout = {
     labelCol: {
@@ -42,10 +54,104 @@ const tailFormItemLayout = {
         },
     },
 };
+
+const recaptchaSiteKey = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
+
 const RegisterForm = () => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const { user, isAdmin, emailRegister, updateProfile, emailDelete } = useAuthContext();
+    const { createItem } = useUserContext();
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const [captchaToken, setCaptchaToken] = useState(null);
+    const [captchaError, setCaptchaError] = useState('');
+
     const [form] = Form.useForm();
+    const handleCaptchaChange = (token) => {
+        setCaptchaToken(token);
+        setCaptchaError('');
+    };
+    const handleCaptchaError = () => {
+        setCaptchaError('Please complete the CAPTCHA.');
+    };
     const onFinish = (values) => {
+        if (!captchaToken) {
+            handleCaptchaError();
+            return;
+        }
+
         console.log('Received values of form: ', values);
+
+        setEmail(values.email);
+        setPassword(values.password);
+
+        const displayName = values.firstName + ' ' + values.lastName;
+        const data = {
+            displayName,
+        };
+
+        const birthDate = values.birthDate.format("YYYY-MM-DD");
+        values.birthDate = birthDate;
+
+        emailRegister(values.email, values.password)
+            .then(response => {
+                // response.json()
+
+                const userCreated = response.user;
+                const userId = userCreated.uid;
+
+                // const userToSave = { ...values, userId };
+                const userToSave = {
+                    firebase_id: userId,
+                    first_name: values.firstName,
+                    last_name: values.lastName,
+                    nickname: values.nickname,
+                    phone_number: values.phone,
+                    website: values.website,
+                    description: values.description,
+                    gender: values.gender,
+                    birth_date: values.birthDate,
+                    prefix: values.prefix,
+                }
+
+                const promises = [
+                    // add additional data to firebase user's record
+                    updateProfile(userCreated, data),
+                    // save user's record to a database
+                    createItem(userToSave)
+                ];
+                Promise.allSettled(promises)
+                    .then((results) => {
+                        results.forEach((result, index) => {
+                            if (result.status === 'fulfilled') {
+                                console.log(`Promise ${index + 1} fulfilled with value:`, result.value);
+                            } else if (result.status === 'rejected') {
+                                console.log(`Promise ${index + 1} rejected with reason:`, result.reason);
+                            }
+                        });
+                    });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // delete user's record from firebase
+                emailDelete(values.email, values.password);
+            })
+            .finally(() => console.log('Fetch operation 1 complete.'));
+
+    };
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+        messageApi.open({
+            type: 'error',
+            content: 'Error during Form submit',
+        });
+        if (!captchaToken) {
+            handleCaptchaError();
+            return;
+        }
     };
     const prefixSelector = (
         <Form.Item name="prefix" noStyle>
@@ -89,8 +195,9 @@ const RegisterForm = () => {
             form={form}
             name="register"
             onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
             initialValues={{
-                residence: ['zhejiang', 'hangzhou', 'xihu'],
                 prefix: '1',
             }}
             style={{
@@ -152,6 +259,34 @@ const RegisterForm = () => {
                 <Input.Password />
             </Form.Item>
 
+            <Divider />
+
+            <Form.Item
+                name="firstName"
+                label="First Name"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input first name!',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+
+            <Form.Item
+                name="lastName"
+                label="Last Name"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input last name!',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+
             <Form.Item
                 name="nickname"
                 label="Nickname"
@@ -165,6 +300,36 @@ const RegisterForm = () => {
                 ]}
             >
                 <Input />
+            </Form.Item>
+
+            <Form.Item
+                name="gender"
+                label="Gender"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please select gender!',
+                    },
+                ]}
+            >
+                <Select placeholder="select your gender">
+                    <Option value="male">Male</Option>
+                    <Option value="female">Female</Option>
+                    <Option value="other">Other</Option>
+                </Select>
+            </Form.Item>
+
+            <Form.Item
+                name="birthDate"
+                label="Date of Birth"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your birth date!',
+                    },
+                ]}
+            >
+                <DatePicker format="YYYY-MM-DD" />
             </Form.Item>
 
             <Form.Item
@@ -201,12 +366,12 @@ const RegisterForm = () => {
             </Form.Item>
 
             <Form.Item
-                name="intro"
-                label="Intro"
+                name="description"
+                label="Description"
                 rules={[
                     {
                         required: true,
-                        message: 'Please input Intro',
+                        message: 'Please input Description',
                     },
                 ]}
             >
@@ -214,48 +379,29 @@ const RegisterForm = () => {
             </Form.Item>
 
             <Form.Item
-                name="gender"
-                label="Gender"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please select gender!',
-                    },
-                ]}
+                label="Captcha"
+                extra="We must make sure that your are a human."
             >
-                <Select placeholder="select your gender">
-                    <Option value="male">Male</Option>
-                    <Option value="female">Female</Option>
-                    <Option value="other">Other</Option>
-                </Select>
+                <ReCAPTCHA
+                    sitekey={recaptchaSiteKey}
+                    onChange={handleCaptchaChange}
+                />
+                {captchaError && <p style={{ color: 'red' }}>{captchaError}</p>}
             </Form.Item>
 
-            <Form.Item label="Captcha" extra="We must make sure that your are a human.">
-                <Row gutter={8}>
-                    <Col span={12}>
-                        <Form.Item
-                            name="captcha"
-                            noStyle
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input the captcha you got!',
-                                },
-                            ]}
-                        >
-                            <Input />
-                        </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                        <Button>Get captcha</Button>
-                    </Col>
-                </Row>
-            </Form.Item>
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit">
-                    Register
-                </Button>
+                <CreateAccount type="primary" />
             </Form.Item>
+
+            <Flex vertical gap="small" style={{ marginBottom: "16px" }}>
+                <Divider>
+                    or
+                </Divider>
+
+                <Login />
+                <RemindPassword />
+            </Flex>
+            {contextHolder}
         </Form>
     );
 };

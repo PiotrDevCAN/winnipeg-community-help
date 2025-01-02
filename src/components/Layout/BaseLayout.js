@@ -1,86 +1,61 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Layout } from 'antd';
-import HeaderContent from './Header';
-import PageHeader from './PageHeader';
-import FooterContent from './Footer';
-import ContextMenu from './ContextMenu';
-import { useRouteContext } from '../../context/RouteContext';
-import { usePageHeaderContext } from '../../context/PageHeaderContext';
-import { DonateProvider } from '../../context/DonateContext';
-import AppBreadcrumbHeader from './AppBreadcrumbHeader';
+import HeaderContent from '@/components/Layout/Header';
+import PageHeader from '@/components/Layout/PageHeader';
+import FooterContent from '@/components/Layout/Footer';
+import ContextMenu from '@/components/Layout/ContextMenu';
+import AppBreadcrumbHeader from '@/components/Layout/AppBreadcrumbHeader';
+import { useRouteContext } from '@/context/RouteContext';
+import { DonateProvider } from '@/context/DonateContext';
+import { getCurrentRoute } from '@/services//routeHelpers';
 
 const { Header, Content, Footer } = Layout;
 
-const headerStyle = {
-    height: '115px',
-}
+// Extracted styles for better organization
+const styles = {
+    header: { height: '115px' },
+    content: { padding: '0 48px' },
+    footer: {
+        background: 'linear-gradient(to right, #1f2937, #3f3f46, #1f2937)',
+        color: '#d1d5db',
+        fontFamily: 'sans-serif',
+        letterSpacing: '0.05em',
+        padding: '20px 40px',
+    },
+};
 
-const contentStyle = {
-    padding: '0 48px',
-}
-
-const footerStyle = {
-    background: "linear-gradient(to right, #1f2937, #3f3f46, #1f2937)",
-    color: "#d1d5db",
-    fontFamily: "sans-serif",
-    letterSpacing: "0.05em",
-    padding: "20px 40px",
-}
-
-const getCurrentRoute = (location, routes) => {
-    let currentRoute = null;
-    routes.forEach((value, index) => {
-        try {
-            const replacements = {
-                ":itemId": "\\d+",
-                ":catId": "\\d+",
-                ":typeId": "\\d+",
-            };
-            const regexPath = value.path.replace(/:itemId|:catId|:typeId/g, (match) => replacements[match]);
-            const regexPattern = new RegExp('^' + regexPath + '$');
-
-            if (regexPattern.test(location.pathname)) {
-                currentRoute = value;
-            } else {
-                // return <div>Invalid Route!</div>;
-            }
-        } catch (error) {
-            // console.error("Invalid regular expression:", error.message);
-        }
-    });
-    return currentRoute;
-}
-
-const BaseLayout = ({ ...props }) => {
-
-    const { children } = props;
+const BaseLayout = ({ children }) => {
     const location = useLocation();
-    const { routes } = useRouteContext();
+    const { routes: availableRoutes } = useRouteContext();
 
-    // Get the current route
-    let currentRoute = getCurrentRoute(location, routes);
+    // Memoize current route for better performance
+    const currentRoute = useMemo(() => getCurrentRoute(location, availableRoutes), [location, availableRoutes]);
 
-    // Get the current page name and section
+    // Fallback values
     const pageName = currentRoute?.name || 'Page Not Found';
     const section = currentRoute?.section || 'Default';
 
     return (
         <Layout>
-            <Header style={headerStyle}>
+            {/* Header Section */}
+            <Header style={styles.header}>
                 <HeaderContent />
             </Header>
 
-            <Content style={contentStyle}>
+            {/* Content Section */}
+            <Content style={styles.content}>
                 <AppBreadcrumbHeader />
                 <PageHeader PageName={pageName} Section={section} />
                 {children}
             </Content>
 
-            <Footer style={footerStyle}>
+            {/* Footer Section */}
+            <Footer style={styles.footer}>
                 <FooterContent />
             </Footer>
 
+            {/* Context Menu within DonateProvider */}
             <DonateProvider>
                 <ContextMenu />
             </DonateProvider>

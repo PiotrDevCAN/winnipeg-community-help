@@ -38,7 +38,7 @@ const tailFormItemLayout = {
     },
 };
 
-const NewRequestForm = ({ catId, typeId }) => {
+const RequestForm = ({ item, catId, typeId, mode }) => {
 
     const [form] = Form.useForm();
     const onFinish = (values) => {
@@ -72,11 +72,16 @@ const NewRequestForm = ({ catId, typeId }) => {
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit" className="colorful-background">
-                    Submit request
-                </Button>
+                {mode === 'new' ?
+                    <Button type="primary" htmlType="submit" className="colorful-background">
+                        Register request
+                    </Button> :
+                    <Button type="primary" htmlType="submit" className="colorful-background">
+                        Update request
+                    </Button>
+                }
             </Form.Item>
         </Form>
     );
 };
-export default NewRequestForm;
+export default RequestForm;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     AutoComplete,
     Button,
@@ -7,7 +7,8 @@ import {
     Select,
 } from 'antd';
 
-import { useStaticCommunityContext } from '../../context/StaticCommunityContext';
+import { FormCommunityProvider } from '@/context/FormCommunityContext';
+import MainCommunity from '../Selects/MainCommunity';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -41,7 +42,8 @@ const tailFormItemLayout = {
     },
 };
 
-const NewCommunityForm = () => {
+const CommunityForm = ({ item, mode }) => {
+
     const [form] = Form.useForm();
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
@@ -71,8 +73,15 @@ const NewCommunityForm = () => {
         value: website,
     }));
 
-
-    const { mainCommunitiesData, communitiesData } = useStaticCommunityContext();
+    useEffect(() => {
+        form.setFieldsValue({
+            ...item,
+            communityName: 'test',
+            // email: item.email,
+            // prefix: item.prefix,
+            // phone: item.phone_number,
+        });
+    }, [item]);
 
     return (
         <Form
@@ -95,16 +104,11 @@ const NewCommunityForm = () => {
                 rules={[
                     {
                         required: true,
-                        message: 'Please input first name!',
+                        message: 'Please input main community name!',
                     },
                 ]}
             >
-                <Select
-                    // defaultValue="jack"
-                    // style={{ width: 120 }}
-                    // onChange={handleChange}
-                    options={mainCommunitiesData}
-                />
+                <MainCommunity />
             </Form.Item>
 
             <Form.Item
@@ -199,11 +203,25 @@ const NewCommunityForm = () => {
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit" className="colorful-background">
-                    Register community
-                </Button>
+                {mode === 'new' ?
+                    <Button type="primary" htmlType="submit" className="colorful-background">
+                        Register community
+                    </Button> :
+                    <Button type="primary" htmlType="submit" className="colorful-background">
+                        Update community
+                    </Button>
+                }
             </Form.Item>
         </Form>
     );
 };
-export default NewCommunityForm;
+
+export const MainForm = ({ item, mode }) => {
+    return (
+        <FormCommunityProvider>
+            <CommunityForm item={item} mode={mode} />
+        </FormCommunityProvider>
+    );
+};
+
+export default MainForm;

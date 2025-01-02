@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, Input, Divider, Typography, message } from 'antd';
-import { contactsData } from '../data/contactsData';
+import { contactsData } from '@/data/contactsData';
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Card, Space, Flex } from "antd";
+import { Typography, Card, Flex } from "antd";
 import DonateButtons from "../Donate/Buttons";
 
 const { Title, Paragraph } = Typography;

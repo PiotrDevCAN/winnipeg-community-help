@@ -1,7 +1,7 @@
 
 import React from 'react';
-import Donate from '../FloatButtons/Donate';
-import Navigation from '../FloatButtons/Navigation';
+import Donate from '@/components/FloatButtons/Donate';
+import Navigation from '@/components/FloatButtons/Navigation';
 
 const ContextMenu = () => {
     return (

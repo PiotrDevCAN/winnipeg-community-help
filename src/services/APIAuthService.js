@@ -1,33 +1,33 @@
-// import jwtDecode from 'jwt-decode';
+import { getFromLocalStorage, saveToLocalStorage, removeFromLocalStorage } from '@/services/localStorageHelpers';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 // Get the stored access token
 export const getAccessToken = () => {
-    return localStorage.getItem('access_token'); // or HTTP-only cookies
+    return getFromLocalStorage('access_token'); // or HTTP-only cookies
 };
 
 // Set the new access token
 export const setAccessToken = (token) => {
-    localStorage.setItem('access_token', token); // Store in localStorage or cookies
+    saveToLocalStorage('access_token', token); // Store in localStorage or cookies
 };
 
 export const removeRefreshToken = () => {
-    localStorage.removeItem('access_token');
+    removeFromLocalStorage('access_token');
 }
 
 // Get refresh token
 export const getRefreshToken = () => {
-    return localStorage.getItem('refresh_token'); // or HTTP-only cookies
+    return getFromLocalStorage('refresh_token'); // or HTTP-only cookies
 };
 
 // Set refresh token
 export const setRefreshToken = (token) => {
-    localStorage.setItem('refresh_token', token); // Store securely (cookies recommended)
+    saveToLocalStorage('refresh_token', token); // Store securely (cookies recommended)
 };
 
 export const removeAccessToken = () => {
-    localStorage.removeItem('refresh_token');    
+    removeFromLocalStorage('refresh_token');
 };
 
 export const APIAuthService = {
@@ -66,10 +66,6 @@ export const APIAuthService = {
     },
 
     isTokenExpired(token) {
-        // const decoded = jwtDecode(token);
-        // const currentTime = Math.floor(Date.now() / 1000);
-        // return decoded.exp < currentTime;
-
         if (!token) return true;
         const { exp } = JSON.parse(atob(token.split('.')[1])); // Decode JWT to get expiry time
         const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds

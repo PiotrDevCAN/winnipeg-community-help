@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { Divider, Row, Col, Card, Typography } from 'antd';
-import { useStaticHelpDataContext } from '../context/StaticHelpDataContext';
-import { useStaticCommunityContext } from '../context/StaticCommunityContext';
+import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
+import { useStaticCommunityContext } from '@/context/StaticCommunityContext';
 
-import CategoryCards from '../components/CategoryCards';
-import TypeCards from '../components/TypeCards';
-import FormsSteps from '../components/FormsSteps';
+import CategoryCards from '@/components/CategoryCards';
+import TypeCards from '@/components/TypeCards';
+import FormsSteps from '@/components/FormsSteps';
 
 const { Title } = Typography;
 
 const CategoryTypeSelector = ({ children }) => {
 
     let content;
+
+    // main and sub community id come from logged user's profile
+    const mainCommunityId = 1;
+    const subCommunityId = 1;
 
     const { getCategory, getType, selectedCategory: catId, setSelectedCategory, selectedType: typeId, setSelectedType } = useStaticHelpDataContext();
     const { getCommunity, getSubCommunity } = useStaticCommunityContext();
@@ -75,8 +79,8 @@ const CategoryTypeSelector = ({ children }) => {
                 const selectedCategory = getCategory(catId);
                 const selectedType = getType(typeId);
 
-                const selectedCommunity = getCommunity(catId);
-                const selectedSubCommunity = getSubCommunity(typeId);
+                const mainCommunityData = getCommunity(mainCommunityId);
+                const subCommunityData = getSubCommunity(subCommunityId);
 
                 // Add props to children
                 const childrenWithProps = React.Children.map(children, (child) =>
@@ -99,8 +103,8 @@ const CategoryTypeSelector = ({ children }) => {
                                 title="Selected Community / Sub-community"
                                 className="card-with-colorful-header"
                                 bordered={true}>
-                                <Title level={5}>Community: {selectedCommunity?.label || "Default selectedCommunity Label"}</Title>
-                                <Title level={5}>Sub Community: {selectedSubCommunity?.label || "Default selectedSubCommunity Label"}</Title>
+                                <Title level={5}>Community: {mainCommunityData?.label || "Default mainCommunityData Label"}</Title>
+                                <Title level={5}>Sub Community: {subCommunityData?.label || "Default subCommunityData Label"}</Title>
                             </Card>
                         </Col>
                     </Row>
@@ -130,7 +134,6 @@ const CategoryTypeSelector = ({ children }) => {
 
     return (
         <>
-            {/* <Divider /> */}
             <FormsSteps step={currentStep} percent={percent} onChange={onStepChange} />
             <Divider />
             {content}

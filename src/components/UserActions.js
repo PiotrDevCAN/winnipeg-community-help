@@ -8,8 +8,8 @@ import { MdOutlinePassword } from "react-icons/md";
 import { LuLogIn } from "react-icons/lu";
 import { LuLogOut } from "react-icons/lu";
 
-import { useRouteContext } from '../context/RouteContext';
-import { useAuthContext } from '../context/AuthContext';
+import { useRouteContext } from '@/context/RouteContext';
+import { useAuthContext } from '@/context/AuthContext';
 
 const iconStyle = {
     margin: '0 8px',
@@ -59,13 +59,21 @@ const UserActions = () => {
 
     const menuAuthContent = [
         {
-            key: '1',
-            label: 'My Account',
+            key: '0',
+            label: user?.displayName,
             disabled: true,
         },
         {
             type: 'divider',
         },
+        // {
+        //     key: '1',
+        //     label: 'My Account',
+        //     disabled: true,
+        // },
+        // {
+        //     type: 'divider',
+        // },
         {
             key: '2',
             label: 'My Profile',
@@ -134,7 +142,7 @@ const UserActions = () => {
                     trigger={['click']}
                 >
                     {/* <Tooltip title="Displays personalized options such as a dashboard, account settings, notifications, and a logout button, enabling users to manage their profiles and access exclusive features." > */}
-                        <Button type="default" shape="circle" icon={<SiAircanada />} style={redIconStyle} />
+                    <Button type="default" shape="circle" icon={<SiAircanada />} style={redIconStyle} />
                     {/* </Tooltip> */}
                 </Dropdown>
             ) : (
@@ -142,9 +150,9 @@ const UserActions = () => {
                     menu={menuNotAuthProps}
                     trigger={['click']}
                 >
-                    <Tooltip title="Offers basic navigation options like home, about, contact, and a login/signup button, inviting users to explore the platform and register for more features.">
-                        <Button type="default" shape="circle" icon={<UserAddOutlined />} style={iconStyle} />
-                    </Tooltip>
+                    {/* <Tooltip title="Offers basic navigation options like home, about, contact, and a login/signup button, inviting users to explore the platform and register for more features."> */}
+                    <Button type="default" shape="circle" icon={<UserAddOutlined />} style={iconStyle} />
+                    {/* </Tooltip> */}
                 </Dropdown>
             )}
         </>

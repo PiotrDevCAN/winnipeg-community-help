@@ -1,26 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useAuthContext } from '../../context/AuthContext';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth, googleProvider, facebookProvider } from "../../services/firebaseService";
-
-// import { auth } from "../../services/authService";
+import React from 'react';
+import { Card } from 'antd';
+import { useAuthContext } from '@/context/AuthContext';
+import { useUserContext } from '@/context/UserContext';
 
 const UserInfo = () => {
 
-    const { isAuthenticated, user, getAuthUser } = useAuthContext();
-
-    // console.log(user);
-    // console.log(isAuthenticated);
-
-    // useEffect(() => {
-    //     console.log('useEffect');
-    //     return () => getAuthUser();
-    // }, [getAuthUser]);
+    const { user } = useAuthContext();
+    const { item } = useUserContext();
 
     return (
-        <div>
-            {user ? <h2>Welcome, {user.email}</h2> : <h2>Please log in or sign up</h2>}
-        </div>
+        <Card bordered={true} align="center">
+            {user ? <h2>Welcome, {user.email} {user.displayName}</h2> : <h2>Please log in or sign up</h2>}
+            {item ? <h3>User has completed their profile</h3> : <h3>Please fulfill a profile</h3>}
+        </Card>
     );
 }
 

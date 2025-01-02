@@ -1,8 +1,7 @@
-// Footer.js
 import React from 'react';
-import { useRouteContext } from '../../context/RouteContext';
-import { Col, Divider, Flex, Row, Space } from 'antd';
-import DonateButtons from '../Donate/Buttons';
+import { useRouteContext } from '@/context/RouteContext';
+import { Col, Divider, Flex, Row } from 'antd';
+import DonateButtons from '@/components/Donate/Buttons';
 
 const listStyle = {
     display: "flex",

@@ -1,12 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import LoadingPlaceholder from '../components/LoadingPlaceholder';
-import ErrorPlaceholder from '../components/ErrorPlaceholder';
-import EmptyPlaceholder from '../components/EmptyPlaceholder';
-
-import { useRouteContext } from '../context/RouteContext';
-import { useStaticCommunityContext } from '../context/StaticCommunityContext';
-import { useAPIAuth } from '../context/APIAuthContext';
-import APIService from '../services/APIService';
+import React, { createContext, useContext, useState, useCallback } from 'react';
+import { useStaticCommunityContext } from '@/context/StaticCommunityContext';
+import { useAPIAuth } from '@/context/APIAuthContext';
+import APIService from '@/services/APIService';
 
 const CommunityContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -15,7 +10,7 @@ const apiService = new APIService(API_BASE_URL);
 export const useCommunityContext = () => useContext(CommunityContext);
 
 export const CommunityProvider = ({ children }) => {
-    const { getAccessToken } = useAPIAuth();
+    const { isReady, getAccessToken } = useAPIAuth();
 
     const [data, setData] = useState([]);
     const [item, setItem] = useState(null);
@@ -27,11 +22,10 @@ export const CommunityProvider = ({ children }) => {
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const { newCommunity: handleNewItem } = useRouteContext();
-    const { selectedCommunity: communityId, selectedSubCommunity: subCommunityId } = useStaticCommunityContext();
+    const { selectedCommunityId: communityId, selectedSubCommunityId: subCommunityId } = useStaticCommunityContext();
 
     let filteredItems = data;
 
@@ -44,55 +38,64 @@ export const CommunityProvider = ({ children }) => {
 
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
-    const fetchData = async () => {
-        try {
-            setLoading(true);
+    const fetchData = useCallback(async () => {
+        if (isReady) {
+            try {
+                setLoading(true);
 
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest('/community/', {}, accessToken);
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest('/community/', {}, accessToken);
 
-            if (response.status === 'success') {
-                setData(response.data || []);
-            } else {
-                console.error(response.message || 'Unknown error occurred');
-                setError(response.message);
+                if (response.status === 'success') {
+                    setData(response.data || []);
+                } else {
+                    console.error(response.message || 'Unknown error occurred');
+                    setError(response.message);
+                }
+
+                if (response.pagination) {
+                    // console.log('Pagination Info - communities:', response.pagination);
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setError(err.message || 'An error occurred while fetching data');
+            } finally {
+                setLoading(false);
             }
-
-            if (response.pagination) {
-                // console.log('Pagination Info - communities:', response.pagination);
-            }
-        } catch (err) {
-            console.error('Error fetching data:', err);
-            setError(err.message || 'An error occurred while fetching data');
-        } finally {
-            setLoading(false);
-        }
-    };
+        };
+    }, [isReady]);
 
     const getCommunity = (id) => {
-        const community = data.find(item => item.id === id);
+        const communityId = parseInt(id);
+        const community = data.find(item => item.id === communityId);
         return community;
     };
 
-    const getItem = async (id) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/community/${id}/`, {
-                method: 'GET',
-            }, accessToken);
+    const getItem = useCallback(async (id) => {
+        if (isReady) {
+            try {
+                setLoading(true);
 
-            if (response.status === 'success') {
-                const result = response.data
-                setItem(result);
-            } else {
-                console.error(response.message || 'Failed to fetch item');
-                setError(response.message);
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest(`/community/${id}/`, {
+                    method: 'GET',
+                }, accessToken);
+
+                if (response.status === 'success') {
+                    const result = response.data
+                    setItem(result);
+                } else {
+                    console.error(response.message || 'Failed to fetch item');
+                    setError(response.message);
+                }
+            } catch (err) {
+                console.error('Error fetching item:', err);
+                setError(err.message || 'An error occurred while fetching an item');
+            } finally {
+                setLoading(false);
             }
-        } catch (err) {
-            console.error('Error fetching item:', err);
-            setError(err.message || 'An error occurred while fetching an item');
         }
-    };
+    }, [isReady]);
 
     const createItem = async (newItem) => {
         try {
@@ -153,37 +156,28 @@ export const CommunityProvider = ({ children }) => {
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, [getAccessToken]);
-
-    // If still loading, return a loading state
-    const loadingMsg = 'Loading communities data...';
-    if (loading) return <LoadingPlaceholder message={loadingMsg} />;
-
-    // If there is an error, display it
-    if (error) return <ErrorPlaceholder error={error} />;
-
-    // If data has not been fetched (null or empty), return a message
-    if (!data || data.length === 0) return <EmptyPlaceholder newItem={handleNewItem} />;
+    const value = {
+        data,
+        setData,
+        fetchData,
+        filteredItems,
+        currentItems,
+        itemsPerPage,
+        setPageSize,
+        currentPage,
+        paginate,
+        item,
+        getItem,
+        getCommunity,
+        createItem,
+        updateItem,
+        deleteItem,
+        loading,
+        error,
+    };
 
     return (
-        <CommunityContext.Provider value={{
-            data,
-            setData,
-            filteredItems,
-            currentItems,
-            itemsPerPage,
-            setPageSize,
-            currentPage,
-            paginate,
-            item,
-            getItem,
-            getCommunity,
-            createItem,
-            updateItem,
-            deleteItem,
-        }}>
+        <CommunityContext.Provider value={value}>
             {children}
         </CommunityContext.Provider >
     );

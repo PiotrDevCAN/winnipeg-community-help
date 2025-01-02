@@ -1,36 +1,53 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { StaticCommunityProvider } from './context/StaticCommunityContext';
-import { StaticHelpProvider } from './context/StaticHelpDataContext';
-import { APIAuthProvider } from './context/APIAuthContext';
-import { AuthProvider } from './context/AuthContext';
-import { RouteProvider } from './context/RouteContext';
-import BaseLayout from './components/Layout/BaseLayout';
-import { PageHeaderProvider } from './context/PageHeaderContext';
-import AppRoutes from './router/AppRoutes';
-import CookieConsent from './components/CookieConsent';
 
-import './App.css';
+import '@/App.css';
 // import 'leaflet/dist/leaflet.css';
+
+// Providers
+import { AuthProvider } from '@/context/AuthContext';
+import { APIAuthProvider } from '@/context/APIAuthContext';
+import { StaticCommunityProvider } from '@/context/StaticCommunityContext';
+import { StaticHelpProvider } from '@/context/StaticHelpDataContext';
+import { UserProvider } from '@/context/UserContext';
+import { VolunteerProvider } from '@/context/VolunteerContext';
+import { RouteProvider } from '@/context/RouteContext';
+import { PageHeaderProvider } from '@/context/PageHeaderContext';
+
+// Components
+import BaseLayout from '@/components/Layout/BaseLayout';
+import AppRoutes from '@/router/AppRoutes';
+import CookieConsent from '@/components/CookieConsent';
+
+// Grouping all providers for clarity
+const Providers = ({ children }) => (
+  <AuthProvider>
+    <APIAuthProvider>
+      <RouteProvider>
+        <StaticCommunityProvider>
+          <StaticHelpProvider>
+            <UserProvider>
+              <VolunteerProvider>
+                <PageHeaderProvider>
+                  {children}
+                </PageHeaderProvider>
+              </VolunteerProvider>
+            </UserProvider>
+          </StaticHelpProvider>
+        </StaticCommunityProvider>
+      </RouteProvider>
+    </APIAuthProvider>
+  </AuthProvider>
+);
 
 const App = () => {
   return (
     <Router>
-      <AuthProvider>
-        <APIAuthProvider>
-          <StaticCommunityProvider>
-            <StaticHelpProvider>
-              <RouteProvider>
-                <PageHeaderProvider>
-                  <BaseLayout>
-                    <AppRoutes />
-                  </BaseLayout>
-                </PageHeaderProvider>
-              </RouteProvider>
-            </StaticHelpProvider>
-          </StaticCommunityProvider>
-        </APIAuthProvider>
-      </AuthProvider>
+      <Providers>
+        <BaseLayout>
+          <AppRoutes />
+        </BaseLayout>
+      </Providers>
       <CookieConsent />
     </Router>
   );

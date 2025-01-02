@@ -1,5 +1,5 @@
 // Child.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Child from './Child';
 
 function Parent() {
@@ -8,6 +8,11 @@ function Parent() {
     const handleData = (childData) => {
         setData(childData);
     };
+
+    useEffect(() => {
+        console.log('Parent');
+    });
+
     return (
         <div>
             <h1>Parent Component</h1>

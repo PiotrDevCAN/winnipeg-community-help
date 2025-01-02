@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
-import { useAPIAuth } from '../context/APIAuthContext';
-import APIService from '../services/APIService';
+import { useAPIAuth } from '@/context/APIAuthContext';
+import APIService from '@/services/APIService';
 
 const StaticCommunityContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -10,116 +10,207 @@ const apiService = new APIService(API_BASE_URL);
 export const useStaticCommunityContext = () => useContext(StaticCommunityContext);
 
 export const StaticCommunityProvider = ({ children }) => {
-    const { getAccessToken } = useAPIAuth();
+    const { isReady, getAccessToken } = useAPIAuth();
 
+    // store the fetched data
     const [mainCommunitiesData, setMainCommunitiesData] = useState([]);
     const [subCommunitiesData, setSubCommunitiesData] = useState([]);
 
-    const [selectedCommunity, setSelectedCommunity] = useState(null);
-    const [selectedSubCommunity, setSelectedSubCommunity] = useState(null);
+    // store the options for the dropdowns
+    const [communityOptions, setCommunityOptions] = useState([]);
     const [subCommunityOptions, setSubCommunityOptions] = useState([]);
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    // used to filter out the selected community
+    const [selectedCommunityId, setSelectedCommunityId] = useState(null);
+    const [selectedSubCommunityId, setSelectedSubCommunityId] = useState(null);
 
+    // store the selected community data
+    const [mainCommunityData, setMainCommunityData] = useState(null);
+    const [subCommunityData, setSubCommunityData] = useState(null);
+
+    // loading states
     const [loadingCommunities, setLoadingCommunities] = useState(false);
     const [loadingSubCommunities, setLoadingSubCommunities] = useState(false);
 
-    const fetchMainCommunityData = async () => {
-        try {
-            setLoading(true);
-            setLoadingCommunities(true);
+    // main loading and error states
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest('/main-community/', {}, accessToken);
+    const fetchMainCommunityData = useCallback(async () => {
+        if (isReady) {
+            try {
+                setLoading(true);
+                setLoadingCommunities(true);
 
-            if (response.status === 'success') {
-                setMainCommunitiesData(response.data || []);
-            } else {
-                console.error(response.message || 'Unknown error occurred');
-                setError(response.message);
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest('/main-community/', {}, accessToken);
+
+                if (response.status === 'success') {
+                    setMainCommunitiesData(response.data || []);
+                    setCommunityOptions(response.data || []);
+                } else {
+                    console.error(response.message || 'Unknown error occurred');
+                    setError(response.message);
+                }
+
+                if (response.pagination) {
+                    // console.log('Pagination Info - main community:', response.pagination);
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setError(err.message || 'An error occurred while fetching data');
+            } finally {
+                setLoading(false);
+                setLoadingCommunities(false);
             }
+        };
+    }, [isReady]);
 
-            if (response.pagination) {
-                // console.log('Pagination Info - main community:', response.pagination);
+    const fetchSubCommunityData = useCallback(async () => {
+        if (isReady) {
+            try {
+                setLoading(true);
+                setLoadingSubCommunities(true);
+
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest('/community/', {}, accessToken);
+
+                if (response.status === 'success') {
+                    setSubCommunitiesData(response.data || []);
+                    // select main community first
+                    // setSubCommunityOptions(response.data || []);
+                } else {
+                    console.error(response.message || 'Unknown error occurred');
+                    setError(response.message);
+                }
+
+                if (response.pagination) {
+                    // console.log('Pagination Info - sub community:', response.pagination);
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setError(err.message || 'An error occurred while fetching data');
+            } finally {
+                setLoading(false);
+                setLoadingSubCommunities(false);
             }
-        } catch (err) {
-            console.error('Error fetching data:', err);
-            setError(err.message || 'An error occurred while fetching data');
-        } finally {
-            setLoading(false);
-            setLoadingCommunities(false);
-        }
-    };
-
-    const fetchSubCommunityData = async () => {
-        try {
-            setLoading(true);
-            setLoadingSubCommunities(true);
-
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest('/community/', {}, accessToken);
-
-            if (response.status === 'success') {
-                setSubCommunitiesData(response.data || []);
-            } else {
-                console.error(response.message || 'Unknown error occurred');
-                setError(response.message);
-            }
-
-            if (response.pagination) {
-                // console.log('Pagination Info - sub community:', response.pagination);
-            }
-        } catch (err) {
-            console.error('Error fetching data:', err);
-            setError(err.message || 'An error occurred while fetching data');
-        } finally {
-            setLoading(false);
-            setLoadingSubCommunities(false);
-        }
-    };
+        };
+    }, [isReady]);
 
     const getCommunity = (id) => {
-        const community = mainCommunitiesData.find(item => item.id === id);
+        const communityId = parseInt(id);
+        const community = mainCommunitiesData.find(item => item.id === communityId);
         return community;
     }
 
+    const getCommunityById = useCallback(async (id) => {
+        if (isReady) {
+            try {
+                const communityId = parseInt(id);
+
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest(`/main-community/${communityId}/`, {
+                    method: 'GET',
+                }, accessToken);
+
+                if (response.status === 'success') {
+                    const result = response.data
+                    setMainCommunityData(result);
+                    return result;
+                } else {
+                    console.error(response.message || 'Failed to fetch item');
+                    setError(response.message);
+                }
+            } catch (err) {
+                console.error('Error fetching item:', err);
+                setError(err.message || 'An error occurred while fetching an item');
+            }
+        };
+    }, [isReady]);
+
     const getSubCommunity = (id) => {
-        const subCommunity = subCommunitiesData.find(item => item.id === id);
+        const communityId = parseInt(id);
+        const subCommunity = subCommunitiesData.find(item => item.id === communityId);
         return subCommunity;
     }
 
+    const getSubCommunityById = useCallback(async (id) => {
+        if (isReady) {
+            try {
+                const communityId = parseInt(id);
+
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest(`/community/${communityId}/`, {
+                    method: 'GET',
+                }, accessToken);
+
+                if (response.status === 'success') {
+                    const result = response.data
+                    setSubCommunityData(result);
+                    return result;
+                } else {
+                    console.error(response.message || 'Failed to fetch item');
+                    setError(response.message);
+                }
+            } catch (err) {
+                console.error('Error fetching item:', err);
+                setError(err.message || 'An error occurred while fetching an item');
+            }
+        };
+    }, [isReady]);
+
+    const getParentIdById = (id) => {
+        const communityId = parseInt(id);
+        console.log('subCommunitiesData:', subCommunitiesData);
+        const subCommunity = subCommunitiesData.find(item => item.id === communityId);
+        if (subCommunity) {
+            return subCommunity.community_id;
+        } else {
+            return 0;
+        }
+    }
+
     const getSubCommunities = (id) => {
-        const result = subCommunitiesData.filter(item => item.community_id === id);
+        const communityId = parseInt(id);
+        const result = subCommunitiesData.filter(item => item.community_id === communityId);
         return result;
     }
 
     const countSubCommunities = (id) => {
-        const result = getSubCommunities(id);
+        const communityId = parseInt(id);
+        const result = getSubCommunities(communityId);
         return result.length;
     }
 
     useEffect(() => {
         fetchMainCommunityData();
         fetchSubCommunityData();
-    }, [getAccessToken]);
+    }, [fetchMainCommunityData, fetchSubCommunityData]);
+
+    const value = {
+        mainCommunitiesData, setMainCommunitiesData,
+        subCommunitiesData, setSubCommunitiesData,
+        communityOptions, setCommunityOptions,
+        subCommunityOptions, setSubCommunityOptions,
+        selectedCommunityId, setSelectedCommunityId,
+        selectedSubCommunityId, setSelectedSubCommunityId,
+        mainCommunityData,
+        subCommunityData,
+        getCommunity,
+        getCommunityById,
+        getSubCommunity,
+        getSubCommunityById,
+        getParentIdById,
+        getSubCommunities,
+        countSubCommunities,
+        loadingCommunities,
+        loadingSubCommunities,
+        loading,
+        error
+    };
 
     return (
-        <StaticCommunityContext.Provider value={{
-            mainCommunitiesData, setMainCommunitiesData,
-            subCommunitiesData, setSubCommunitiesData,
-            selectedCommunity, setSelectedCommunity,
-            selectedSubCommunity, setSelectedSubCommunity,
-            subCommunityOptions, setSubCommunityOptions,
-            getCommunity,
-            getSubCommunity,
-            getSubCommunities,
-            countSubCommunities,
-            loadingCommunities,
-            loadingSubCommunities,
-            loading,
-            error,
-        }}>
+        <StaticCommunityContext.Provider value={value}>
             {children}
         </StaticCommunityContext.Provider >
     );

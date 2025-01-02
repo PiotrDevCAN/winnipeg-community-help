@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import TaskContext from '../../context/TaskContext'; // Assuming you are using a context to manage tasks
-import TaskCard from '../../components/Task/TaskCard'; // Reuse TaskCard component
+import TaskContext from '@/context/TaskContext'; // Assuming you are using a context to manage tasks
+import TaskCard from '@/components/Task/TaskCard'; // Reuse TaskCard component
 
 const TaskListPage = () => {
   const { tasks } = useContext(TaskContext);

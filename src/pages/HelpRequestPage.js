@@ -1,19 +1,19 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { RequestProvider } from '../context/RequestContext';
-import { CommunityProvider } from '../context/CommunityContext';
-import RequestPreview from '../components/Request/Preview';
+import { useRequestContext, RequestProvider } from '@/context/RequestContext';
+import GenericRecordPage from '@/components/Layout/GenericRecordPage';
+import RequestPreview from '@/components/Request/Preview';
+import RequestForm from '@/components/Request/Form';
 
-const HelpRequestPage = () => {
-  const { itemId } = useParams();
-
-  return (
-    <RequestProvider>
-      <CommunityProvider>
-        <RequestPreview itemId={itemId} />
-      </CommunityProvider>
-    </RequestProvider>
-  );
-};
+const HelpRequestPage = ({ mode }) => (
+  <RequestProvider>
+    <GenericRecordPage
+      objectType="request"
+      useContextHook={useRequestContext}
+      mode={mode}
+      PreviewComponent={RequestPreview}
+      FormComponent={RequestForm}
+    />
+  </RequestProvider>
+);
 
 export default HelpRequestPage;

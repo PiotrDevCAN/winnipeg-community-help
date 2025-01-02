@@ -1,11 +1,8 @@
 import React from 'react';
 import { Col } from 'antd';
-import { useRequestContext } from '../../context/RequestContext';
-import RequestCard from '../Request/Card';
+import RequestCard from '@/components/Request/Card';
 
-const Cards = ({ onSelect }) => {
-
-    const { currentItems: data } = useRequestContext();
+const Cards = ({ data, onSelect }) => {
 
     return (
         <>

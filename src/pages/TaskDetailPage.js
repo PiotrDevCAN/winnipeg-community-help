@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import TaskContext from '../context/TaskContext';
-import TaskForm from '../components/Task/TaskForm';
+import TaskContext from '@/context/TaskContext';
+import TaskForm from '@/components/Task/TaskForm';
 
 const TaskDetailPage = () => {
   const { taskId } = useParams();

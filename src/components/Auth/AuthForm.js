@@ -1,31 +1,38 @@
 import React from "react";
-import { Card, Col, Row, Avatar } from 'antd';
+import { Card, Col, Row, Avatar, Divider } from 'antd';
 import EmailLoginForm from "./EmailLoginForm";
 import SocialMediaLoginForm from "./SocialMediaLoginForm";
+
+const cardStyle = {
+    marginBottom: 16,
+}
 
 const AuthForm = () => {
     return (
         <Row gutter={16}>
-            <Col span={12}>
-                <Card bordered={true} style={{ height: '100%' }}>
-                    <Card.Meta
-                        avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=8" />}
-                        title="Email authentication"
-                        description={
-                            <EmailLoginForm />
-                        }
-                    />
+            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                <Card bordered={true} align="center" style={cardStyle}>
+                    <EmailLoginForm />
                 </Card>
             </Col>
-            <Col span={12}>
-                <Card bordered={true} style={{ height: '100%' }}>
+            <Col xs={0} sm={0} md={8} lg={8} xl={8}>
+                <Card bordered={true} align="center" style={cardStyle}>
+                    <img src="/icon1.webp" alt="logo" />
+                </Card>
+            </Col>
+            <Col xs={24} sm={24} md={8} lg={8} xl={8}>
+                <Card bordered={true} align="center" style={cardStyle}>
                     <Card.Meta
-                        avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />}
-                        title="Social Media authentication"
+                        title="Log in with Social Media"
                         description={
                             <SocialMediaLoginForm />
                         }
                     />
+                </Card>
+            </Col>
+            <Col xs={24} sm={24} md={0} lg={0} xl={0}>
+                <Card bordered={true} align="center" style={cardStyle}>
+                    <img src="/icon1.webp" alt="logo" />
                 </Card>
             </Col>
         </Row>

@@ -1,6 +1,6 @@
 import { Flex } from "antd";
 import AppBreadcrumb from "./AppBreadcrumb";
-import DonateButtons from '../Donate/Buttons';
+import DonateButtons from '@/components/Donate/Buttons';
 
 const AppBreadcrumbHeader = () => {
 

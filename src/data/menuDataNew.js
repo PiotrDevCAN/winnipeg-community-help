@@ -129,6 +129,7 @@ const menuDataNew = [
         key: 'admins',
         label: 'Administration',
         icon: <TbBuildingCommunity />,
+        admins: 'true',
         children: [
             {
                 key: 'helpCategoriesList',
@@ -170,6 +171,13 @@ const menuDataNew = [
                 label: 'Manage communities',
                 icon: <TbLayoutCards />,
                 path: '/community/list',
+                admins: 'true',
+            },
+            {
+                key: 'usersList',
+                label: 'Manage users',
+                icon: <TbLayoutCards />,
+                path: '/user/list',
                 admins: 'true',
             },
         ],

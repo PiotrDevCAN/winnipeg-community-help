@@ -1,17 +1,19 @@
 import React from 'react';
-import UserInfo from '../components/Auth/UserInfo';
-import { Divider } from 'antd';
-// import EditForm from '../components/Profile/EditForm';
+import { Divider, Flex } from 'antd';
+import { Navigate } from 'react-router-dom';
+import { useAuthContext } from '@/context/AuthContext';
+import UserInfo from '@/components/Auth/UserInfo';
+// import EditForm from '@/components/Profile/EditForm';
 
 const MyHelpOffers = () => {
+    const { isAuthenticated } = useAuthContext();
 
-    return (
-        <>
+    return isAuthenticated ?
+        <Flex align="center" vertical>
             <UserInfo />
             <Divider />
             {/* <EditForm /> */}
-        </>
-    );
+        </Flex> : <Navigate to="/login" />;
 };
 
 export default MyHelpOffers;

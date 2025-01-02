@@ -1,11 +1,8 @@
 import React from 'react';
 import { Col } from 'antd';
-import { useCommunityContext } from '../../context/CommunityContext';
-import CommunityCard from '../Community/Card';
+import CommunityCard from '@/components/Community/Card';
 
-const Cards = ({ onSelect }) => {
-
-    const { currentItems: data } = useCommunityContext();
+const Cards = ({ data, onSelect }) => {
 
     return (
         <>

@@ -1,9 +1,9 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import routesData from '../data/routesData';
-import menuData from '../data/menuData';
-import menuDataNew from '../data/menuDataNew';
+import routesData from '@/data/routesData';
+import menuData from '@/data/menuData';
+import menuDataNew from '@/data/menuDataNew';
 
 const RouteContext = createContext();
 
@@ -16,33 +16,99 @@ export const RouteProvider = ({ children }) => {
 
     const navigate = useNavigate();
 
-    const myProfile = () => {
-        navigate('/myProfile');
+    const home = () => {
+        navigate('/');
     };
+
     const askForHelp = () => {
         navigate('/request/new');
     };
+    const listRequest = () => {
+        navigate('/request/list');
+    };
     const requestHelpDetails = (id) => {
-        navigate('/request/view/' + id);
+        navigate('/request/' + id + '/details');
     }
+    const requestHelpEdit = (id) => {
+        navigate('/request/' + id + '/edit');
+    }
+    const requestHelpInCommunity = (id) => {
+        navigate('/request/cards/community/' + id);
+    }
+    const requestHelpInType = (id) => {
+        navigate('/request/cards/type/' + id);
+    }
+    const requestHelpByUser = (id) => {
+        navigate('/request/cards/user/' + id);
+    }
+    const requestHelpByVolunteer = (id) => {
+        navigate('/request/cards/volunteer/' + id);
+    }
+
     const offerHelp = () => {
         navigate('/offer/new');
     };
+    const listOffer = () => {
+        navigate('/offer/list');
+    };
     const offerHelpDetails = (id) => {
-        navigate('/offer/view/' + id);
+        navigate('/offer/' + id + '/details');
     }
+    const offerHelpEdit = (id) => {
+        navigate('/offer/' + id + '/edit');
+    }
+    const offerHelpInCommunity = (id) => {
+        navigate('/offer/cards/community/' + id);
+    }
+    const offerHelpInType = (id) => {
+        navigate('/offer/cards/type/' + id);
+    }
+    const offerHelpByUser = (id) => {
+        navigate('/offer/cards/user/' + id);
+    }
+    const offerHelpByVolunteer = (id) => {
+        navigate('/offer/cards/volunteer/' + id);
+    }
+
     const newVolunteer = () => {
         navigate('/volunteer/new');
     };
+    const listVolunteer = () => {
+        navigate('/volunteer/list');
+    };
     const volunteerDetails = (id) => {
-        navigate('/volunteer/view/' + id);
+        navigate('/volunteer/' + id + '/details');
     }
+    const volunteerEdit = (id) => {
+        navigate('/volunteer/' + id + '/edit');
+    }
+    const volunteerInCommunity = (id) => {
+        navigate('/volunteer/cards/community/' + id);
+    }
+
     const newCommunity = () => {
         navigate('/community/new');
     };
+    const listCommunity = () => {
+        navigate('/community/list');
+    };
     const communityDetails = (id) => {
-        navigate('/community/view/' + id);
+        navigate('/community/' + id + '/details');
     }
+    const communityEdit = (id) => {
+        navigate('/community/' + id + '/edit');
+    }
+
+    const userDetails = (id) => {
+        navigate('/user/' + id + '/details');
+    }
+    const userInCommunity = (id) => {
+        navigate('/user/cards/community/' + id);
+    }
+
+    const myProfile = () => {
+        navigate('/myProfile');
+    };
     const newUser = () => {
         navigate('/myProfile/new');
     };
@@ -68,29 +134,54 @@ export const RouteProvider = ({ children }) => {
         navigate('/remind');
     };
 
+    const value = {
+        routes,
+        setRoutes,
+        menuItems,
+        setMenuItems,
+        menuNewItems,
+        setMenuNewItems,
+        home,
+        askForHelp,
+        listRequest,
+        requestHelpDetails,
+        requestHelpEdit,
+        offerHelp,
+        listOffer,
+        offerHelpDetails,
+        offerHelpEdit,
+        offerHelpInCommunity,
+        offerHelpInType,
+        offerHelpByUser,
+        offerHelpByVolunteer,
+        requestHelpInCommunity,
+        requestHelpInType,
+        requestHelpByUser,
+        requestHelpByVolunteer,
+        newVolunteer,
+        listVolunteer,
+        volunteerDetails,
+        volunteerEdit,
+        volunteerInCommunity,
+        newCommunity,
+        listCommunity,
+        communityDetails,
+        communityEdit,
+        userDetails,
+        userInCommunity,
+        myProfile,
+        newUser,
+        myHelpRequests,
+        myHelpOffers,
+        myCommunity,
+        leave,
+        signIn,
+        signUp,
+        remindPassword,
+    };
+
     return (
-        <RouteContext.Provider value={{
-            routes,
-            menuItems,
-            menuNewItems,
-            myProfile,
-            askForHelp,
-            requestHelpDetails,
-            offerHelp,
-            offerHelpDetails,
-            newVolunteer,
-            volunteerDetails,
-            newCommunity,
-            communityDetails,
-            newUser,
-            myHelpRequests,
-            myHelpOffers,
-            myCommunity,
-            leave,
-            signIn,
-            signUp,
-            remindPassword,
-        }}>
+        <RouteContext.Provider value={value}>
             {children}
         </RouteContext.Provider>
     );

@@ -1,5 +1,16 @@
-import React, { createContext, useContext, useState } from 'react';
-import { emailLoginAction, googleLoginAction, facebookLoginAction, logoutAction, getAuthUserAction } from '../services/authService';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import {
+    emailRegisterAction,
+    emailLoginAction,
+    emailDeleteAction,
+    updateProfileAction,
+    resetPasswordAction,
+    googleLoginAction,
+    facebookLoginAction,
+    logoutAction,
+    getAuthUserAction,
+    monitorAuthState
+} from '@/services/authService';
 
 const AuthContext = createContext();
 
@@ -7,117 +18,133 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
 
-    // const [isAuthenticated, setIsAuthenticated] = useState(false);
-    // const [user, setUser] = useState(null);
-    // const [isAdmin, setIsAdmin] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(true);
     const [user, setUser] = useState(true);
     const [isAdmin, setIsAdmin] = useState(true);
-
     const [loading, setLoading] = useState(false);
 
-    const handleGoogleLogin = async () => {
-        if (loading) return; // Prevent multiple popups
+    useEffect(() => {
+        // setLoading(true);
+        // const unsubscribe = monitorAuthState((user) => {
+        //     setUser(user);
+        //     if (user) {
+        //         setIsAuthenticated(true);
+        //     } else {
+        //         setIsAuthenticated(false);
+        //     }
+        //     setLoading(false);
+        // });
+        // return unsubscribe;
+    }, []);
 
-        setLoading(true);
-        try {
-            await googleLogin();
-            // Handle successful login
-        } catch (error) {
-            console.error('Error during login:', error.message);
-        } finally {
-            setLoading(false);
-        }
+    // Common function to handle errors
+    const handleError = (action, error) => {
+        console.error(`Error during ${action}:`, error.message || error);
+        setIsAuthenticated(false);
     };
 
-    const handleFacebookLogin = async () => {
-        if (loading) return; // Prevent multiple popups
-
-        setLoading(true);
-        try {
-            await facebookLogin();
-            // Handle successful login
-        } catch (error) {
-            console.error('Error during login:', error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-
-
+    // Login Functions
     const emailLogin = async (email, password) => {
         try {
             const result = await emailLoginAction(email, password);
-            setUser(result.user); // Save user info in the state
-            setIsAuthenticated(true);
-            console.log("User Info: ", result.user);
+            return result;
         } catch (error) {
-            console.error("Error during Email login: ", error);
-            setIsAuthenticated(false);
+            handleError('email login', error);
         }
-    }
+    };
+
+    const emailRegister = async (email, password) => {
+        try {
+            const result = await emailRegisterAction(email, password);
+            return result;
+        } catch (error) {
+            handleError('email registration', error);
+        }
+    };
 
     const googleLogin = async () => {
         try {
             const result = await googleLoginAction();
-            setUser(result.user); // Save user info in the state
-            setIsAuthenticated(true);
-            console.log("User Info: ", result.user);
+            return result;
         } catch (error) {
-            console.error("Error during Google login: ", error);
-            setIsAuthenticated(false);
+            handleError('Google login', error);
         }
     };
 
     const facebookLogin = async () => {
         try {
             const result = await facebookLoginAction();
-            setUser(result.user); // Save user info in the state
-            setIsAuthenticated(true);
-            console.log("User Info: ", result.user);
+            return result;
         } catch (error) {
-            console.error("Error during Facebook login: ", error);
-            setIsAuthenticated(false);
+            handleError('Facebook login', error);
+        }
+    };
+
+    // Account Management Functions
+    const emailDelete = async (email, password) => {
+        try {
+            const result = await emailDeleteAction(email, password);
+            return result;
+        } catch (error) {
+            handleError('email deletion', error);
+        }
+    };
+
+    const updateProfile = async (user, data) => {
+        try {
+            const result = await updateProfileAction(user, data);
+            return result;
+        } catch (error) {
+            handleError('profile update', error);
+        }
+    };
+
+    const resetPassword = async (email) => {
+        try {
+            const result = await resetPasswordAction(email);
+            return result;
+        } catch (error) {
+            handleError('password reset', error);
         }
     };
 
     const logout = async () => {
         try {
             const result = await logoutAction();
-            setUser(null); // Clear user info
-            setIsAuthenticated(false);
-            console.log("User logged out");
+            return result;
         } catch (error) {
-            console.error("Error during logout: ", error);
+            handleError('logout', error);
         }
     };
 
     const getAuthUser = async () => {
         try {
             const result = await getAuthUserAction();
-            setUser(result.user); // Save user info in the state
-            setIsAuthenticated(true);
-            console.log("User auth - auth context");
+            return result;
         } catch (error) {
-            console.error("Error during User auth: ", error);
+            handleError('fetching authenticated user', error);
         }
-    }
+    };
+
+    const value = {
+        isAuthenticated,
+        user,
+        isAdmin,
+        loading,
+        emailLogin,
+        emailRegister,
+        emailDelete,
+        updateProfile,
+        resetPassword,
+        googleLogin,
+        facebookLogin,
+        logout,
+        getAuthUser,
+    };
 
     return (
-        <AuthContext.Provider value={{
-            isAuthenticated,
-            user,
-            isAdmin,
-            emailLogin,
-            googleLogin,
-            handleGoogleLogin,
-            facebookLogin,
-            handleFacebookLogin,
-            logout,
-            getAuthUser
-        }}>
-            {children}
+        <AuthContext.Provider value={value}>
+            {!loading && children}
         </AuthContext.Provider>
     );
 };

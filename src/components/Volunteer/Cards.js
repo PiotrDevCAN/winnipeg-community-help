@@ -1,11 +1,8 @@
 import React from 'react';
 import { Col } from 'antd';
-import { useVolunteerContext } from '../../context/VolunteerContext';
-import VolunteerCard from '../Volunteer/Card';
+import VolunteerCard from '@/components/Volunteer/Card';
 
-const Cards = ({ onSelect }) => {
-
-    const { currentItems: data } = useVolunteerContext();
+const Cards = ({ data, onSelect }) => {
 
     return (
         <>

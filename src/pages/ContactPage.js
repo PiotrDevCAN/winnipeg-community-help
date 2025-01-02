@@ -1,6 +1,6 @@
 import React from 'react';
-import { Flex, Divider, Form } from 'antd';
-import SuggestionForm from '../components/SuggestionForm';
+import { Flex, Form } from 'antd';
+import SuggestionForm from '@/components/SuggestionForm';
 
 const ContactPage = () => {
 
@@ -8,8 +8,9 @@ const ContactPage = () => {
 
   return (
     <Flex align="center" vertical>
-      {/* <Divider /> */}
-      <SuggestionForm form={form} formName="contact" />
+      <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
+        <SuggestionForm form={form} formName="contact" />
+      </div>
     </Flex>
   );
 };

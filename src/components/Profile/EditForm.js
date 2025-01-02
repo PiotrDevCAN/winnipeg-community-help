@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     AutoComplete,
     Button,
@@ -6,7 +6,10 @@ import {
     Input,
     Select,
     DatePicker,
+    Divider,
 } from 'antd';
+import { useAuthContext } from '@/context/AuthContext';
+import { useUserContext } from '@/context/UserContext';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -40,6 +43,10 @@ const tailFormItemLayout = {
     },
 };
 const EditForm = () => {
+
+    const { user } = useAuthContext();
+    const { item } = useUserContext();
+
     const [form] = Form.useForm();
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
@@ -69,6 +76,18 @@ const EditForm = () => {
         value: website,
     }));
 
+    useEffect(() => {
+        form.setFieldsValue({
+            ...item,
+            email: user.email,
+            firstName: item.first_name,
+            lastName: item.last_name,
+            prefix: item.prefix,
+            phone: item.phone_number,
+            // birthDate: item.birth_date,
+        });
+    }, [item]);
+
     return (
         <Form
             {...formItemLayout}
@@ -83,6 +102,25 @@ const EditForm = () => {
             }}
             scrollToFirstError
         >
+            <Form.Item
+                name="email"
+                label="E-mail"
+                rules={[
+                    {
+                        type: 'email',
+                        message: 'The input is not valid E-mail!',
+                    },
+                    {
+                        required: true,
+                        message: 'Please input your E-mail!',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+
+            <Divider />
+
             <Form.Item
                 name="firstName"
                 label="First Name"
@@ -151,7 +189,7 @@ const EditForm = () => {
                     },
                 ]}
             >
-                <DatePicker />
+                <DatePicker format="YYYY-MM-DD" />
             </Form.Item>
 
             <Form.Item
@@ -170,23 +208,6 @@ const EditForm = () => {
                         width: '100%',
                     }}
                 />
-            </Form.Item>
-
-            <Form.Item
-                name="email"
-                label="E-mail"
-                rules={[
-                    {
-                        type: 'email',
-                        message: 'The input is not valid E-mail!',
-                    },
-                    {
-                        required: true,
-                        message: 'Please input your E-mail!',
-                    },
-                ]}
-            >
-                <Input />
             </Form.Item>
 
             <Form.Item
@@ -218,7 +239,7 @@ const EditForm = () => {
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" className="colorful-background">
                     Save Changes
                 </Button>
             </Form.Item>

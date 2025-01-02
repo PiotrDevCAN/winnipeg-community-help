@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { useAuthContext } from '../../context/AuthContext';
-import { FacebookFilled, GoogleOutlined } from '@ant-design/icons';
 import { Button, Divider } from 'antd';
-// import GoggleAuthModal from '../Modals/GoggleAuthModal';
-// import FacebookAuthModal from '../Modals/FacebookAuthModal';
+import { useAuthContext } from '@/context/AuthContext';
+import { FaFacebook, FaGoogle, FaLinkedinIn } from "react-icons/fa";
+import { FaApple } from "react-icons/fa";
+
+// import GoggleAuthModal from '@/components/Modals/GoggleAuthModal';
+// import FacebookAuthModal from '@/components/Modals/FacebookAuthModal';
+
+const dividerStyle = {
+    margin: "8px 0"
+}
 
 const SocialMediaLoginForm = () => {
 
@@ -37,13 +43,44 @@ const SocialMediaLoginForm = () => {
             {/* <GoggleAuthModal open={opeGoogle} onOk={handleGoogleOk} onCancel={handleGoogleCancel} /> */}
             {/* <FacebookAuthModal open={openFacebook} onOk={handleFBOk} onCancel={handleFBCancel} /> */}
 
-            <Divider />
-            <Button onClick={handleGoogleLogin} type="primary" icon={<GoogleOutlined />}>
+            <Divider style={dividerStyle} />
+            <Button
+                onClick={facebookLogin}
+                type="primary" icon={<FaFacebook />}
+                className="colorful-background"
+                style={{ width: "100%" }}
+            >
+                Login with Facebook
+            </Button>
+            <Divider style={dividerStyle} />
+            <Button
+                onClick={handleGoogleLogin}
+                type="primary"
+                icon={<FaGoogle />}
+                className="colorful-background"
+                style={{ width: "100%" }}
+            >
                 Login with Google
             </Button>
-            <Divider />
-            <Button onClick={facebookLogin} type="primary" icon={<FacebookFilled />}>
-                Login with Facebook
+            <Divider style={dividerStyle} />
+            <Button
+                onClick={facebookLogin}
+                type="primary"
+                icon={<FaLinkedinIn />}
+                className="colorful-background"
+                style={{ width: "100%" }}
+            >
+                Login with LinkedIn
+            </Button>
+            <Divider style={dividerStyle} />
+            <Button
+                onClick={facebookLogin}
+                type="primary"
+                icon={<FaApple />}
+                className="colorful-background"
+                style={{ width: "100%" }}
+            >
+                Login with Apple
             </Button>
         </>
     );

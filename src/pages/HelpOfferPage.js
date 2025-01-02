@@ -1,19 +1,19 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { OfferProvider } from '../context/OfferContext';
-import { CommunityProvider } from '../context/CommunityContext';
-import OfferPreview from '../components/Offer/Preview';
+import { useOfferContext, OfferProvider } from '@/context/OfferContext';
+import OfferPreview from '@/components/Offer/Preview';
+import OfferForm from '@/components/Offer/Form';
+import GenericRecordPage from '@/components/Layout/GenericRecordPage';
 
-const HelpOfferPage = () => {
-  const { itemId } = useParams();
-
-  return (
-    <OfferProvider>
-      <CommunityProvider>
-        <OfferPreview itemId={itemId} />
-      </CommunityProvider>
-    </OfferProvider>
-  );
-};
+const HelpOfferPage = ({ mode }) => (
+  <OfferProvider>
+    <GenericRecordPage
+      objectType="offer"
+      useContextHook={useOfferContext}
+      mode={mode}
+      PreviewComponent={OfferPreview}
+      FormComponent={OfferForm}
+    />
+  </OfferProvider>
+);
 
 export default HelpOfferPage;

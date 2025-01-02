@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getFromLocalStorage, saveToLocalStorage } from '@/services/localStorageHelpers';
 
 const styles = {
     banner: {
@@ -24,14 +25,14 @@ const CookieConsent = () => {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
-        const consent = localStorage.getItem('cookieConsent');
+        const consent = getFromLocalStorage('cookieConsent');
         if (!consent) {
             setVisible(true);
         }
     }, []);
 
     const handleAccept = () => {
-        localStorage.setItem('cookieConsent', 'accepted');
+        saveToLocalStorage('cookieConsent', 'accepted');
         setVisible(false);
     };
 

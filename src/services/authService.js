@@ -1,5 +1,15 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
-import { auth, googleProvider, facebookProvider } from "./firebaseService";
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signOut,
+    updateProfile,
+    sendPasswordResetEmail,
+    onAuthStateChanged
+} from 'firebase/auth';
+// import { auth, googleProvider, facebookProvider } from "./firebaseService";
+
+const auth = null;
 
 const emailRegisterAction = async (email, password) => {
     try {
@@ -7,6 +17,29 @@ const emailRegisterAction = async (email, password) => {
         return result;
     } catch (error) {
         console.error("Error during Email register: ", error);
+        throw error;
+    }
+}
+
+const emailDeleteAction = async (email, password) => {
+    try {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                user.delete().then(() => {
+                    console.log("User deleted successfully");
+                    return true;
+                }).catch((error) => {
+                    console.error("Error deleting user: ", error);
+                    return false;
+                });
+            })
+            .catch((error) => {
+                console.error("Error signing in: ", error);
+                return false;
+            });
+    } catch (error) {
+        console.error("Error during Email deleting: ", error);
         throw error;
     }
 }
@@ -21,10 +54,31 @@ const emailLoginAction = async (email, password) => {
     }
 }
 
+const updateProfileAction = async (user, data) => {
+    try {
+        const result = await updateProfile(user, data);
+        return result;
+    } catch (error) {
+        console.error("Error during User Profile update: ", error);
+        throw error;
+    }
+}
+
+const resetPasswordAction = async (email) => {
+    try {
+        await sendPasswordResetEmail(auth, email);
+        return true;
+    } catch (error) {
+        console.error("Error during Password reset: ", error);
+        throw error;
+    }
+}
+
 const googleLoginAction = async () => {
     try {
-        const result = await signInWithPopup(auth, googleProvider);
-        return result;
+        // const result = await signInWithPopup(auth, googleProvider);
+        // return result;
+        return null;
     } catch (error) {
         console.error("Error during Google login: ", error);
         throw error;
@@ -33,8 +87,9 @@ const googleLoginAction = async () => {
 
 const facebookLoginAction = async () => {
     try {
-        const result = await signInWithPopup(auth, facebookProvider);
-        return result;
+        // const result = await signInWithPopup(auth, facebookProvider);
+        // return result;
+        return null;
     } catch (error) {
         console.error("Error during Facebook login: ", error);
         throw error;
@@ -52,7 +107,7 @@ const logoutAction = async () => {
 };
 
 const getAuthUserAction = async () => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = await onAuthStateChanged(auth, (user) => {
         if (user) {
             console.log("User is signed in: ", user);
             return user;
@@ -65,18 +120,8 @@ const getAuthUserAction = async () => {
     return () => unsubscribe();
 };
 
-// Fetch users when the component mounts
-// useEffect(() => {
-//     const fetchUsers = async () => {
-//         try {
-//             const userList = await getUsers();
-//             setUsers(userList);
-//         } catch (err) {
-//             setError('Failed to fetch users');
-//         }
-//     };
+const monitorAuthState = (callback) => {
+    return onAuthStateChanged(auth, callback);
+};
 
-//     fetchUsers();
-// }, []);
-
-export { auth, emailRegisterAction, emailLoginAction, googleLoginAction, facebookLoginAction, logoutAction, getAuthUserAction };
+export { auth, emailRegisterAction, emailLoginAction, emailDeleteAction, updateProfileAction, resetPasswordAction, googleLoginAction, facebookLoginAction, logoutAction, getAuthUserAction, monitorAuthState };

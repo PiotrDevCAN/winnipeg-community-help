@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
-import { Flex, Divider } from 'antd';
-import ListTable from '../components/HelpCategory/ListTable';
+import React from 'react';
+import { useHelpCategoryContext, HelpCategoryProvider } from '@/context/HelpCategoryContext';
+import ListTable from '@/components/HelpCategory/ListTable';
+import GenericListPage from '@/components/Layout/GenericListPage';
 
 const HelpCategoryListPage = () => {
 
   return (
-    <Flex gap="middle" align="center" vertical>
-      <Divider />
-      <ListTable />
-    </Flex>
+    <HelpCategoryProvider>
+      <GenericListPage
+        handleNewItem=""
+        useContextHook={useHelpCategoryContext}
+        ListTableComponent={ListTable}
+      />
+    </HelpCategoryProvider>
   );
 };
 

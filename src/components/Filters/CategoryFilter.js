@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
-import { Dropdown, Flex, message, Space, Button, Select, Row, Col } from 'antd';
+import React, { useEffect } from 'react';
+import { Select, Row, Col } from 'antd';
 
 import { TbCategory } from "react-icons/tb";
 import { VscTypeHierarchySub } from "react-icons/vsc";
 
-import { useStaticHelpDataContext } from '../../context/StaticHelpDataContext';
-import SelectAllOption from '../SelectAllOption';
+import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
+import SelectAllOption from '@/components/SelectAllOption';
 
-const CategoryFilter = () => {
+const CategoryFilter = ({ preSelectedId }) => {
 
-    const { categoriesData, typesData, getTypes,
+    const {
+        typesData,
+        getTypes,
         selectedCategory, setSelectedCategory,
         selectedType, setSelectedType,
+        categoryOptions,
         typeOptions, setTypeOptions,
         loadingCategories, loadingTypes,
+        getParentIdById,
     } = useStaticHelpDataContext();
 
-    const updatedCategoriesData = categoriesData.map(item => {
+    const updatedCategoriesData = categoryOptions.map(item => {
         let value = item.id;
         return { ...item, value };
     });
@@ -29,26 +33,47 @@ const CategoryFilter = () => {
     const categoriesOptionsData = SelectAllOption.concat(updatedCategoriesData);
     const typeOptionsData = SelectAllOption.concat(updatedTypesData);
 
-    const handleCategoryChange = (value) => {
-        const tempValue = parseInt(value);
+    const updateCategory = (value) => {
+        const categoryId = parseInt(value);
         if (String(value).includes('all')) {
             setSelectedCategory(null);
             setSelectedType(null);
             setTypeOptions([]);
         } else {
-            const tempTypes = getTypes(tempValue);
-            setSelectedCategory(tempValue);
+            const tempTypes = getTypes(categoryId);
+            setSelectedCategory(categoryId);
             setTypeOptions(tempTypes || []);
         }
-    };
-    const handleTypeChange = (value) => {
-        const tempValue = parseInt(value);
+    }
+
+    const updateType = (value) => {
+        const typeId = parseInt(value);
         if (String(value).includes('all')) {
             setSelectedType(null);
         } else {
-            setSelectedType(tempValue);
+            setSelectedType(typeId);
+        }
+    }
+
+    const handleCategoryChange = (value) => {
+        updateCategory(value);
+    };
+    const handleTypeChange = (value) => {
+        updateType(value);
+    };
+    const triggerTypeChange = async (newTypeId) => {
+        if (newTypeId) {
+            const typeId = parseInt(newTypeId);
+            const categoryId = getParentIdById(typeId);
+            setSelectedType(typeId);
+            setSelectedCategory(typeId);
+            handleCategoryChange(categoryId);
         }
     };
+
+    useEffect(() => {
+        triggerTypeChange(preSelectedId);
+    }, [typesData]);
 
     return (
         <Row gutter={16}>

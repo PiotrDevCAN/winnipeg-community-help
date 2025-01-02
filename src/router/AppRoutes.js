@@ -1,23 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useRouteContext } from '../context/RouteContext';
-import ProtectedRoute from '../components/Auth/ProtectedRoute';
+import { useRouteContext } from '@/context/RouteContext';
+import ProtectedRoute from '@/components/Auth/ProtectedRoute';
 
 const AppRoutes = () => {
-
-    const { routes: data } = useRouteContext();
+    const { routes } = useRouteContext();
 
     return (
         <Routes>
-            {data.map(
-                ({ path, Component, protect }) => {
-                    if (protect) {
-                        return <Route key={path} path={path} element={<ProtectedRoute component={Component} />} />
-                    } else {
-                        return <Route key={path} path={path} element={<Component />} />
+            {routes.map(({ path, Component, protect, admin, mode }) => (
+                <Route
+                    key={path}
+                    path={path}
+                    element={
+                        protect ? (
+                            <ProtectedRoute component={(props) => <Component {...props} mode={mode} />} admin={admin} />
+                        ) : (
+                            <Component mode={mode} />
+                        )
                     }
-                }
-            )}
+                />
+            ))}
         </Routes>
     );
 };

@@ -11,8 +11,8 @@ import { TbBuildingCommunity } from "react-icons/tb";
 // Sub Community
 import { RiCommunityLine } from "react-icons/ri";
 
-import { useStaticHelpDataContext } from '../../../context/StaticHelpDataContext';
-import { useStaticCommunityContext } from '../../../context/StaticCommunityContext';
+import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
+import { useStaticCommunityContext } from '@/context/StaticCommunityContext';
 
 const handleButtonClick = (e) => {
     message.info('Click on left button.');
@@ -36,7 +36,7 @@ const FiltersDropdownsSection = () => {
         items: typesData,
         onClick: handleMenuClick,
     };
-    const menumainCommunitiesDataProps = {
+    const menuMainCommunitiesDataProps = {
         items: mainCommunitiesData,
         onClick: handleMenuClick,
     };
@@ -53,7 +53,7 @@ const FiltersDropdownsSection = () => {
             <Dropdown.Button menu={menuTypesProps} placement="bottom" icon={<VscTypeHierarchySub />} onClick={handleButtonClick}>
                 Type
             </Dropdown.Button>
-            <Dropdown.Button menu={menumainCommunitiesDataProps} placement="bottom" icon={<TbBuildingCommunity />} onClick={handleButtonClick}>
+            <Dropdown.Button menu={menuMainCommunitiesDataProps} placement="bottom" icon={<TbBuildingCommunity />} onClick={handleButtonClick}>
                 Community
             </Dropdown.Button>
             <Dropdown.Button menu={menuCommunitiesProps} placement="bottom" icon={<RiCommunityLine />} onClick={handleButtonClick}>

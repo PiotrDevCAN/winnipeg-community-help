@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Card, Divider, Col } from 'antd';
-import { useStaticHelpDataContext } from '../context/StaticHelpDataContext';
+import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
 import { VscTypeHierarchySub } from "react-icons/vsc";
 
 const { Meta } = Card;
@@ -33,6 +33,7 @@ const TypeCards = ({ onSelect }) => {
                             hoverable
                             bordered
                             style={{
+                                marginBottom: 16,
                                 backgroundColor: typeId === item.id ? '#e6f7ff' : '#fff', // Change background if selected
                                 border: typeId === item.id ? '2px solid #1890ff' : '1px solid #d9d9d9', // Optional: change border color
                                 cursor: 'pointer',

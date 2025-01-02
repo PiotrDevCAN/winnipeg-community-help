@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Divider, Card, Typography } from 'antd';
-import { useRouteContext } from '../../context/RouteContext';
+import { useRouteContext } from '@/context/RouteContext';
 import { RiUserHeartLine } from "react-icons/ri";
 
 const { Meta } = Card;
@@ -19,7 +19,7 @@ const dividerStyle = {
     margin: "8px 0"
 }
 
-const { Text, Link } = Typography;
+const { Text } = Typography;
 
 const VolunteerCard = ({ item }) => {
 
@@ -47,7 +47,7 @@ const VolunteerCard = ({ item }) => {
                         <p>Community: <Text strong>{item.community_name}</Text></p>
                         <p>Sub Community: <Text strong>{item.sub_community_name}</Text></p>
                         <Divider style={dividerStyle} />
-                        <p>Nick: <Text strong>{item.nick}</Text></p>
+                        <p>Nickname: <Text strong>{item.nick}</Text></p>
                         <p>E-mail: <Text strong>{item.email}</Text></p>
                         <p>Phone Number: <Text strong>{item.phone_number}</Text></p>
                         <p>Website: <Text strong>{item.website}</Text></p>

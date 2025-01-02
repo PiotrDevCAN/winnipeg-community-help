@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { FloatButton } from 'antd';
-import { useDonateContex } from '../../context/DonateContext';
+import { useDonateContex } from '@/context/DonateContext';
 import { FaDonate, FaPaypal } from "react-icons/fa";
 import { MdCoffee } from "react-icons/md";
 

@@ -1,13 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import LoadingPlaceholder from '../components/LoadingPlaceholder';
-import ErrorPlaceholder from '../components/ErrorPlaceholder';
-import EmptyPlaceholder from '../components/EmptyPlaceholder';
-
-import { useRouteContext } from '../context/RouteContext';
-import { useStaticHelpDataContext } from '../context/StaticHelpDataContext';
-import { useStaticCommunityContext } from '../context/StaticCommunityContext';
-import { useAPIAuth } from '../context/APIAuthContext';
-import APIService from '../services/APIService';
+import React, { createContext, useContext, useState, useCallback } from 'react';
+import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
+import { useStaticCommunityContext } from '@/context/StaticCommunityContext';
+import { useUserContext } from '@/context/UserContext';
+import { useVolunteerContext } from '@/context/VolunteerContext';
+import { useAPIAuth } from '@/context/APIAuthContext';
+import APIService from '@/services/APIService';
 
 const OfferContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
@@ -16,12 +13,14 @@ const apiService = new APIService(API_BASE_URL);
 export const useOfferContext = () => useContext(OfferContext);
 
 export const OfferProvider = ({ children }) => {
-    const { getAccessToken } = useAPIAuth();
+    const { isReady, getAccessToken } = useAPIAuth();
 
     const [data, setData] = useState([]);
     const [item, setItem] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setPageSize] = useState(9);
+
+    const [numberOfOffers, setNumberOfOffers] = useState(0);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -31,9 +30,11 @@ export const OfferProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const { offerHelp: handleNewItem } = useRouteContext();
     const { selectedCategory: catId, selectedType: typeId } = useStaticHelpDataContext();
-    const { selectedCommunity: communityId, selectedSubCommunity: subCommunityId } = useStaticCommunityContext();
+    const { selectedCommunityId: communityId, selectedSubCommunityId: subCommunityId } = useStaticCommunityContext();
+
+    const { selectedUser: userId } = useUserContext();
+    const { selectedVolunteer: volunteerId } = useVolunteerContext();
 
     let filteredItems = data;
 
@@ -53,55 +54,64 @@ export const OfferProvider = ({ children }) => {
 
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
-    const fetchData = async () => {
-        try {
-            setLoading(true);
+    const fetchData = useCallback(async () => {
+        if (isReady) {
+            try {
+                setLoading(true);
 
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest('/offer/', {}, accessToken);
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest('/offer/', {}, accessToken);
 
-            if (response.status === 'success') {
-                setData(response.data || []);
-            } else {
-                console.error(response.message || 'Unknown error occurred');
-                setError(response.message);
+                if (response.status === 'success') {
+                    setData(response.data || []);
+                } else {
+                    console.error(response.message || 'Unknown error occurred');
+                    setError(response.message);
+                }
+
+                if (response.pagination) {
+                    // console.log('Pagination Info - offers:', response.pagination);
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setError(err.message || 'An error occurred while fetching data');
+            } finally {
+                setLoading(false);
             }
-
-            if (response.pagination) {
-                // console.log('Pagination Info - offers:', response.pagination);
-            }
-        } catch (err) {
-            console.error('Error fetching data:', err);
-            setError(err.message || 'An error occurred while fetching data');
-        } finally {
-            setLoading(false);
-        }
-    };
+        };
+    }, [isReady]);
 
     const getOffer = (id) => {
-        const offer = data.find(item => item.id === id);
+        const offerId = parseInt(id);
+        const offer = data.find(item => item.id === offerId);
         return offer;
     };
 
-    const getItem = async (id) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/offer/${id}/`, {
-                method: 'GET',
-            }, accessToken);
+    const getItem = useCallback(async (id) => {
+        if (isReady) {
+            try {
+                setLoading(true);
 
-            if (response.status === 'success') {
-                const result = response.data;
-                setItem(result);
-            } else {
-                console.error(response.message || 'Failed to fetch item');
-                setError(response.message);
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest(`/offer/${id}/`, {
+                    method: 'GET',
+                }, accessToken);
+
+                if (response.status === 'success') {
+                    const result = response.data;
+                    setItem(result);
+                } else {
+                    console.error(response.message || 'Failed to fetch item');
+                    setError(response.message);
+                }
+            } catch (err) {
+                console.error('Error fetching item:', err);
+                setError(err.message || 'An error occurred while fetching an item');
+            } finally {
+                setLoading(false);
             }
-        } catch (err) {
-            console.error('Error fetching item:', err);
-            setError(err.message || 'An error occurred while fetching an item');
         }
-    };
+    }, [isReady]);
 
     const createItem = async (newItem) => {
         try {
@@ -162,37 +172,57 @@ export const OfferProvider = ({ children }) => {
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, [getAccessToken]);
+    const getOffersInCommunityNumber = useCallback(async (id) => {
+        if (isReady) {
+            try {
+                setLoading(true);
 
-    // If still loading, return a loading state
-    const loadingMsg = 'Loading help offers data...';
-    if (loading) return <LoadingPlaceholder message={loadingMsg} />
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest(`/user/list/community/${id}/`, {}, accessToken);
 
-    // If there is an error, display it
-    if (error) return <ErrorPlaceholder error={error} />
+                if (response.status === 'success') {
+                    setNumberOfOffers(response.data.amount || 0);
+                } else {
+                    console.error(response.message || 'Unknown error occurred');
+                    setError(response.message);
+                }
 
-    // If data has not been fetched (null or empty), return a message
-    if (!data || data.length === 0) return <EmptyPlaceholder newItem={handleNewItem} />
+                if (response.pagination) {
+                    // console.log('Pagination Info - users:', response.pagination);
+                }
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setError(err.message || 'An error occurred while fetching data');
+            } finally {
+                setLoading(false);
+            }
+        };
+    }, [isReady]);
+
+    const value = {
+        data,
+        setData,
+        fetchData,
+        filteredItems,
+        currentItems,
+        itemsPerPage,
+        setPageSize,
+        currentPage,
+        paginate,
+        item,
+        getItem,
+        getOffer,
+        createItem,
+        updateItem,
+        deleteItem,
+        getOffersInCommunityNumber,
+        numberOfOffers,
+        loading,
+        error,
+    };
 
     return (
-        <OfferContext.Provider value={{
-            data,
-            setData,
-            filteredItems,
-            currentItems,
-            itemsPerPage,
-            setPageSize,
-            currentPage,
-            paginate,
-            item,
-            getItem,
-            getOffer,
-            createItem,
-            updateItem,
-            deleteItem,
-        }}>
+        <OfferContext.Provider value={value}>
             {children}
         </OfferContext.Provider >
     );

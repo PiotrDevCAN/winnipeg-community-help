@@ -1,16 +1,20 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { CommunityProvider } from '../context/CommunityContext';
-import CommunityPreview from '../components/Community/Preview';
+import { CommunityProvider } from '@/context/CommunityContext';
+import { useCommunityContext } from '@/context/CommunityContext';
+import CommunityPreview from '@/components/Community/Preview';
+import CommunityForm from '@/components/Community/Form';
+import GenericRecordPage from '@/components/Layout/GenericRecordPage';
 
-const Page = () => {
-  const { itemId } = useParams();
+const CommunityPage = ({ mode }) => (
+  <CommunityProvider>
+    <GenericRecordPage
+      objectType="community"
+      useContextHook={useCommunityContext}
+      mode={mode}
+      PreviewComponent={CommunityPreview}
+      FormComponent={CommunityForm}
+    />
+  </CommunityProvider>
+);
 
-  return (
-    <CommunityProvider>
-      <CommunityPreview itemId={itemId} />
-    </CommunityProvider>
-  );
-};
-
-export default Page;
+export default CommunityPage;

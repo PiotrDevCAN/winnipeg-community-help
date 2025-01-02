@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import TaskContext from '../../context/TaskContext';
+import TaskContext from '@/context/TaskContext';
 
 const TaskForm = () => {
   const { addTask } = useContext(TaskContext);

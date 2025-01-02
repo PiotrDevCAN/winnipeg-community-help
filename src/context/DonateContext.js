@@ -21,11 +21,13 @@ export const DonateProvider = ({ children }) => {
         openInNewTab(url);
     };
 
+    const value = {
+        handleBuyCoffee,
+        handlePayPal
+    };
+
     return (
-        <DonateContex.Provider value={{
-            handleBuyCoffee,
-            handlePayPal
-        }}>
+        <DonateContex.Provider value={value}>
             {children}
         </DonateContex.Provider>
     );

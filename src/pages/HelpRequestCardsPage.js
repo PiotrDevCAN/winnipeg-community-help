@@ -1,37 +1,44 @@
 import React, { useEffect } from 'react';
-import { Row } from 'antd';
-import { RequestProvider } from '../context/RequestContext';
-import Cards from '../components/Request/Cards';
-import Pagination from '../components/Request/Pagination';
-import { usePageHeaderContext } from '../context/PageHeaderContext';
-import CategoryFilter from '../components/Filters/CategoryFilter';
-import CommunityFilter from '../components/Filters/CommunityFilter';
-import ClearFilters from '../components/ClearFilters';
+import { RequestProvider, useRequestContext } from '@/context/RequestContext';
+import Cards from '@/components/Request/Cards';
+import { usePageHeaderContext } from '@/context/PageHeaderContext';
+import CategoryFilter from '@/components/Filters/CategoryFilter';
+import CommunityFilter from '@/components/Filters/CommunityFilter';
+import PeopleFilter from '@/components/Filters/PeopleFilter';
+import ClearFilters from '@/components/Filters/ClearFilters';
+import GenericCardsPage from '@/components/Layout/GenericCardsPage';
+import { useRouteContext } from '@/context/RouteContext';
+import { useParams } from 'react-router-dom';
 
 const HelpRequestCardsPage = () => {
+  const { communityId, typeId, volunteerId, userId } = useParams();
 
-  const { setComponent1, setComponent2, setComponent3 } = usePageHeaderContext();
+  const { setComponent1, setComponent2, setComponent3, setComponent4, setComponent5 } = usePageHeaderContext();
   useEffect(() => {
-    setComponent1(<CategoryFilter />);
-    setComponent2(<CommunityFilter />);
-    setComponent3(<ClearFilters />);
+    setComponent1(<CategoryFilter preSelectedId={typeId} />);
+    setComponent2(<CommunityFilter preSelectedId={communityId} />);
+    setComponent3(<PeopleFilter preSelectedVolunteerId={volunteerId} preSelectedUserId={userId} />);
+    setComponent4(<ClearFilters />);
 
     return () => {
       setComponent1(null);
       setComponent2(null);
       setComponent3(null);
+      setComponent4(null);
+      setComponent5(null);
     };
-  }, [setComponent1, setComponent2, setComponent3]);
+  }, [setComponent1, setComponent2, setComponent3, setComponent4, setComponent5]);
+
+  const { askForHelp: handleNewItem } = useRouteContext();
 
   return (
-    <>
-      <RequestProvider>
-        <Row gutter={16}>
-          <Cards />
-        </Row>
-        <Pagination />
-      </RequestProvider>
-    </>
+    <RequestProvider>
+      <GenericCardsPage
+        handleNewItem={handleNewItem}
+        useContextHook={useRequestContext}
+        CardsComponent={Cards}
+      />
+    </RequestProvider>
   );
 };
 

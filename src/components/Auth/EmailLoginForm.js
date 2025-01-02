@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
-import { useAuthContext } from '../../context/AuthContext';
+import { Button, Form, Input, Checkbox, Divider, Typography } from 'antd';
+import { useAuthContext } from '@/context/AuthContext';
+import RemindPassword from '@/components/Buttons/RemindPassword';
+import CreateAccount from '@/components/Buttons/CreateAccount';
+
+const { Text } = Typography;
+
+const dividerStyle = {
+    margin: "8px 0"
+}
 
 const EmailLoginForm = () => {
 
@@ -17,7 +25,11 @@ const EmailLoginForm = () => {
         setEmail(values.email);
         setPassword(values.password);
 
-        emailLogin(email, password);
+        emailLogin(values.email, values.password);
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
     };
 
     return (
@@ -30,6 +42,8 @@ const EmailLoginForm = () => {
                 maxWidth: 360,
             }}
             onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
         >
             <Form.Item
                 name="email"
@@ -51,14 +65,25 @@ const EmailLoginForm = () => {
                     },
                 ]}
             >
-                <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
+                <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+            </Form.Item>
+
+            <Form.Item name="remember" valuePropName="checked" label={null}>
+                <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
             <Form.Item>
-                <Button block type="primary" htmlType="submit">
+                <Button block type="primary" htmlType="submit" className="colorful-background">
                     Log in
                 </Button>
-                or <a href="/register">Register now!</a>
+                <Divider style={dividerStyle} />
+                <RemindPassword />
+
+                <Divider>
+                    or
+                </Divider>
+
+                <CreateAccount />
             </Form.Item>
         </Form>
     );

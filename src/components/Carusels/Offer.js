@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Carousel } from 'antd';
 import { Button, Flex, Typography, Avatar } from 'antd';
 
-import { useOfferContext } from '../../context/OfferContext';
-import { useRouteContext } from '../../context/RouteContext';
+import { useOfferContext } from '@/context/OfferContext';
+import { useRouteContext } from '@/context/RouteContext';
 import { MdVolunteerActivism } from "react-icons/md";
 
 const { Title, Paragraph } = Typography;
@@ -14,12 +14,19 @@ const avatarStyle = {
 
 const Offer = () => {
 
-    const { currentItems: data } = useOfferContext();
+    const { currentItems: data, fetchData, loading, error } = useOfferContext();
     const { offerHelpDetails } = useRouteContext();
 
     const handleCardClick = (id) => {
         offerHelpDetails(id);
     };
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
 
     return (
         <>

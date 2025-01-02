@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Modal, Form } from 'antd';
-import SuggestionForm from '../../components/SuggestionForm';
+import SuggestionForm from '@/components/SuggestionForm';
 
 const SuggestionModal = ({ open, onOk, onCancel }) => {
 

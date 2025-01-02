@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     AutoComplete,
     Button,
+    Divider,
     Form,
     Input,
     Select,
+    DatePicker,
 } from 'antd';
 
-import { useStaticCommunityContext } from '../../context/StaticCommunityContext';
+import { FormCommunityProvider } from '@/context/FormCommunityContext';
+import MainCommunity from '@/components/Selects/MainCommunity';
+import SubCommunity from '@/components/Selects/SubCommunity';
 
 const { Option } = Select;
 const formItemLayout = {
@@ -41,7 +45,8 @@ const tailFormItemLayout = {
     },
 };
 
-const NewVolunteerForm = () => {
+const VolunteerForm = ({ item, mode }) => {
+
     const [form] = Form.useForm();
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
@@ -71,7 +76,21 @@ const NewVolunteerForm = () => {
         value: website,
     }));
 
-    const { mainCommunitiesData, communitiesData } = useStaticCommunityContext();
+    useEffect(() => {
+        if (item) {
+            form.setFieldsValue({
+                ...item,
+                // email: item.email,
+                firstName: item.first_name,
+                lastName: item.last_name,
+                nickname: item.nick,
+                prefix: item.prefix,
+                phone: item.phone_number,
+                // birthDate: item.birth_date,
+            });
+        }
+
+    }, [item]);
 
     return (
         <Form
@@ -98,12 +117,7 @@ const NewVolunteerForm = () => {
                     },
                 ]}
             >
-                <Select
-                    // defaultValue="jack"
-                    // style={{ width: 120 }}
-                    // onChange={handleChange}
-                    options={mainCommunitiesData}
-                />
+                <MainCommunity />
             </Form.Item>
 
             <Form.Item
@@ -116,16 +130,28 @@ const NewVolunteerForm = () => {
                     },
                 ]}
             >
-                <Select
-                    // defaultValue="jack"
-                    // style={{ width: 120 }}
-                    // onChange={handleChange}
-                    options={communitiesData}
-                />
+                <SubCommunity preSelectedId={item ? item.community_id : null} />
             </Form.Item>
 
             <Form.Item
-                name="FirstName"
+                name="email"
+                label="E-mail"
+                rules={[
+                    {
+                        type: 'email',
+                        message: 'The input is not valid E-mail!',
+                    },
+                    {
+                        required: true,
+                        message: 'Please input your E-mail!',
+                    },
+                ]}
+            >
+                <Input />
+            </Form.Item>
+            <Divider />
+            <Form.Item
+                name="firstName"
                 label="First Name"
                 rules={[
                     {
@@ -151,8 +177,8 @@ const NewVolunteerForm = () => {
             </Form.Item>
 
             <Form.Item
-                name="nick"
-                label="Nick"
+                name="nickname"
+                label="Nickname"
                 tooltip="What do you want others to call you?"
                 rules={[
                     {
@@ -165,21 +191,35 @@ const NewVolunteerForm = () => {
                 <Input />
             </Form.Item>
 
+
             <Form.Item
-                name="email"
-                label="E-mail"
+                name="gender"
+                label="Gender"
                 rules={[
                     {
-                        type: 'email',
-                        message: 'The input is not valid E-mail!',
-                    },
-                    {
                         required: true,
-                        message: 'Please input your E-mail!',
+                        message: 'Please select gender!',
                     },
                 ]}
             >
-                <Input />
+                <Select placeholder="select your gender">
+                    <Option value="male">Male</Option>
+                    <Option value="female">Female</Option>
+                    <Option value="other">Other</Option>
+                </Select>
+            </Form.Item>
+
+            <Form.Item
+                name="birthDate"
+                label="Date of Birth"
+                rules={[
+                    {
+                        required: true,
+                        message: 'Please input your birth date!',
+                    },
+                ]}
+            >
+                <DatePicker format="YYYY-MM-DD" />
             </Form.Item>
 
             <Form.Item
@@ -229,11 +269,25 @@ const NewVolunteerForm = () => {
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
-                <Button type="primary" htmlType="submit" className="colorful-background">
-                    Register volunteer
-                </Button>
+                {mode === 'new' ?
+                    <Button type="primary" htmlType="submit" className="colorful-background">
+                        Register volunteer
+                    </Button> :
+                    <Button type="primary" htmlType="submit" className="colorful-background">
+                        Update volunteer
+                    </Button>
+                }
             </Form.Item>
         </Form>
     );
 };
-export default NewVolunteerForm;
+
+export const MainForm = ({ item, mode }) => {
+    return (
+        <FormCommunityProvider>
+            <VolunteerForm item={item} mode={mode} />
+        </FormCommunityProvider>
+    );
+};
+
+export default MainForm;
