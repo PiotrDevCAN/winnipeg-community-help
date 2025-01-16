@@ -6,7 +6,7 @@ import { useRouteContext } from '@/context/RouteContext';
 const { Text } = Typography;
 
 const Requests = ({ item }) => {
-    const { getRequestsNumber, loading, error } = useVolunteerContext();
+    const { numberOfRequests, getRequestsNumber, loading, error } = useVolunteerContext();
 
     const dividerStyle = {
         margin: "8px 0"
@@ -21,6 +21,9 @@ const Requests = ({ item }) => {
         getRequestsNumber(item.id);
     }, [getRequestsNumber]);
 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+
     return (
         <Card
             className="card-with-colorful-header"
@@ -31,9 +34,9 @@ const Requests = ({ item }) => {
                 </Button>
             ]}
         >
-            <p>List of Help Requests raised by Volunteer</p>
+            <p>List of Help Requests responded by Volunteer</p>
             <Divider style={dividerStyle} />
-            <p>Number of items: <Text strong>{getRequestsNumber}</Text></p>
+            <p>Number of items: <Text strong>{numberOfRequests}</Text></p>
         </Card>
     );
 };

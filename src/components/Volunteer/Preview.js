@@ -20,8 +20,8 @@ const Preview = ({ item }) => {
                 </Col>
                 <Col xs={20} sm={16} md={12} lg={12} xl={12}>
                     <Flex gap="middle" vertical>
-                        <Requests item={item} />
                         <Offers item={item} />
+                        <Requests item={item} />
                         <Communities item={item} />
                     </Flex>
                 </Col>

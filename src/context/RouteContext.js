@@ -38,8 +38,8 @@ export const RouteProvider = ({ children }) => {
     const requestHelpInType = (id) => {
         navigate('/request/cards/type/' + id);
     }
-    const requestHelpByUser = (id) => {
-        navigate('/request/cards/user/' + id);
+    const requestHelpByNeedy = (id) => {
+        navigate('/request/cards/needy/' + id);
     }
     const requestHelpByVolunteer = (id) => {
         navigate('/request/cards/volunteer/' + id);
@@ -63,8 +63,8 @@ export const RouteProvider = ({ children }) => {
     const offerHelpInType = (id) => {
         navigate('/offer/cards/type/' + id);
     }
-    const offerHelpByUser = (id) => {
-        navigate('/offer/cards/user/' + id);
+    const offerHelpByNeedy = (id) => {
+        navigate('/offer/cards/needy/' + id);
     }
     const offerHelpByVolunteer = (id) => {
         navigate('/offer/cards/volunteer/' + id);
@@ -84,6 +84,22 @@ export const RouteProvider = ({ children }) => {
     }
     const volunteerInCommunity = (id) => {
         navigate('/volunteer/cards/community/' + id);
+    }
+
+    const newNeedy = () => {
+        navigate('/needy/new');
+    };
+    const listNeedy = () => {
+        navigate('/needy/list');
+    };
+    const needyDetails = (id) => {
+        navigate('/needy/' + id + '/details');
+    }
+    const needyEdit = (id) => {
+        navigate('/needy/' + id + '/edit');
+    }
+    const needyInCommunity = (id) => {
+        navigate('/needy/cards/community/' + id);
     }
 
     const newCommunity = () => {
@@ -131,7 +147,13 @@ export const RouteProvider = ({ children }) => {
         navigate('/register');
     };
     const remindPassword = () => {
-        navigate('/remind');
+        navigate('/remindPassword');
+    };
+    const resetPassword = () => {
+        navigate('/resetPassword');
+    };
+    const updatePassword = () => {
+        navigate('/updatePassword');
     };
 
     const value = {
@@ -142,35 +164,47 @@ export const RouteProvider = ({ children }) => {
         menuNewItems,
         setMenuNewItems,
         home,
+
         askForHelp,
         listRequest,
         requestHelpDetails,
         requestHelpEdit,
+        requestHelpInCommunity,
+        requestHelpInType,
+        requestHelpByNeedy,
+        requestHelpByVolunteer,
+
         offerHelp,
         listOffer,
         offerHelpDetails,
         offerHelpEdit,
         offerHelpInCommunity,
         offerHelpInType,
-        offerHelpByUser,
+        offerHelpByNeedy,
         offerHelpByVolunteer,
-        requestHelpInCommunity,
-        requestHelpInType,
-        requestHelpByUser,
-        requestHelpByVolunteer,
+
         newVolunteer,
         listVolunteer,
         volunteerDetails,
         volunteerEdit,
         volunteerInCommunity,
+
+        newNeedy,
+        listNeedy,
+        needyDetails,
+        needyEdit,
+        needyInCommunity,
+
         newCommunity,
         listCommunity,
         communityDetails,
         communityEdit,
+
         userDetails,
         userInCommunity,
-        myProfile,
         newUser,
+
+        myProfile,
         myHelpRequests,
         myHelpOffers,
         myCommunity,
@@ -178,6 +212,8 @@ export const RouteProvider = ({ children }) => {
         signIn,
         signUp,
         remindPassword,
+        resetPassword,
+        updatePassword,
     };
 
     return (

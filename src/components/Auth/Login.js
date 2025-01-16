@@ -1,13 +1,16 @@
-import { useState } from 'react';
-import { emailLoginAction } from '@/services/authService';
+import React, { useState } from 'react';
+import { useAuthContext } from '@/context/AuthContext';
 
 const Login = () => {
+
+    const { emailLogin } = useAuthContext();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = async () => {
         try {
-            await emailLoginAction(email, password);
+            await emailLogin(email, password);
             alert('User logged in successfully!');
         } catch (error) {
             console.error('Error logging in:', error.message);

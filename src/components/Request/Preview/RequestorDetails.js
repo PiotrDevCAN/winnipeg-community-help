@@ -7,27 +7,27 @@ const { Text } = Typography;
 
 const RequestorDetails = ({ item }) => {
 
-    const { userDetails, requestHelpByUser, offerHelpByUser } = useRouteContext();
+    const { userDetails, requestHelpByNeedy, offerHelpByNeedy } = useRouteContext();
     const handleViewProfile = (id) => {
         userDetails(id);
     };
     const handleViewRequests = (id) => {
-        requestHelpByUser(id);
+        requestHelpByNeedy(id);
     };
     const handleViewOffers = (id) => {
-        offerHelpByUser(id);
+        offerHelpByNeedy(id);
     };
 
     const { item: user, getItem, loading, error } = useUserContext();
-    const itemId = 1;
+    const userId = item.requestor_id;
     useEffect(() => {
         const loadData = async () => {
-            if (itemId && !user) {
-                await getItem(itemId);
+            if (userId && !user) {
+                await getItem(userId);
             }
         };
         loadData();
-    }, [itemId, user, getItem]);
+    }, [userId, user, getItem]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -36,7 +36,7 @@ const RequestorDetails = ({ item }) => {
     return (
         <Card
             className="card-with-colorful-header"
-            title="Requestor Details"
+            title="Needy Person Details"
             actions={[
                 <Button key="1" type="primary" size="default" onClick={() => handleViewProfile(item.id)} className="colorful-background">
                     View Profile

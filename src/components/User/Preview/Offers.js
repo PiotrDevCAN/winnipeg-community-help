@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, Button, Divider, Typography } from 'antd';
 import { useUserContext } from '@/context/UserContext';
 import { useRouteContext } from '@/context/RouteContext';
@@ -6,24 +6,23 @@ import { useRouteContext } from '@/context/RouteContext';
 const { Text } = Typography;
 
 const Offers = ({ item }) => {
-    // const { getOffersNumber, loading, error } = useUserContext();
+    const { numberOfOffers, getOffersNumber, loading, error } = useUserContext();
 
     const dividerStyle = {
         margin: "8px 0"
     }
 
-    const { requestHelpByUser } = useRouteContext();
+    const { offerHelpByNeedy } = useRouteContext();
     const handleViewOffers = (id) => {
-        requestHelpByUser(id);
+        offerHelpByNeedy(id);
     };
 
-    // useEffect(() => {
-    //     getOffersNumber(item.id);
-    // }, [getOffersNumber]);
+    useEffect(() => {
+        getOffersNumber(item.id);
+    }, [getOffersNumber]);
 
-    // if (loading) return <p>Loading...</p>;
-    // if (error) return <p>Error: {error}</p>;
-    // if (!item) return <p>Loading main item data...</p>;
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
 
     return (
         <Card
@@ -37,7 +36,7 @@ const Offers = ({ item }) => {
         >
             <p>List of Help Offers responded by User</p>
             <Divider style={dividerStyle} />
-            <p>Number of items: <Text strong></Text></p>
+            <p>Number of items: <Text strong>{numberOfOffers}</Text></p>
         </Card>
     );
 };

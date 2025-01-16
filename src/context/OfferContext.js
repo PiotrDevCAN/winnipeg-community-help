@@ -52,6 +52,13 @@ export const OfferProvider = ({ children }) => {
         filteredItems = data.filter(item => item.sub_community_id === subCommunityId);
     }
 
+    if (userId !== null) {
+        // filteredItems = data.filter(item => item.requestor_id === userId);
+    }
+    if (volunteerId !== null) {
+        filteredItems = data.filter(item => item.requestor_id === volunteerId);
+    }
+
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
     const fetchData = useCallback(async () => {

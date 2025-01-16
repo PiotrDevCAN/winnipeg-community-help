@@ -19,6 +19,8 @@ export const VolunteerProvider = ({ children }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setPageSize] = useState(9);
 
+    const [numberOfRequests, setNumberOfRequests] = useState(0);
+    const [numberOfOffers, setNumberOfOffers] = useState(0);
     const [numberOfVolunteers, setNumberOfVolunteers] = useState(0);
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -161,47 +163,41 @@ export const VolunteerProvider = ({ children }) => {
     };
 
     const getOffersNumber = useCallback(async (id) => {
-        // try {
-        // const accessToken = await getAccessToken();
-        // const response = await apiService.makeRequest(`/volunteer/${id}/offers`, {
-        //     method: 'GET',
-        // }, accessToken);
+        try {
+            const accessToken = await getAccessToken();
+            const response = await apiService.makeRequest(`/volunteer/${id}/offers`, {
+                method: 'GET',
+            }, accessToken);
 
-        // if (response.status === 'success') {
-        //     const result = response.data
-        //     // setTypeData(result);
-        //     return result;
-        // } else {
-        //     console.error(response.message || 'Failed to fetch item');
-        //     setError(response.message);
-        // }
-        return id;
-        // } catch (err) {
-        //     console.error('Error fetching item:', err);
-        //     setError(err.message || 'An error occurred while fetching an item');
-        // }
+            if (response.status === 'success') {
+                setNumberOfOffers(response.data.amount || 0);
+            } else {
+                console.error(response.message || 'Failed to fetch item');
+                setError(response.message);
+            }
+        } catch (err) {
+            console.error('Error fetching item:', err);
+            setError(err.message || 'An error occurred while fetching an item');
+        }
     }, []);
 
     const getRequestsNumber = useCallback(async (id) => {
-        // try {
-        // const accessToken = await getAccessToken();
-        // const response = await apiService.makeRequest(`/volunteer/${id}/requests`, {
-        //     method: 'GET',
-        // }, accessToken);
+        try {
+            const accessToken = await getAccessToken();
+            const response = await apiService.makeRequest(`/volunteer/${id}/requests`, {
+                method: 'GET',
+            }, accessToken);
 
-        // if (response.status === 'success') {
-        //     const result = response.data
-        //     // setTypeData(result);
-        //     return result;
-        // } else {
-        //     console.error(response.message || 'Failed to fetch item');
-        //     setError(response.message);
-        // }
-        return id;
-        // } catch (err) {
-        //     console.error('Error fetching item:', err);
-        //     setError(err.message || 'An error occurred while fetching an item');
-        // }
+            if (response.status === 'success') {
+                setNumberOfRequests(response.data.amount || 0);
+            } else {
+                console.error(response.message || 'Failed to fetch item');
+                setError(response.message);
+            }
+        } catch (err) {
+            console.error('Error fetching item:', err);
+            setError(err.message || 'An error occurred while fetching an item');
+        }
     }, []);
 
     const getVolunteersInCommunityNumber = useCallback(async (id) => {
@@ -250,6 +246,8 @@ export const VolunteerProvider = ({ children }) => {
         getOffersNumber,
         getRequestsNumber,
         getVolunteersInCommunityNumber,
+        numberOfOffers,
+        numberOfRequests,
         numberOfVolunteers,
         selectedVolunteer, setSelectedVolunteer,
         loading,

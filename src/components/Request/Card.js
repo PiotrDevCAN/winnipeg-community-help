@@ -2,6 +2,7 @@ import React from 'react';
 import { Avatar, Divider, Card, Typography } from 'antd';
 import { useRouteContext } from '@/context/RouteContext';
 import { MdOutlineVolunteerActivism } from "react-icons/md";
+import dayjs from 'dayjs';
 
 const { Meta } = Card;
 
@@ -27,6 +28,7 @@ const RequestCard = ({ item }) => {
     const handleCardClick = (id) => {
         requestHelpDetails(id);
     };
+    const formattedDate = dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss');
 
     return (
         <Card
@@ -44,17 +46,19 @@ const RequestCard = ({ item }) => {
                 title={item.name}
                 description={
                     <>
-                        <p><Text strong>{item.description ?? 'description'}</Text></p>
+                        <p>Title: <Text strong>{item.title ?? 'title'}</Text></p>
+                        <p>Description: <Text strong>{item.description ?? 'description'}</Text></p>
                         <Divider style={dividerStyle} />
-                        <p>Requestor: <Text strong>{item.requestor ?? 'John Dou'}</Text></p>
+                        <p>Needy Person: <Text strong>{item.requestor_id ? item.first_name + ' ' + item.last_name : 'Not assigned yet'}</Text></p>
+                        <p>Volunteer: <Text strong>{item.requestor_id ? item.first_name + ' ' + item.last_name : 'Not assigned yet'}</Text></p>
                         <Divider style={dividerStyle} />
-                        <p>Community: <Text strong>{item.label ?? 'community'}</Text></p>
+                        <p>Community: <Text strong>{item.community_name ?? 'community'}</Text></p>
                         <p>Sub Community: <Text strong>{item.sub_community_name ?? 'sub community'}</Text></p>
                         <p>Category: <Text strong>{item.category_name ?? 'category'}</Text></p>
                         <p>Type: <Text strong>{item.type_name ?? 'type'}</Text></p>
                         <Divider style={dividerStyle} />
                         <p>Status: <Text strong>{item.status ?? 'status'}</Text></p>
-                        <p>Created: <Text strong>{item.created ?? 'created'}</Text></p>
+                        <p>Created: <Text strong>{formattedDate ?? 'created'}</Text></p>
                     </>
                 }
             />

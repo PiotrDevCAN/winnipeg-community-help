@@ -19,7 +19,7 @@ import { useAuthContext } from '@/context/AuthContext';
 import { useUserContext } from '@/context/UserContext';
 import { useRouteContext } from '@/context/RouteContext';
 import ReCAPTCHA from 'react-google-recaptcha';
-import RemindPassword from '@/components/Buttons/RemindPassword';
+import ResetPassword from '@/components/Buttons/ResetPassword';
 import Login from '@/components/Buttons/Login';
 import CreateAccount from '@/components/Buttons/CreateAccount';
 
@@ -98,41 +98,42 @@ const RegisterForm = () => {
 
         emailRegister(values.email, values.password)
             .then(response => {
-                // response.json()
 
                 const userCreated = response.user;
-                const userId = userCreated.uid;
+                // const userId = userCreated.uid;
+
+                console.log('User created:', userCreated);
 
                 // const userToSave = { ...values, userId };
-                const userToSave = {
-                    firebase_id: userId,
-                    first_name: values.firstName,
-                    last_name: values.lastName,
-                    nickname: values.nickname,
-                    phone_number: values.phone,
-                    website: values.website,
-                    description: values.description,
-                    gender: values.gender,
-                    birth_date: values.birthDate,
-                    prefix: values.prefix,
-                }
+                // const userToSave = {
+                //     firebase_id: userId,
+                //     first_name: values.firstName,
+                //     last_name: values.lastName,
+                //     nickname: values.nickname,
+                //     phone_number: values.phone,
+                //     website: values.website,
+                //     description: values.description,
+                //     gender: values.gender,
+                //     birth_date: values.birthDate,
+                //     prefix: values.prefix,
+                // }
 
-                const promises = [
-                    // add additional data to firebase user's record
-                    updateProfile(userCreated, data),
-                    // save user's record to a database
-                    createItem(userToSave)
-                ];
-                Promise.allSettled(promises)
-                    .then((results) => {
-                        results.forEach((result, index) => {
-                            if (result.status === 'fulfilled') {
-                                console.log(`Promise ${index + 1} fulfilled with value:`, result.value);
-                            } else if (result.status === 'rejected') {
-                                console.log(`Promise ${index + 1} rejected with reason:`, result.reason);
-                            }
-                        });
-                    });
+                // const promises = [
+                //     // add additional data to firebase user's record
+                //     updateProfile(userCreated, data),
+                //     // save user's record to a database
+                //     createItem(userToSave)
+                // ];
+                // Promise.allSettled(promises)
+                //     .then((results) => {
+                //         results.forEach((result, index) => {
+                //             if (result.status === 'fulfilled') {
+                //                 console.log(`Promise ${index + 1} fulfilled with value:`, result.value);
+                //             } else if (result.status === 'rejected') {
+                //                 console.log(`Promise ${index + 1} rejected with reason:`, result.reason);
+                //             }
+                //         });
+                //     });
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -214,7 +215,7 @@ const RegisterForm = () => {
                         message: 'The input is not valid E-mail!',
                     },
                     {
-                        required: true,
+                        required: false,
                         message: 'Please input your E-mail!',
                     },
                 ]}
@@ -227,7 +228,7 @@ const RegisterForm = () => {
                 label="Password"
                 rules={[
                     {
-                        required: true,
+                        required: false,
                         message: 'Please input your password!',
                     },
                 ]}
@@ -243,7 +244,7 @@ const RegisterForm = () => {
                 hasFeedback
                 rules={[
                     {
-                        required: true,
+                        required: false,
                         message: 'Please confirm your password!',
                     },
                     ({ getFieldValue }) => ({
@@ -266,7 +267,7 @@ const RegisterForm = () => {
                 label="First Name"
                 rules={[
                     {
-                        required: true,
+                        required: false,
                         message: 'Please input first name!',
                     },
                 ]}
@@ -279,7 +280,7 @@ const RegisterForm = () => {
                 label="Last Name"
                 rules={[
                     {
-                        required: true,
+                        required: false,
                         message: 'Please input last name!',
                     },
                 ]}
@@ -293,7 +294,7 @@ const RegisterForm = () => {
                 tooltip="What do you want others to call you?"
                 rules={[
                     {
-                        required: true,
+                        required: false,
                         message: 'Please input your nickname!',
                         whitespace: true,
                     },
@@ -307,7 +308,7 @@ const RegisterForm = () => {
                 label="Gender"
                 rules={[
                     {
-                        required: true,
+                        required: false,
                         message: 'Please select gender!',
                     },
                 ]}
@@ -324,7 +325,7 @@ const RegisterForm = () => {
                 label="Date of Birth"
                 rules={[
                     {
-                        required: true,
+                        required: false,
                         message: 'Please input your birth date!',
                     },
                 ]}
@@ -337,7 +338,7 @@ const RegisterForm = () => {
                 label="Phone Number"
                 rules={[
                     {
-                        required: true,
+                        required: false,
                         message: 'Please input your phone number!',
                     },
                 ]}
@@ -355,7 +356,7 @@ const RegisterForm = () => {
                 label="Website"
                 rules={[
                     {
-                        required: true,
+                        required: false,
                         message: 'Please input website!',
                     },
                 ]}
@@ -370,7 +371,7 @@ const RegisterForm = () => {
                 label="Description"
                 rules={[
                     {
-                        required: true,
+                        required: false,
                         message: 'Please input Description',
                     },
                 ]}
@@ -399,7 +400,7 @@ const RegisterForm = () => {
                 </Divider>
 
                 <Login />
-                <RemindPassword />
+                <ResetPassword />
             </Flex>
             {contextHolder}
         </Form>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Avatar, Divider, Card, Typography } from 'antd';
 import { useRouteContext } from '@/context/RouteContext';
 import { TbBuildingCommunity } from "react-icons/tb";
+import dayjs from 'dayjs';
 
 const { Meta } = Card;
 
@@ -27,6 +28,7 @@ const CommunityCard = ({ item }) => {
     const handleCardClick = (id) => {
         communityDetails(id);
     };
+    const formattedDate = dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss');
 
     return (
         <Card
@@ -50,7 +52,7 @@ const CommunityCard = ({ item }) => {
                         <p>Phone Number: <Text strong>{item.phone_number}</Text></p>
                         <p>Website: <Text strong>{item.website}</Text></p>
                         <p>Description: <Text strong>{item.description}</Text></p>
-                        <p>Created: <Text strong>{item.created_at}</Text></p>
+                        <p>Created: <Text strong>{formattedDate}</Text></p>
                     </>
                 }
             />

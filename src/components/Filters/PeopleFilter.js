@@ -8,7 +8,7 @@ import { useUserContext } from '@/context/UserContext';
 import { useVolunteerContext } from '@/context/VolunteerContext';
 import SelectAllOption from '@/components/SelectAllOption';
 
-const PeopleFilter = ({ preSelectedVolunteerId, preSelectedUserId }) => {
+const PeopleFilter = ({ preSelectedVolunteerId, preSelectedNeedyId }) => {
 
     const {
         data: usersData,
@@ -67,9 +67,9 @@ const PeopleFilter = ({ preSelectedVolunteerId, preSelectedUserId }) => {
     useEffect(() => {
         fetchUserData();
         fetchVolunteerData();
-        if (preSelectedUserId) {
-            const userId = parseInt(preSelectedUserId);
-            setSelectedUser(userId);
+        if (preSelectedNeedyId) {
+            const needyId = parseInt(preSelectedNeedyId);
+            setSelectedUser(needyId);
         }
         if (preSelectedVolunteerId) {
             const volunteerId = parseInt(preSelectedVolunteerId);
@@ -87,7 +87,7 @@ const PeopleFilter = ({ preSelectedVolunteerId, preSelectedUserId }) => {
                     value={selectedUser}
                     suffixIcon={<MdVolunteerActivism />}
                     showSearch
-                    placeholder="Select a Requestor"
+                    placeholder="Select a Needy Person"
                     optionFilterProp="label"
                     onChange={handleUserChange}
                     options={usersOptionsData}

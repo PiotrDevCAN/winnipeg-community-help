@@ -10,7 +10,7 @@ import {
     logoutAction,
     getAuthUserAction,
     monitorAuthState
-} from '@/services/authService';
+} from '@/services/SupabaseAuthService';
 
 const AuthContext = createContext();
 
@@ -19,23 +19,24 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
 
     const [isAuthenticated, setIsAuthenticated] = useState(true);
-    const [user, setUser] = useState(true);
+    const [user, setUser] = useState(false);
     const [isAdmin, setIsAdmin] = useState(true);
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        // setLoading(true);
-        // const unsubscribe = monitorAuthState((user) => {
-        //     setUser(user);
-        //     if (user) {
-        //         setIsAuthenticated(true);
-        //     } else {
-        //         setIsAuthenticated(false);
-        //     }
-        //     setLoading(false);
-        // });
-        // return unsubscribe;
-    }, []);
+    // useEffect(() => {
+    //     setLoading(true);
+    //     const { subscription } = monitorAuthState((event, session) => {
+    //         setUser(user);
+    //         if (session?.user) {
+    //             setIsAuthenticated(true);
+    //         } else {
+    //             setIsAuthenticated(false);
+    //         }
+    //         setLoading(false);
+    //     });
+
+    //     return () => subscription.unsubscribe();
+    // }, []);
 
     // Common function to handle errors
     const handleError = (action, error) => {

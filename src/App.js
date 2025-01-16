@@ -10,6 +10,7 @@ import { APIAuthProvider } from '@/context/APIAuthContext';
 import { StaticCommunityProvider } from '@/context/StaticCommunityContext';
 import { StaticHelpProvider } from '@/context/StaticHelpDataContext';
 import { UserProvider } from '@/context/UserContext';
+import { NeedyProvider } from './context/NeedyContext';
 import { VolunteerProvider } from '@/context/VolunteerContext';
 import { RouteProvider } from '@/context/RouteContext';
 import { PageHeaderProvider } from '@/context/PageHeaderContext';
@@ -27,11 +28,13 @@ const Providers = ({ children }) => (
         <StaticCommunityProvider>
           <StaticHelpProvider>
             <UserProvider>
-              <VolunteerProvider>
-                <PageHeaderProvider>
-                  {children}
-                </PageHeaderProvider>
-              </VolunteerProvider>
+              <NeedyProvider>
+                <VolunteerProvider>
+                  <PageHeaderProvider>
+                    {children}
+                  </PageHeaderProvider>
+                </VolunteerProvider>
+              </NeedyProvider>
             </UserProvider>
           </StaticHelpProvider>
         </StaticCommunityProvider>

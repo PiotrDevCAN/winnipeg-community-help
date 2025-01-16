@@ -3,6 +3,7 @@ import { Button, Card, Typography, Divider } from 'antd';
 import { useCombinedCommunityContext } from '@/context/CombinedCommunityContext';
 import { useCombinedCategoryContext } from '@/context/CombinedCategoryContext';
 import { useRouteContext } from '@/context/RouteContext';
+import dayjs from 'dayjs';
 
 const { Text } = Typography;
 
@@ -19,6 +20,7 @@ const Details = ({ item }) => {
     const dividerStyle = {
         margin: "8px 0"
     }
+    const formattedDate = dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss');
 
     useEffect(() => {
         const subCommunityId = item.community_id;
@@ -51,7 +53,7 @@ const Details = ({ item }) => {
             <p>Title: <Text strong>{item.title}</Text></p>
             <p>Description: <Text strong>{item.description}</Text></p>
             <p>Status: <Text strong>{item.status}</Text></p>
-            <p>Created: <Text strong>{item.created_at}</Text></p>
+            <p>Created: <Text strong>{formattedDate}</Text></p>
             <Divider style={dividerStyle} />
             <p>Community: <Text strong>{mainCommunityData.label}</Text></p>
             <p>Sub Community: <Text strong>{subCommunityData.label}</Text></p>

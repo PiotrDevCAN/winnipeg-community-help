@@ -1,13 +1,16 @@
-import { useState } from 'react';
-import { emailRegisterAction } from '@/services/authService';
+import React, { useState } from 'react';
+import { useAuthContext } from '@/context/AuthContext';
 
 const SignUp = () => {
+
+  const { emailRegister } = useAuthContext();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSignUp = async () => {
     try {
-      await emailRegisterAction(email, password);
+      await emailRegister(email, password);
       alert('User signed up successfully!');
     } catch (error) {
       console.error('Error signing up:', error.message);

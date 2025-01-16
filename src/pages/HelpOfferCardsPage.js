@@ -4,20 +4,21 @@ import Cards from '@/components/Offer/Cards';
 import { usePageHeaderContext } from '@/context/PageHeaderContext';
 import CategoryFilter from '@/components/Filters/CategoryFilter';
 import CommunityFilter from '@/components/Filters/CommunityFilter';
-import PeopleFilter from '@/components/Filters/PeopleFilter';
+// import PeopleFilter from '@/components/Filters/PeopleFilter';
+import OfferRequestorFilter from '@/components/Filters/OfferRequestorFilter';
 import ClearFilters from '@/components/Filters/ClearFilters';
 import GenericCardsPage from '@/components/Layout/GenericCardsPage';
 import { useRouteContext } from '@/context/RouteContext';
 import { useParams } from 'react-router-dom';
 
 const HelpOfferCardsPage = () => {
-  const { communityId, typeId, volunteerId, userId } = useParams();
+  const { communityId, typeId, volunteerId, needyId } = useParams();
 
   const { setComponent1, setComponent2, setComponent3, setComponent4, setComponent5 } = usePageHeaderContext();
   useEffect(() => {
     setComponent1(<CategoryFilter preSelectedId={typeId} />);
     setComponent2(<CommunityFilter preSelectedId={communityId} />);
-    setComponent3(<PeopleFilter preSelectedVolunteerId={volunteerId} preSelectedUserId={userId} />);
+    setComponent3(<OfferRequestorFilter preSelectedVolunteerId={volunteerId} preSelectedNeedyId={needyId} />);
     setComponent4(<ClearFilters />);
 
     return () => {

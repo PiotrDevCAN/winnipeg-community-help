@@ -6,7 +6,7 @@ import GenericRecordPage from '@/components/Layout/GenericRecordPage';
 
 const UserPage = ({ mode }) => (
   <GenericRecordPage
-    objectType="user"
+    objectType="needy"
     useContextHook={useUserContext}
     mode={mode}
     PreviewComponent={UserPreview}

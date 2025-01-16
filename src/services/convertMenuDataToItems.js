@@ -8,6 +8,7 @@ export const convertMenuDataToItems = (menuData) => {
                 children: item.children,
                 path: item.path,
                 disabled: item.disabled,
+                type: item.type,
             };
 
             if (item.children && item.children.length > 0) {

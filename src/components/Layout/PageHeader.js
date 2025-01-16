@@ -23,8 +23,9 @@ const PageHeader = ({ PageName, Section }) => {
         case 'request':
         case 'offer':
         case 'volunteer':
-        case 'community':
+        case 'needy':
         case 'user':
+        case 'community':
         case 'category':
         case 'type':
             cardStyleClass = "";

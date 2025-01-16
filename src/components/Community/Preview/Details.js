@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Card, Typography } from 'antd';
 import { useRouteContext } from '@/context/RouteContext';
+import dayjs from 'dayjs';
 
 const { Text } = Typography;
 
@@ -10,6 +11,7 @@ const Details = ({ item }) => {
     const handleEditClick = (id) => {
         communityEdit(id);
     };
+    const formattedDate = dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss');
 
     return (
         <Card
@@ -28,7 +30,7 @@ const Details = ({ item }) => {
             <p>Phone Number: <Text strong>{item.phone_number}</Text></p>
             <p>Website: <Text strong>{item.website}</Text></p>
             <p>Status: <Text strong>{item.status}</Text></p>
-            <p>Created: <Text strong>{item.created_at}</Text></p>
+            <p>Created: <Text strong>{formattedDate}</Text></p>
         </Card>
     );
 };

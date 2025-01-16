@@ -1,9 +1,10 @@
 import { AppstoreAddOutlined } from '@ant-design/icons';
 import { ContactsOutlined } from '@mui/icons-material';
 import { MdOutlineVolunteerActivism, MdVolunteerActivism, MdOutlineContactSupport, MdOutlinePolicy, MdPolicy } from "react-icons/md";
-import { TbBuildingCommunity, TbLayoutCards } from "react-icons/tb";
-import { FaHome, FaListUl, FaDonate } from "react-icons/fa";
+import { TbBuildingCommunity, TbLayoutCards, TbUserHeart, TbUser } from "react-icons/tb";
+import { FaHome, FaListUl, FaDonate, FaHandsHelping } from "react-icons/fa";
 import { RiUserHeartLine } from "react-icons/ri";
+import { FaPeopleGroup } from "react-icons/fa6";
 
 const menuDataNew = [
     {
@@ -50,61 +51,113 @@ const menuDataNew = [
         ],
     },
     {
-        key: 'request',
-        label: 'Need help',
-        icon: <MdOutlineVolunteerActivism />,
+        key: 'help',
+        label: 'Your help',
+        icon: <FaHandsHelping />,
         children: [
             {
-                key: 'newHelpRequest',
-                label: 'New help request',
-                icon: <AppstoreAddOutlined />,
-                path: '/request/new',
+                key: 'helpRequest',
+                label: 'Help request',
+                type: 'group',
+                children: [
+                    {
+                        key: 'newHelpRequest',
+                        label: 'Ask for help',
+                        icon: <MdOutlineVolunteerActivism />,
+                        path: '/request/new',
+                    },
+                    {
+                        key: 'helpRequestsCards',
+                        label: 'All help requests',
+                        icon: <FaListUl />,
+                        path: '/request/cards',
+                    },
+                ]
             },
             {
-                key: 'helpRequestsCards',
-                label: 'All help requests',
-                icon: <FaListUl />,
-                path: '/request/cards',
+                key: 'helpOffer',
+                label: 'Help offer',
+                type: 'group',
+                children: [
+                    {
+                        key: 'newHelpOffer',
+                        label: 'Offer your help',
+                        icon: <MdVolunteerActivism />,
+                        path: '/offer/new',
+                    },
+                    {
+                        key: 'helpOffersCards',
+                        label: 'All help offers',
+                        icon: <FaListUl />,
+                        path: '/offer/cards',
+                    },
+                ]
             },
-        ],
+        ]
     },
     {
-        key: 'offer',
-        label: 'Offer help',
-        icon: <MdVolunteerActivism />,
+        key: 'society',
+        label: 'Winnipeggers',
+        icon: <FaPeopleGroup />,
         children: [
             {
-                key: 'newHelpOffer',
-                label: 'New help offer',
-                icon: <AppstoreAddOutlined />,
-                path: '/offer/new',
+                key: 'volunteers',
+                label: 'Volunteers',
+                type: 'group',
+                children: [
+                    {
+                        key: 'newVolunteer',
+                        label: 'New volunteer',
+                        icon: <RiUserHeartLine />,
+                        path: '/volunteer/new',
+                    },
+                    {
+                        key: 'volunteersCards',
+                        label: 'All registered volunteers',
+                        icon: <FaListUl />,
+                        path: '/volunteer/cards',
+                    },
+                ],
             },
             {
-                key: 'helpOffersCards',
-                label: 'All help offers',
-                icon: <FaListUl />,
-                path: '/offer/cards',
+                key: 'needy',
+                label: 'People in need',
+                type: 'group',
+                children: [
+                    {
+                        key: 'newNeedy',
+                        label: 'New person in need',
+                        icon: <TbUserHeart />,
+                        path: '/needy/new',
+                    },
+                    {
+                        key: 'needyCards',
+                        label: 'All registered people in need',
+                        icon: <FaListUl />,
+                        path: '/needy/cards',
+                    },
+                ],
             },
-        ],
-    },
-    {
-        key: 'volunteers',
-        label: 'Volunteers',
-        icon: <RiUserHeartLine />,
-        children: [
             {
-                key: 'newVolunteer',
-                label: 'New volunteer',
-                icon: <AppstoreAddOutlined />,
-                path: '/volunteer/new',
+                key: 'users',
+                label: 'Users',
+                type: 'group',
+                children: [
+                    {
+                        key: 'newUser',
+                        label: 'New user',
+                        icon: <TbUser />,
+                        path: '/user/new',
+                    },
+                    {
+                        key: 'usersCards',
+                        label: 'All registered users',
+                        icon: <FaListUl />,
+                        path: '/user/cards',
+                    },
+                ],
             },
-            {
-                key: 'volunteersCards',
-                label: 'All registered volunteers',
-                icon: <FaListUl />,
-                path: '/volunteer/cards',
-            },
-        ],
+        ]
     },
     {
         key: 'communities',
@@ -114,7 +167,7 @@ const menuDataNew = [
             {
                 key: 'newCommunity',
                 label: 'New community',
-                icon: <AppstoreAddOutlined />,
+                icon: <TbBuildingCommunity />,
                 path: '/community/new',
             },
             {
@@ -128,7 +181,7 @@ const menuDataNew = [
     {
         key: 'admins',
         label: 'Administration',
-        icon: <TbBuildingCommunity />,
+        icon: <AppstoreAddOutlined />,
         admins: 'true',
         children: [
             {

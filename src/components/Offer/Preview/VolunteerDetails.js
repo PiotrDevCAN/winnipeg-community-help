@@ -19,16 +19,16 @@ const VolunteerDetails = ({ item }) => {
     };
 
     const { item: volunteer, getItem, loading, error } = useVolunteerContext();
-    const itemId = 1;
+    const userId = item.requestor_id;
     useEffect(() => {
         const loadData = async () => {
-            if (itemId && !volunteer) {
-                await getItem(itemId);
+            if (userId && !volunteer) {
+                await getItem(userId);
             }
         };
         loadData();
         console.log(volunteer);
-    }, [itemId, volunteer, getItem]);
+    }, [userId, volunteer, getItem]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;

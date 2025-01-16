@@ -8,6 +8,7 @@ export const getCurrentRoute = (location, routes) => {
             ":communityId": "\\d+",
             ":categoryId": "\\d+",
             ":volunteerId": "\\d+",
+            ":needyId": "\\d+",
             ":userId": "\\d+",
         };
         const keysPattern = Object.keys(replacements).join('|');

@@ -25,7 +25,7 @@ const redIconStyle = {
 
 const UserActions = () => {
 
-    const { signIn, remindPassword, signUp, myProfile, askForHelp, offerHelp, leave, myHelpRequests, myHelpOffers, myCommunity } = useRouteContext();
+    const { signIn, resetPassword, signUp, myProfile, askForHelp, offerHelp, leave, myHelpRequests, myHelpOffers, myCommunity } = useRouteContext();
     const { isAuthenticated, user } = useAuthContext();
 
     const menuNotAuthContent = [
@@ -45,8 +45,8 @@ const UserActions = () => {
         },
         {
             key: '3',
-            label: 'Remind Password',
-            onClick: remindPassword,
+            label: 'Reset Password',
+            onClick: resetPassword,
             icon: <MdOutlinePassword />,
         },
         {

@@ -19,6 +19,8 @@ export const UserProvider = ({ children }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setPageSize] = useState(9);
 
+    const [numberOfRequests, setNumberOfRequests] = useState(0);
+    const [numberOfOffers, setNumberOfOffers] = useState(0);
     const [numberOfUsers, setNumberOfUsers] = useState(0);
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -174,6 +176,48 @@ export const UserProvider = ({ children }) => {
         }
     };
 
+    const getOffersNumber = useCallback(async (id) => {
+        if (isReady) {
+            try {
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest(`/user/${id}/offers`, {
+                    method: 'GET',
+                }, accessToken);
+
+                if (response.status === 'success') {
+                    setNumberOfOffers(response.data.amount || 0);
+                } else {
+                    console.error(response.message || 'Failed to fetch item');
+                    setError(response.message);
+                }
+            } catch (err) {
+                console.error('Error fetching item:', err);
+                setError(err.message || 'An error occurred while fetching an item');
+            }
+        };
+    }, [isReady]);
+
+    const getRequestsNumber = useCallback(async (id) => {
+        if (isReady) {
+            try {
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest(`/user/${id}/requests`, {
+                    method: 'GET',
+                }, accessToken);
+
+                if (response.status === 'success') {
+                    setNumberOfRequests(response.data.amount || 0);
+                } else {
+                    console.error(response.message || 'Failed to fetch item');
+                    setError(response.message);
+                }
+            } catch (err) {
+                console.error('Error fetching item:', err);
+                setError(err.message || 'An error occurred while fetching an item');
+            }
+        };
+    }, [isReady]);
+
     const getUsersInCommunityNumber = useCallback(async (id) => {
         if (isReady) {
             try {
@@ -218,7 +262,11 @@ export const UserProvider = ({ children }) => {
         createItem,
         updateItem,
         deleteItem,
+        getRequestsNumber,
+        getOffersNumber,
         getUsersInCommunityNumber,
+        numberOfOffers,
+        numberOfRequests,
         numberOfUsers,
         selectedUser, setSelectedUser,
         loading,

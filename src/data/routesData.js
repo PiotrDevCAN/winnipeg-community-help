@@ -18,6 +18,10 @@ import VolunteerPage from '@/pages/VolunteerPage'; // form
 import VolunteerListPage from '@/pages/VolunteerListPage'; // list
 import VolunteerCardsPage from '@/pages/VolunteerCardsPage'; // cards
 
+import NeedyPage from '@/pages/NeedyPage'; // form 
+import NeedyListPage from '@/pages/NeedyListPage'; // list
+import NeedyCardsPage from '@/pages/NeedyCardsPage'; // cards
+
 import UserPage from '@/pages/UserPage'; // form 
 import UserListPage from '@/pages/UserListPage'; // list
 import UserCardsPage from '@/pages/UserCardsPage'; // cards
@@ -25,6 +29,7 @@ import UserCardsPage from '@/pages/UserCardsPage'; // cards
 import LoginPage from '@/pages/LoginPage';
 import RegisterPage from '@/pages/RegisterPage';
 import RemindPage from '@/pages/RemindPage';
+import ResetPage from '@/pages/ResetPage';
 import LogoutPage from '@/pages/LogoutPage';
 
 import MyProfilePage from '@/pages/MyProfilePage';
@@ -46,6 +51,7 @@ const helpRequestListHeader = 'List of help requests';
 const helpOfferListHeader = 'List of help offers';
 const communityListHeader = 'List of communities';
 const volunteerListHeader = 'List of volunteers';
+const needyListHeader = 'List of people in need';
 const userListHeader = 'List of users';
 const helpCategoryListHeader = 'List of help categories';
 const helpTypeListHeader = 'List of help types';
@@ -63,7 +69,7 @@ const routesData = [
     { path: "/request/cards", section: 'request', protect: true, name: "Cards of help requests", Component: HelpRequestCardsPage },
     { path: "/request/cards/community/:communityId", section: 'request', protect: true, name: "Cards of help requests", Component: HelpRequestCardsPage },
     { path: "/request/cards/type/:typeId", section: 'request', protect: true, name: "Cards of help requests", Component: HelpRequestCardsPage },
-    { path: "/request/cards/user/:userId", section: 'request', protect: true, name: "Cards of help requests", Component: HelpRequestCardsPage },
+    { path: "/request/cards/needy/:needyId", section: 'request', protect: true, name: "Cards of help requests", Component: HelpRequestCardsPage },
     { path: "/request/cards/volunteer/:volunteerId", section: 'request', protect: true, name: "Cards of help requests", Component: HelpRequestCardsPage },
 
     // Help Offer
@@ -75,7 +81,7 @@ const routesData = [
     { path: "/offer/cards", section: 'offer', protect: true, name: "Cards of help offers", Component: HelpOfferCardsPage },
     { path: "/offer/cards/community/:communityId", section: 'offer', protect: true, name: "Cards of help offers", Component: HelpOfferCardsPage },
     { path: "/offer/cards/type/:typeId", section: 'offer', protect: true, name: "Cards of help offers", Component: HelpOfferCardsPage },
-    { path: "/offer/cards/user/:userId", section: 'offer', protect: true, name: "Cards of help offers", Component: HelpOfferCardsPage },
+    { path: "/offer/cards/needy/:needyId", section: 'offer', protect: true, name: "Cards of help offers", Component: HelpOfferCardsPage },
     { path: "/offer/cards/volunteer/:volunteerId", section: 'offer', protect: true, name: "Cards of help offers", Component: HelpOfferCardsPage },
 
     // Community
@@ -89,11 +95,21 @@ const routesData = [
     { path: "/volunteer/new", mode: 'new', section: 'volunteer', protect: true, name: "Register new volunteer", Component: VolunteerPage },
     { path: "/volunteer/:itemId/details", mode: 'view', section: 'volunteer', protect: true, name: "View volunteer", Component: VolunteerPage },
     { path: "/volunteer/:itemId/edit", mode: 'edit', section: 'volunteer', protect: true, name: "Edit volunteer", Component: VolunteerPage },
-    { path: "/volunteer/:itemId/requests", section: 'community', protect: true, name: volunteerListHeader, Component: VolunteerListPage },
-    { path: "/volunteer/:itemId/offers", section: 'community', protect: true, name: volunteerListHeader, Component: VolunteerListPage },
+    { path: "/volunteer/:itemId/requests", section: 'volunteer', protect: true, name: volunteerListHeader, Component: VolunteerListPage },
+    { path: "/volunteer/:itemId/offers", section: 'volunteer', protect: true, name: volunteerListHeader, Component: VolunteerListPage },
     { path: "/volunteer/list", section: 'volunteer', protect: true, admin: true, name: volunteerListHeader, Component: VolunteerListPage },
     { path: "/volunteer/cards", section: 'volunteer', protect: true, name: "Cards of volunteers", Component: VolunteerCardsPage },
     { path: "/volunteer/cards/community/:communityId", section: 'volunteer', protect: true, name: "Cards of volunteers", Component: VolunteerCardsPage },
+
+    // Needy Person
+    { path: "/needy/new", mode: 'new', section: 'needy', protect: true, name: "Register new person in need", Component: NeedyPage },
+    { path: "/needy/:itemId/details", mode: 'view', section: 'needy', protect: true, name: "View person in need", Component: NeedyPage },
+    { path: "/needy/:itemId/edit", mode: 'edit', section: 'needy', protect: true, name: "Edit person in need", Component: NeedyPage },
+    { path: "/needy/:itemId/requests", section: 'needy', protect: true, name: needyListHeader, Component: NeedyListPage },
+    { path: "/needy/:itemId/offers", section: 'needy', protect: true, name: needyListHeader, Component: NeedyListPage },
+    { path: "/needy/list", section: 'needy', protect: true, admin: true, name: needyListHeader, Component: NeedyListPage },
+    { path: "/needy/cards", section: 'needy', protect: true, name: "Cards of people in need", Component: NeedyCardsPage },
+    { path: "/needy/cards/community/:communityId", section: 'needy', protect: true, name: "Cards of person in need", Component: NeedyCardsPage },
 
     // User 
     { path: "/user/new", mode: 'new', section: 'user', protect: true, name: "Register new user", Component: UserPage },
@@ -108,7 +124,9 @@ const routesData = [
     // Auth
     { path: "/login", section: 'auth', name: "Sign In", Component: LoginPage },             // OK
     { path: "/register", section: 'auth', name: "Sign Up", Component: RegisterPage },       // OK
-    { path: "/remind", section: 'auth', name: "Remind password", Component: RemindPage },   // OK
+    { path: "/remindPassword", section: 'auth', name: "Remind password", Component: RemindPage },   // OK
+    { path: "/resetPassword", section: 'auth', name: "Reset password", Component: ResetPage },   // OK
+    { path: "/updatePassword", section: 'auth', name: "Update password", Component: ResetPage },   // OK
     { path: "/logout", section: 'auth', protect: true, name: "Leave the application", Component: LogoutPage },
 
     { path: "/myProfile", section: 'auth', protect: true, name: "My profile", Component: MyProfilePage },

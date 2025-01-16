@@ -6,15 +6,15 @@ import { useRouteContext } from '@/context/RouteContext';
 const { Text } = Typography;
 
 const Offers = ({ item }) => {
-    const { getOffersNumber, loading, error } = useVolunteerContext();
+    const { numberOfOffers, getOffersNumber, loading, error } = useVolunteerContext();
 
     const dividerStyle = {
         margin: "8px 0"
     }
 
-    const { requestHelpByVolunteer } = useRouteContext();
+    const { offerHelpByVolunteer } = useRouteContext();
     const handleViewOffers = (id) => {
-        requestHelpByVolunteer(id);
+        offerHelpByVolunteer(id);
     };
 
     useEffect(() => {
@@ -23,7 +23,6 @@ const Offers = ({ item }) => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-    if (!item) return <p>Loading main item data...</p>;
 
     return (
         <Card
@@ -35,9 +34,9 @@ const Offers = ({ item }) => {
                 </Button>
             ]}
         >
-            <p>List of Help Offers responded by Volunteer</p>
+            <p>List of Help Offers raised by Volunteer</p>
             <Divider style={dividerStyle} />
-            <p>Number of items: <Text strong>{getOffersNumber}</Text></p>
+            <p>Number of items: <Text strong>{numberOfOffers}</Text></p>
         </Card>
     );
 };

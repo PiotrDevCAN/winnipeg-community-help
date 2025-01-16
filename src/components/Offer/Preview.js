@@ -5,6 +5,7 @@ import { CombinedCategoryProvider } from '@/context/CombinedCategoryContext';
 import Details from '@/components/Offer/Preview/Details';
 import Map from '@/components/Offer/Preview/Map';
 import VolunteerDetails from '@/components/Offer/Preview/VolunteerDetails';
+import NecessitousDetails from '@/components/Offer/Preview/NecessitousDetails';
 import Communities from '@/components/Boxes/Communities';
 import CategoryTypes from '@/components/Boxes/CategoryTypes';
 
@@ -25,6 +26,7 @@ const Preview = ({ item }) => {
             <Col xs={20} sm={16} md={12} lg={12} xl={12}>
                 <Flex gap="middle" vertical>
                     <VolunteerDetails item={item} />
+                    <NecessitousDetails item={item} />
                     <CombinedCommunityProvider>
                         <Communities item={item} />
                     </CombinedCommunityProvider>

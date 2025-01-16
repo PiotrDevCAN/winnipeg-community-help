@@ -51,7 +51,7 @@ const Volunteer = () => {
                                 <Title level={2}>
                                     {`${item.first_name} ${item.last_name}`}
                                 </Title>
-                                <Paragraph>{item.nick ?? 'nick'}</Paragraph>
+                                <Paragraph>{item.nickname ?? 'nick'}</Paragraph>
                                 <Paragraph>{item.email ?? 'e-mail'}</Paragraph>
                                 <Paragraph>{item.community_name ?? 'community'}</Paragraph>
                                 <Paragraph>{item.sub_community_name ?? 'sub community'}</Paragraph>

@@ -5,19 +5,20 @@ import ListTable from '@/components/Request/ListTable';
 import { usePageHeaderContext } from '@/context/PageHeaderContext';
 import CategoryFilter from '@/components/Filters/CategoryFilter';
 import CommunityFilter from '@/components/Filters/CommunityFilter';
-import PeopleFilter from '@/components/Filters/PeopleFilter';
+// import PeopleFilter from '@/components/Filters/PeopleFilter';
+import RequestRequestorFilter from '@/components/Filters/RequestRequestorFilter';
 import ClearFilters from '@/components/Filters/ClearFilters';
 import GenericListPage from '@/components/Layout/GenericListPage';
 import { useRouteContext } from '@/context/RouteContext';
 
 const HelpRequestListPage = () => {
-  const { communityId, typeId, volunteerId, userId } = useParams();
+  const { communityId, typeId, volunteerId, needyId } = useParams();
 
   const { setComponent1, setComponent2, setComponent3, setComponent4, setComponent5 } = usePageHeaderContext();
   useEffect(() => {
     setComponent1(<CategoryFilter preSelectedId={typeId} />);
     setComponent2(<CommunityFilter preSelectedId={communityId} />);
-    setComponent3(<PeopleFilter preSelectedVolunteerId={volunteerId} preSelectedUserId={userId} />);
+    setComponent3(<RequestRequestorFilter preSelectedVolunteerId={volunteerId} preSelectedNeedyId={needyId} />);
     setComponent4(<ClearFilters />);
 
     return () => {

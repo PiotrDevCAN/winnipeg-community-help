@@ -83,7 +83,7 @@ const UserForm = ({ item, mode }) => {
                 // email: item.email,
                 firstName: item.first_name,
                 lastName: item.last_name,
-                nickname: item.nick,
+                nickname: item.nickname,
                 prefix: item.prefix,
                 phone: item.phone_number,
                 // birthDate: item.birth_date,

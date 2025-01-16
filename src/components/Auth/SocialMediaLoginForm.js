@@ -45,15 +45,6 @@ const SocialMediaLoginForm = () => {
 
             <Divider style={dividerStyle} />
             <Button
-                onClick={facebookLogin}
-                type="primary" icon={<FaFacebook />}
-                className="colorful-background"
-                style={{ width: "100%" }}
-            >
-                Login with Facebook
-            </Button>
-            <Divider style={dividerStyle} />
-            <Button
                 onClick={handleGoogleLogin}
                 type="primary"
                 icon={<FaGoogle />}
@@ -61,6 +52,15 @@ const SocialMediaLoginForm = () => {
                 style={{ width: "100%" }}
             >
                 Login with Google
+            </Button>
+            <Divider style={dividerStyle} />
+            <Button
+                onClick={facebookLogin}
+                type="primary" icon={<FaFacebook />}
+                className="colorful-background"
+                style={{ width: "100%" }}
+            >
+                Login with Facebook
             </Button>
             <Divider style={dividerStyle} />
             <Button

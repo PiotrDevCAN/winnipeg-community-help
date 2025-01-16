@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Checkbox, Divider, Typography } from 'antd';
 import { useAuthContext } from '@/context/AuthContext';
-import RemindPassword from '@/components/Buttons/RemindPassword';
+import ResetPassword from '@/components/Buttons/ResetPassword';
 import CreateAccount from '@/components/Buttons/CreateAccount';
 
 const { Text } = Typography;
@@ -77,7 +77,7 @@ const EmailLoginForm = () => {
                     Log in
                 </Button>
                 <Divider style={dividerStyle} />
-                <RemindPassword />
+                <ResetPassword />
 
                 <Divider>
                     or

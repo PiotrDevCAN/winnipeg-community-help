@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Card, Typography, Divider, Button } from 'antd';
 import { useCombinedCommunityContext } from '@/context/CombinedCommunityContext';
 import { useRouteContext } from '@/context/RouteContext';
+import dayjs from 'dayjs';
 
 const { Text } = Typography;
 
@@ -17,6 +18,7 @@ const Details = ({ item }) => {
     const dividerStyle = {
         margin: "8px 0"
     }
+    const formattedDate = dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss');
 
     useEffect(() => {
         const subCommunityId = item.community_id;
@@ -38,12 +40,12 @@ const Details = ({ item }) => {
                 </Button>
             ]}
         >
-            <p>Nickname: <Text strong>{item.nick}</Text></p>
+            <p>Nickname: <Text strong>{item.nickname}</Text></p>
             <p>E-mail: <Text strong>{item.email}</Text></p>
             <p>Phone Number: <Text strong>{item.phone_number}</Text></p>
             <p>Website: <Text strong>{item.website}</Text></p>
             <p>Description: <Text strong>{item.description}</Text></p>
-            <p>Created: <Text strong>{item.created_at}</Text></p>
+            <p>Created: <Text strong>{formattedDate}</Text></p>
             <Divider style={dividerStyle} />
             <p>Community: <Text strong>{mainCommunityData.label}</Text></p>
             <p>Sub Community: <Text strong>{subCommunityData.label}</Text></p>

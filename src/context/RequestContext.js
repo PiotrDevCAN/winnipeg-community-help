@@ -52,6 +52,14 @@ export const RequestProvider = ({ children }) => {
         filteredItems = data.filter(item => item.sub_community_id === subCommunityId);
     }
 
+    if (userId !== null) {
+        filteredItems = data.filter(item => item.requestor_id === userId);
+    }
+    if (volunteerId !== null) {
+        // alert('volunteer who responded');
+        // filteredItems = data.filter(item => item.requestor_id === volunteerId);
+    }
+
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
     const fetchData = useCallback(async () => {
