@@ -63,7 +63,7 @@ export const CommunityProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getCommunity = (id) => {
         const communityId = parseInt(id);
@@ -95,7 +95,7 @@ export const CommunityProvider = ({ children }) => {
                 setLoading(false);
             }
         }
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const createItem = async (newItem) => {
         try {

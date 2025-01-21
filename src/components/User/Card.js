@@ -13,7 +13,7 @@ const cardStyle = {
 const avatarStyle = {
     width: 35,
     height: 35,
-    backgroundColor: '#1677ff',
+    // backgroundColor: '#1677ff',
 }
 
 const dividerStyle = {

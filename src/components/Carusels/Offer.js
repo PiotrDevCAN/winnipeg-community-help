@@ -9,7 +9,7 @@ import { MdVolunteerActivism } from "react-icons/md";
 const { Title, Paragraph } = Typography;
 
 const avatarStyle = {
-    backgroundColor: '#1677ff',
+    // backgroundColor: '#1677ff',
 }
 
 const Offer = () => {

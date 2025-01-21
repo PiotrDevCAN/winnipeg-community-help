@@ -58,7 +58,7 @@ export const StaticHelpProvider = ({ children }) => {
                 setLoadingCategories(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const fetchTypeData = useCallback(async () => {
         if (isReady) {
@@ -87,7 +87,7 @@ export const StaticHelpProvider = ({ children }) => {
                 setLoadingTypes(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getCategory = (id) => {
         const categoryId = parseInt(id);
@@ -118,7 +118,7 @@ export const StaticHelpProvider = ({ children }) => {
                 setError(err.message || 'An error occurred while fetching an item');
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getType = (id) => {
         const typeId = parseInt(id);
@@ -149,7 +149,7 @@ export const StaticHelpProvider = ({ children }) => {
                 setError(err.message || 'An error occurred while fetching an item');
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getParentIdById = (id) => {
         const typeId = parseInt(id);

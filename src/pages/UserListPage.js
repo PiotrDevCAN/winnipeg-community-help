@@ -12,15 +12,20 @@ const UserListPage = () => {
   const { communityId } = useParams();
 
   const { setComponent1, setComponent2 } = usePageHeaderContext();
+
   useEffect(() => {
     setComponent1(<CommunityFilter preSelectedId={communityId} />);
-    setComponent2(<ClearFilters />);
-
     return () => {
       setComponent1(null);
+    };
+  }, [communityId, setComponent1]);
+
+  useEffect(() => {
+    setComponent2(<ClearFilters />);
+    return () => {
       setComponent2(null);
     };
-  }, [setComponent1, setComponent2]);
+  }, [setComponent2]);
 
   const { newVolunteer: handleNewItem } = useRouteContext();
 

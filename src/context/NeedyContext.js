@@ -63,7 +63,7 @@ export const NeedyProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getUser = (id) => {
         const userId = parseInt(id);
@@ -91,7 +91,7 @@ export const NeedyProvider = ({ children }) => {
                 setError(err.message || 'An error occurred while fetching an item');
             }
         }
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getItemByFirebaseId = useCallback(async (firebaseId) => {
         if (isReady) {
@@ -115,7 +115,7 @@ export const NeedyProvider = ({ children }) => {
                 setError(err.message || 'An error occurred while fetching an item');
             }
         }
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const createItem = async (newItem) => {
         try {
@@ -195,7 +195,7 @@ export const NeedyProvider = ({ children }) => {
                 setError(err.message || 'An error occurred while fetching an item');
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getRequestsNumber = useCallback(async (id) => {
         if (isReady) {
@@ -216,7 +216,7 @@ export const NeedyProvider = ({ children }) => {
                 setError(err.message || 'An error occurred while fetching an item');
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getUsersInCommunityNumber = useCallback(async (id) => {
         if (isReady) {
@@ -243,7 +243,7 @@ export const NeedyProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const value = {
         data,

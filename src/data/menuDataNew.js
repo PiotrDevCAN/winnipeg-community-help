@@ -101,32 +101,13 @@ const menuDataNew = [
         icon: <FaPeopleGroup />,
         children: [
             {
-                key: 'volunteers',
-                label: 'Volunteers',
-                type: 'group',
-                children: [
-                    {
-                        key: 'newVolunteer',
-                        label: 'New volunteer',
-                        icon: <RiUserHeartLine />,
-                        path: '/volunteer/new',
-                    },
-                    {
-                        key: 'volunteersCards',
-                        label: 'All registered volunteers',
-                        icon: <FaListUl />,
-                        path: '/volunteer/cards',
-                    },
-                ],
-            },
-            {
                 key: 'needy',
                 label: 'People in need',
                 type: 'group',
                 children: [
                     {
                         key: 'newNeedy',
-                        label: 'New person in need',
+                        label: 'Add new person in need',
                         icon: <TbUserHeart />,
                         path: '/needy/new',
                     },
@@ -139,13 +120,32 @@ const menuDataNew = [
                 ],
             },
             {
+                key: 'volunteers',
+                label: 'Volunteers',
+                type: 'group',
+                children: [
+                    {
+                        key: 'newVolunteer',
+                        label: 'Add new volunteer',
+                        icon: <RiUserHeartLine />,
+                        path: '/volunteer/new',
+                    },
+                    {
+                        key: 'volunteersCards',
+                        label: 'All registered volunteers',
+                        icon: <FaListUl />,
+                        path: '/volunteer/cards',
+                    },
+                ],
+            },
+            {
                 key: 'users',
                 label: 'Users',
                 type: 'group',
                 children: [
                     {
                         key: 'newUser',
-                        label: 'New user',
+                        label: 'Add new user',
                         icon: <TbUser />,
                         path: '/user/new',
                     },
@@ -166,7 +166,7 @@ const menuDataNew = [
         children: [
             {
                 key: 'newCommunity',
-                label: 'New community',
+                label: 'Bring new community',
                 icon: <TbBuildingCommunity />,
                 path: '/community/new',
             },

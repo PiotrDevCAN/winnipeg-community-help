@@ -21,7 +21,6 @@ const Details = ({ item }) => {
     const formattedDate = dayjs(item.created_at).format('YYYY-MM-DD HH:mm:ss');
 
     useEffect(() => {
-        alert('aaa'+item.community_id)
         const subCommunityId = item.community_id;
         loadCommunitiesData(subCommunityId);
     }, [loadCommunitiesData]);

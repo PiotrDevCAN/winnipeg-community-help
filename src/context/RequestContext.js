@@ -87,7 +87,7 @@ export const RequestProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getRequest = (id) => {
         const requestId = parseInt(id);
@@ -119,7 +119,7 @@ export const RequestProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const createItem = async (newItem) => {
         try {
@@ -205,7 +205,7 @@ export const RequestProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const value = {
         data,

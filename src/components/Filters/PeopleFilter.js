@@ -4,7 +4,7 @@ import { Select, Row, Col } from 'antd';
 import { MdVolunteerActivism } from "react-icons/md";
 import { MdOutlineVolunteerActivism } from "react-icons/md";
 
-import { useUserContext } from '@/context/UserContext';
+import { useNeedyContext } from '@/context/NeedyContext';
 import { useVolunteerContext } from '@/context/VolunteerContext';
 import SelectAllOption from '@/components/SelectAllOption';
 
@@ -16,7 +16,7 @@ const PeopleFilter = ({ preSelectedVolunteerId, preSelectedNeedyId }) => {
         selectedUser, setSelectedUser,
         load: loadingUsers,
         error: errorUsers,
-    } = useUserContext();
+    } = useNeedyContext();
     const {
         data: volunteersData,
         fetchData: fetchVolunteerData,
@@ -69,6 +69,7 @@ const PeopleFilter = ({ preSelectedVolunteerId, preSelectedNeedyId }) => {
         fetchVolunteerData();
         if (preSelectedNeedyId) {
             const needyId = parseInt(preSelectedNeedyId);
+            alert(typeof needyId);
             setSelectedUser(needyId);
         }
         if (preSelectedVolunteerId) {

@@ -21,39 +21,39 @@ import AppRoutes from '@/router/AppRoutes';
 import CookieConsent from '@/components/CookieConsent';
 
 // Grouping all providers for clarity
-const Providers = ({ children }) => (
-  <AuthProvider>
-    <APIAuthProvider>
-      <RouteProvider>
-        <StaticCommunityProvider>
-          <StaticHelpProvider>
-            <UserProvider>
-              <NeedyProvider>
-                <VolunteerProvider>
-                  <PageHeaderProvider>
-                    {children}
-                  </PageHeaderProvider>
-                </VolunteerProvider>
-              </NeedyProvider>
-            </UserProvider>
-          </StaticHelpProvider>
-        </StaticCommunityProvider>
-      </RouteProvider>
-    </APIAuthProvider>
-  </AuthProvider>
+const AppProviders = ({ children }) => (
+    <AuthProvider>
+        <APIAuthProvider>
+            <RouteProvider>
+                <StaticCommunityProvider>
+                    <StaticHelpProvider>
+                        <UserProvider>
+                            <NeedyProvider>
+                                <VolunteerProvider>
+                                    <PageHeaderProvider>
+                                        {children}
+                                    </PageHeaderProvider>
+                                </VolunteerProvider>
+                            </NeedyProvider>
+                        </UserProvider>
+                    </StaticHelpProvider>
+                </StaticCommunityProvider>
+            </RouteProvider>
+        </APIAuthProvider>
+    </AuthProvider>
 );
 
 const App = () => {
-  return (
-    <Router>
-      <Providers>
-        <BaseLayout>
-          <AppRoutes />
-        </BaseLayout>
-      </Providers>
-      <CookieConsent />
-    </Router>
-  );
+    return (
+        <Router>
+            <AppProviders>
+                <BaseLayout>
+                    <AppRoutes />
+                </BaseLayout>
+            </AppProviders>
+            <CookieConsent />
+        </Router>
+    );
 };
 
 export default App;

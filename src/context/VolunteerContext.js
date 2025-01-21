@@ -69,7 +69,7 @@ export const VolunteerProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getVolunteer = (id) => {
         const volunteerId = parseInt(id);
@@ -101,7 +101,7 @@ export const VolunteerProvider = ({ children }) => {
                 setLoading(false);
             }
         }
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const createItem = async (newItem) => {
         try {
@@ -163,42 +163,46 @@ export const VolunteerProvider = ({ children }) => {
     };
 
     const getOffersNumber = useCallback(async (id) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/volunteer/${id}/offers`, {
-                method: 'GET',
-            }, accessToken);
+        if (isReady) {
+            try {
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest(`/volunteer/${id}/offers`, {
+                    method: 'GET',
+                }, accessToken);
 
-            if (response.status === 'success') {
-                setNumberOfOffers(response.data.amount || 0);
-            } else {
-                console.error(response.message || 'Failed to fetch item');
-                setError(response.message);
+                if (response.status === 'success') {
+                    setNumberOfOffers(response.data.amount || 0);
+                } else {
+                    console.error(response.message || 'Failed to fetch item');
+                    setError(response.message);
+                }
+            } catch (err) {
+                console.error('Error fetching item:', err);
+                setError(err.message || 'An error occurred while fetching an item');
             }
-        } catch (err) {
-            console.error('Error fetching item:', err);
-            setError(err.message || 'An error occurred while fetching an item');
         }
-    }, []);
+    }, [isReady, getAccessToken]);
 
     const getRequestsNumber = useCallback(async (id) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/volunteer/${id}/requests`, {
-                method: 'GET',
-            }, accessToken);
+        if (isReady) {
+            try {
+                const accessToken = await getAccessToken();
+                const response = await apiService.makeRequest(`/volunteer/${id}/requests`, {
+                    method: 'GET',
+                }, accessToken);
 
-            if (response.status === 'success') {
-                setNumberOfRequests(response.data.amount || 0);
-            } else {
-                console.error(response.message || 'Failed to fetch item');
-                setError(response.message);
+                if (response.status === 'success') {
+                    setNumberOfRequests(response.data.amount || 0);
+                } else {
+                    console.error(response.message || 'Failed to fetch item');
+                    setError(response.message);
+                }
+            } catch (err) {
+                console.error('Error fetching item:', err);
+                setError(err.message || 'An error occurred while fetching an item');
             }
-        } catch (err) {
-            console.error('Error fetching item:', err);
-            setError(err.message || 'An error occurred while fetching an item');
         }
-    }, []);
+    }, [isReady, getAccessToken]);
 
     const getVolunteersInCommunityNumber = useCallback(async (id) => {
         if (isReady) {
@@ -225,7 +229,7 @@ export const VolunteerProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const value = {
         data,

@@ -14,10 +14,14 @@ const headerStyle = {
 
 const PageHeader = ({ PageName, Section }) => {
 
-    const { component1, component2, component3, component4, component5 } = usePageHeaderContext();
+    const { components } = usePageHeaderContext();
+
+    const component1 = components[0].content;
+    const component2 = components[1].content;
+    const component3 = components[2].content;
+    const component4 = components[3].content;
 
     let content;
-
     let cardStyleClass;
     switch (Section) {
         case 'request':
@@ -35,7 +39,7 @@ const PageHeader = ({ PageName, Section }) => {
             break;
     }
 
-    if (component1 || component2 || component3 || component4 || component5) {
+    if (component1 || component2 || component3 || component4) {
         content = <>
             <Col className="gutter-row" span={9}>
                 <div style={style}>
@@ -61,11 +65,6 @@ const PageHeader = ({ PageName, Section }) => {
                 {component4 ? (
                     <div style={style}>
                         {component4}
-                    </div>
-                ) : ''}
-                {component5 ? (
-                    <div style={style}>
-                        {component5}
                     </div>
                 ) : ''}
             </Col >

@@ -86,7 +86,7 @@ export const OfferProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getOffer = (id) => {
         const offerId = parseInt(id);
@@ -118,7 +118,7 @@ export const OfferProvider = ({ children }) => {
                 setLoading(false);
             }
         }
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const createItem = async (newItem) => {
         try {
@@ -204,7 +204,7 @@ export const OfferProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const value = {
         data,

@@ -64,7 +64,7 @@ export const StaticCommunityProvider = ({ children }) => {
                 setLoadingCommunities(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const fetchSubCommunityData = useCallback(async () => {
         if (isReady) {
@@ -95,7 +95,7 @@ export const StaticCommunityProvider = ({ children }) => {
                 setLoadingSubCommunities(false);
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getCommunity = (id) => {
         const communityId = parseInt(id);
@@ -126,7 +126,7 @@ export const StaticCommunityProvider = ({ children }) => {
                 setError(err.message || 'An error occurred while fetching an item');
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getSubCommunity = (id) => {
         const communityId = parseInt(id);
@@ -157,7 +157,7 @@ export const StaticCommunityProvider = ({ children }) => {
                 setError(err.message || 'An error occurred while fetching an item');
             }
         };
-    }, [isReady]);
+    }, [isReady, getAccessToken]);
 
     const getParentIdById = (id) => {
         const communityId = parseInt(id);

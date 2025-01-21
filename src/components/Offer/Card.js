@@ -13,7 +13,7 @@ const cardStyle = {
 const avatarStyle = {
     width: 35,
     height: 35,
-    backgroundColor: '#1677ff',
+    // backgroundColor: '#1677ff',
 }
 
 const dividerStyle = {
@@ -49,8 +49,8 @@ const OfferCard = ({ item }) => {
                         <p>Title: <Text strong>{item.title ?? 'title'}</Text></p>
                         <p>Description: <Text strong>{item.description ?? 'description'}</Text></p>
                         <Divider style={dividerStyle} />
-                        <p>Volunteer: <Text strong>{item.requestor_id ? item.first_name + ' ' + item.last_name : 'Not assigned yet'}</Text></p>
-                        <p>Needy Person: <Text strong>{item.requestor_id ? item.first_name + ' ' + item.last_name : 'Not assigned yet'}</Text></p>
+                        <p>Volunteer: <Text strong>{item.volunteer_id ? item.volunteer_first_name + ' ' + item.volunteer_last_name : 'Not assigned yet'}</Text></p>
+                        <p>Needy Person: <Text strong>{item.needy_id ? item.needy_first_name + ' ' + item.needy_last_name : 'Not assigned yet'}</Text></p>
                         <Divider style={dividerStyle} />
                         <p>Community: <Text strong>{item.community_name ?? 'community'}</Text></p>
                         <p>Sub Community: <Text strong>{item.sub_community_name ?? 'sub community'}</Text></p>

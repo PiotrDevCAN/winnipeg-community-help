@@ -48,9 +48,15 @@
   color: #fff;
 }
 
-.ant-menu .ant-menu-submenu-selected, 
-.ant-menu .ant-menu-item-selected {
+.ant-menu-dark .ant-menu-item-selected,
+.ant-menu-dark.ant-menu .ant-menu-submenu-selected {
   background: linear-gradient(135deg, #004dd3 0%, #04befe 100%);
+  border-radius: 6px;
+}
+
+.ant-menu-dark .ant-menu-submenu-selected>.ant-menu-submenu-title, 
+.ant-menu-dark>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
+  color: #fff;
 }
 
 .gradientBg.odd {

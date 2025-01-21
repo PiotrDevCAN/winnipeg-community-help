@@ -10,15 +10,20 @@ import { useRouteContext } from '@/context/RouteContext';
 const CommunityListPage = () => {
 
   const { setComponent1, setComponent2 } = usePageHeaderContext();
+
   useEffect(() => {
     setComponent1(<CommunityFilter />);
-    setComponent2(<ClearFilters />);
-
     return () => {
       setComponent1(null);
+    };
+  }, [setComponent1]);
+
+  useEffect(() => {
+    setComponent2(<ClearFilters />);
+    return () => {
       setComponent2(null);
     };
-  }, [setComponent1, setComponent2]);
+  }, [setComponent2]);
 
   const { newCommunity: handleNewItem } = useRouteContext();
 

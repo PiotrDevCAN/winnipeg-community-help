@@ -9,7 +9,7 @@ import { MdOutlineVolunteerActivism } from "react-icons/md";
 const { Title, Paragraph } = Typography;
 
 const avatarStyle = {
-    backgroundColor: '#1677ff',
+    // backgroundColor: '#1677ff',
 }
 
 const Request = () => {
@@ -22,6 +22,7 @@ const Request = () => {
     };
 
     useEffect(() => {
+        console.log('carusel 1');
         fetchData();
     }, [fetchData]);
 
