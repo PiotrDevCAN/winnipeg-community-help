@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { Card, Button, Divider, Typography } from 'antd';
-import { useRequestContext } from '@/context/RequestContext';
+import { useRequestContext } from '@/context/mainTypes/RequestContext';
 import { useRouteContext } from '@/context/RouteContext';
+import { useUserContext } from '@/context/mainTypes/UserContext';
+import useLoadingMessage from '@/customHooks/useLoadingMessage';
 
 const { Text } = Typography;
 
 const Requests = ({ item }) => {
-    const { numberOfRequests, getRequestsInCommunityNumber, loading, error } = useRequestContext();
+    const { numberOfRequests, loading, error } = useRequestContext();
+    const { getUsersInCommunityNumber } = useUserContext();
 
     const dividerStyle = {
         margin: "8px 0"
@@ -18,10 +21,11 @@ const Requests = ({ item }) => {
     };
 
     useEffect(() => {
-        getRequestsInCommunityNumber(item.community_id);
-    }, [getRequestsInCommunityNumber]);
+        getUsersInCommunityNumber(item.community_id);
+    }, [getUsersInCommunityNumber]);
 
-    if (loading) return <p>Loading...</p>;
+    useLoadingMessage(loading, 'Help Requests in Community');
+
     if (error) return <p>Error: {error}</p>;
     if (!item) return <p>Loading Help Requests amount in Community data...</p>;
 

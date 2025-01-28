@@ -13,7 +13,6 @@ const GenericCardsPage = ({
 }) => {
   const {
     currentItems: data,
-    fetchData,
     loading,
     error,
     filteredItems: filteredData,
@@ -23,12 +22,8 @@ const GenericCardsPage = ({
     paginate,
   } = useContextHook();
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
   // If still loading, return a loading state
-  const loadingMsg = 'Loading table data...';
+  const loadingMsg = 'Loading cards data...';
   if (loading) return <LoadingPlaceholder message={loadingMsg} />;
 
   // If there is an error, display it

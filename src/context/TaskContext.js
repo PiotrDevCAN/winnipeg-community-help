@@ -1,8 +1,10 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
+import useCustomContext from '@/customHooks/useCustomContext';
 
 const TaskContext = createContext();
+TaskContext.displayName = 'Task';
 
-export const useTaskContext = () => useContext(TaskContext);
+export const useTaskContext = () => useCustomContext(TaskContext);
 
 export const TaskProvider = ({ children }) => {
   // const [tasks, setTasks] = useState([]);

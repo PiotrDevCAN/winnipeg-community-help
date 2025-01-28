@@ -13,7 +13,6 @@ const cardStyle = {
 const avatarStyle = {
     width: 35,
     height: 35,
-    // backgroundColor: '#1677ff',
 }
 
 const dividerStyle = {
@@ -40,6 +39,11 @@ const RequestCard = ({ item }) => {
         >
             <Meta
                 avatar={<Avatar
+                    style={{
+                        backgroundColor: 'red',
+                        verticalAlign: 'middle',
+                    }}
+                    size={48}
                     icon={<MdOutlineVolunteerActivism style={avatarStyle} />}
                     shape='square'
                 />}

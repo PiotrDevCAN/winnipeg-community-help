@@ -213,6 +213,13 @@ const menuDataNew = [
                 admins: 'true',
             },
             {
+                key: 'peopleInNeedList',
+                label: 'Manage people in need',
+                icon: <TbLayoutCards />,
+                path: '/needy/list',
+                admins: 'true',
+            },
+            {
                 key: 'volunteersList',
                 label: 'Manage volunteers',
                 icon: <TbLayoutCards />,
@@ -220,17 +227,17 @@ const menuDataNew = [
                 admins: 'true',
             },
             {
-                key: 'communitiesList',
-                label: 'Manage communities',
-                icon: <TbLayoutCards />,
-                path: '/community/list',
-                admins: 'true',
-            },
-            {
                 key: 'usersList',
                 label: 'Manage users',
                 icon: <TbLayoutCards />,
                 path: '/user/list',
+                admins: 'true',
+            },
+            {
+                key: 'communitiesList',
+                label: 'Manage communities',
+                icon: <TbLayoutCards />,
+                path: '/community/list',
                 admins: 'true',
             },
         ],

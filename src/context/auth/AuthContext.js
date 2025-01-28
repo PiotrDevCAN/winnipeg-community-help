@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 import {
     emailRegisterAction,
     emailLoginAction,
@@ -11,10 +11,12 @@ import {
     getAuthUserAction,
     monitorAuthState
 } from '@/services/SupabaseAuthService';
+import useCustomContext from '@/customHooks/useCustomContext';
 
 const AuthContext = createContext();
+AuthContext.displayName = 'Auth';
 
-export const useAuthContext = () => useContext(AuthContext);
+export const useAuthContext = () => useCustomContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
 
@@ -127,7 +129,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const value = {
+    const contextValue = useMemo(() => ({
         isAuthenticated,
         user,
         isAdmin,
@@ -141,10 +143,10 @@ export const AuthProvider = ({ children }) => {
         facebookLogin,
         logout,
         getAuthUser,
-    };
+    }), [isAuthenticated, user, isAdmin, loading]);
 
     return (
-        <AuthContext.Provider value={value}>
+        <AuthContext.Provider value={contextValue}>
             {!loading && children}
         </AuthContext.Provider>
     );

@@ -9,7 +9,7 @@ import {
     DatePicker,
 } from 'antd';
 
-import { FormCommunityProvider } from '@/context/FormCommunityContext';
+import { FormCommunityProvider } from '@/context/auxiliary/FormCommunityContext';
 import MainCommunity from '@/components/Selects/MainCommunity';
 import SubCommunity from '@/components/Selects/SubCommunity';
 

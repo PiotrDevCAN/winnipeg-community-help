@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '@/components/RecordNotFound';
 import FormWrapper from '@/components/FormWrapper';
+import { useAPIAuth } from '@/context/auth/APIAuthContext';
+import useLoadingMessage from '../../customHooks/useLoadingMessage';
 
 const GenericRecordPage = ({
   objectType,
@@ -13,19 +15,21 @@ const GenericRecordPage = ({
   const { itemId } = useParams();
   const isFormMode = mode === "edit" || mode === "new";
 
+  const { isReady } = useAPIAuth();
   const { item, getItem, loading, error } = useContextHook();
 
   useEffect(() => {
     const loadData = async () => {
-      if (itemId && !item) {
-        await getItem(itemId);
-      }
+      await getItem(itemId);
     };
-    loadData();
-  }, [itemId, item, getItem]);
+    if (isReady && itemId && !item) {
+      loadData();
+    }
+  }, [isReady, itemId]);
+
+  useLoadingMessage(loading, objectType);
 
   if (mode !== "new") {
-    if (loading) return <p>Loading {objectType}...</p>;
     if (error) return <RecordNotFound error={error} />;
     if (!item) return <p>Record data not ready yet</p>;
   }

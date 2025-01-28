@@ -1,9 +1,11 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
+import React, { createContext, useState, useCallback } from 'react';
+import { useStaticHelpDataContext } from '@/context/static/StaticHelpDataContext';
+import useCustomContext from '@/customHooks/useCustomContext';
 
 const CombinedCategoryContext = createContext();
+CombinedCategoryContext.displayName = 'CombinedCategory';
 
-export const useCombinedCategoryContext = () => useContext(CombinedCategoryContext);
+export const useCombinedCategoryContext = () => useCustomContext(CombinedCategoryContext);
 
 export const CombinedCategoryProvider = ({ children }) => {
     const { getCategoryById, getTypeById, loading: staticLoading, error: staticError } = useStaticHelpDataContext();

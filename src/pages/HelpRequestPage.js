@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRequestContext, RequestProvider } from '@/context/RequestContext';
+import { useRequestContext, RequestProvider } from '@/context/mainTypes/RequestContext';
 import GenericRecordPage from '@/components/Layout/GenericRecordPage';
 import RequestPreview from '@/components/Request/Preview';
 import RequestForm from '@/components/Request/Form';
@@ -7,7 +7,7 @@ import RequestForm from '@/components/Request/Form';
 const HelpRequestPage = ({ mode }) => (
   <RequestProvider>
     <GenericRecordPage
-      objectType="request"
+      objectType="Request"
       useContextHook={useRequestContext}
       mode={mode}
       PreviewComponent={RequestPreview}

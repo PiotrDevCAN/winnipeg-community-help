@@ -5,7 +5,7 @@ import { usePageHeaderContext } from '@/context/PageHeaderContext';
 import CommunityFilter from '@/components/Filters/CommunityFilter';
 import ClearFilters from '@/components/Filters/ClearFilters';
 import GenericListPage from '@/components/Layout/GenericListPage';
-import { useUserContext } from '@/context/UserContext';
+import { useUserContext } from '@/context/mainTypes/UserContext';
 import { useRouteContext } from '@/context/RouteContext';
 
 const NeedyListPage = () => {

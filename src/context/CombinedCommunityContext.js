@@ -1,9 +1,11 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import { useStaticCommunityContext } from '@/context/StaticCommunityContext';
+import React, { createContext, useState, useCallback } from 'react';
+import { useStaticCommunityContext } from '@/context/static/StaticCommunityContext';
+import useCustomContext from '@/customHooks/useCustomContext';
 
 const CombinedCommunityContext = createContext();
+CombinedCommunityContext.displayName = 'CombinedCommunity';
 
-export const useCombinedCommunityContext = () => useContext(CombinedCommunityContext);
+export const useCombinedCommunityContext = () => useCustomContext(CombinedCommunityContext);
 
 export const CombinedCommunityProvider = ({ children }) => {
     const { getCommunityById, getSubCommunityById } = useStaticCommunityContext();

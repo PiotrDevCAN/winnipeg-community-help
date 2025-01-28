@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Card, Button, Divider, Typography } from 'antd';
-import { useNeedyContext } from '@/context/NeedyContext';
+import { useNeedyContext } from '@/context/mainTypes/NeedyContext';
 import { useRouteContext } from '@/context/RouteContext';
+import useLoadingMessage from '@/customHooks/useLoadingMessage';
 
 const { Text } = Typography;
 
@@ -21,7 +22,8 @@ const Offers = ({ item }) => {
         getOffersNumber(item.id);
     }, [getOffersNumber]);
 
-    if (loading) return <p>Loading...</p>;
+    useLoadingMessage(loading, 'Person in Need Help Offers');
+
     if (error) return <p>Error: {error}</p>;
 
     return (

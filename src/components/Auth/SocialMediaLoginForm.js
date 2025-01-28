@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Divider } from 'antd';
-import { useAuthContext } from '@/context/AuthContext';
+import { useAuthContext } from '@/context/auth/AuthContext';
 import { FaFacebook, FaGoogle, FaLinkedinIn } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
 

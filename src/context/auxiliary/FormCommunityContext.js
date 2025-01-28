@@ -1,11 +1,13 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import { useStaticCommunityContext } from '@/context/StaticCommunityContext';
+import React, { createContext, useState, useCallback } from 'react';
+import { useStaticCommunityContext } from '@/context/static/StaticCommunityContext';
 import SelectAllOption from '@/components/SelectAllOption';
 import { prepareSelectData } from '@/services/prepareSelectData';
+import useCustomContext from '@/customHooks/useCustomContext';
 
 const FormCommunityContext = createContext();
+FormCommunityContext.displayName = 'FormCommunity';
 
-export const useFormCommunityContext = () => useContext(FormCommunityContext);
+export const useFormCommunityContext = () => useCustomContext(FormCommunityContext);
 
 export const FormCommunityProvider = ({ children }) => {
     const {

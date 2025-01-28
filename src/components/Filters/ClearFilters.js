@@ -1,10 +1,10 @@
 import React from 'react';
 import { Space, Button } from 'antd';
 
-import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
-import { useStaticCommunityContext } from '@/context/StaticCommunityContext';
-import { useUserContext } from '@/context/UserContext';
-import { useVolunteerContext } from '@/context/VolunteerContext';
+import { useStaticHelpDataContext } from '@/context/static/StaticHelpDataContext';
+import { useStaticCommunityContext } from '@/context/static/StaticCommunityContext';
+import { useUserContext } from '@/context/mainTypes/UserContext';
+import { useVolunteerContext } from '@/context/mainTypes/VolunteerContext';
 
 const ClearFilters = () => {
 

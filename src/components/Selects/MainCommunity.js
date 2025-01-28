@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select } from 'antd';
-import { useFormCommunityContext } from '@/context/FormCommunityContext';
+import { useFormCommunityContext } from '@/context/auxiliary/FormCommunityContext';
 import { TbBuildingCommunity } from "react-icons/tb";
 
 const MainCommunity = () => {

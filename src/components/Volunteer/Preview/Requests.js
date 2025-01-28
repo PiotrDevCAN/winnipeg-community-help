@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Card, Button, Divider, Typography } from 'antd';
-import { useVolunteerContext } from '@/context/VolunteerContext';
+import { useVolunteerContext } from '@/context/mainTypes/VolunteerContext';
 import { useRouteContext } from '@/context/RouteContext';
+import useLoadingMessage from '@/customHooks/useLoadingMessage';
 
 const { Text } = Typography;
 
@@ -21,7 +22,8 @@ const Requests = ({ item }) => {
         getRequestsNumber(item.id);
     }, [getRequestsNumber]);
 
-    if (loading) return <p>Loading...</p>;
+    useLoadingMessage(loading, 'Volunteers Help Requests');
+
     if (error) return <p>Error: {error}</p>;
 
     return (

@@ -1,13 +1,15 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import routesData from '@/data/routesData';
 import menuData from '@/data/menuData';
 import menuDataNew from '@/data/menuDataNew';
+import useCustomContext from '@/customHooks/useCustomContext';
 
 const RouteContext = createContext();
+RouteContext.displayName = 'Route';
 
-export const useRouteContext = () => useContext(RouteContext);
+export const useRouteContext = () => useCustomContext(RouteContext);
 
 export const RouteProvider = ({ children }) => {
     const [routes, setRoutes] = useState(routesData);
@@ -156,7 +158,7 @@ export const RouteProvider = ({ children }) => {
         navigate('/updatePassword');
     };
 
-    const value = {
+    const contextValue = useMemo(() => ({
         routes,
         setRoutes,
         menuItems,
@@ -214,10 +216,10 @@ export const RouteProvider = ({ children }) => {
         remindPassword,
         resetPassword,
         updatePassword,
-    };
+    }), [routes, menuItems, menuNewItems]);
 
     return (
-        <RouteContext.Provider value={value}>
+        <RouteContext.Provider value={contextValue}>
             {children}
         </RouteContext.Provider>
     );

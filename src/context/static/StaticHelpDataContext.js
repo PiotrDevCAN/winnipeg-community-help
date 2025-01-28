@@ -1,32 +1,41 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 
-import { useAPIAuth } from '@/context/APIAuthContext';
-import APIService from '../services/APIService';
+import { useAPIAuth } from '@/context/auth/APIAuthContext';
+import APIService from '../../services/APIService';
+import useCustomContext from '@/customHooks/useCustomContext';
 
-const StaticHelpDataContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const apiService = new APIService(API_BASE_URL);
 
-export const useStaticHelpDataContext = () => useContext(StaticHelpDataContext);
+const StaticHelpDataContext = createContext();
+StaticHelpDataContext.displayName = 'Static Help Data';
+
+export const useStaticHelpDataContext = () => useCustomContext(StaticHelpDataContext);
 
 export const StaticHelpProvider = ({ children }) => {
     const { isReady, getAccessToken } = useAPIAuth();
 
+    // store the fetched data
     const [categoriesData, setCategoriesData] = useState([]);
     const [typesData, setTypesData] = useState([]);
 
+    // store the options for the dropdowns
     const [categoryData, setCategoryData] = useState(null);
     const [typeData, setTypeData] = useState(null);
 
+    // used to filter out the selected category
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
 
+    // store the selected community data
     const [categoryOptions, setCategoryOptions] = useState([]);
     const [typeOptions, setTypeOptions] = useState([]);
 
+    // loading states
     const [loadingCategories, setLoadingCategories] = useState(false);
     const [loadingTypes, setLoadingTypes] = useState(false);
 
+    // main loading and error states
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -174,14 +183,18 @@ export const StaticHelpProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        fetchTypeData();
         fetchCategoryData();
-    }, [fetchTypeData, fetchCategoryData]);
+    }, [fetchCategoryData]);
 
-    const value = {
+    useEffect(() => {
+        fetchTypeData();
+    }, [fetchTypeData]);
+
+    const contextValue = useMemo(() => ({
         categoriesData, setCategoriesData,
         typesData, setTypesData,
-        fetchCategoryData, fetchTypeData,
+        fetchCategoryData,
+        fetchTypeData,
         selectedCategory, setSelectedCategory,
         selectedType, setSelectedType,
         categoryOptions, setCategoryOptions,
@@ -199,11 +212,13 @@ export const StaticHelpProvider = ({ children }) => {
         loadingTypes,
         loading,
         error,
-    };
+    }), [categoriesData, setCategoriesData, typesData, setTypesData, fetchCategoryData, fetchTypeData, selectedCategory, setSelectedCategory, selectedType, setSelectedType, categoryOptions, setCategoryOptions, typeOptions, setTypeOptions, getCategory, getCategoryById, getType, getTypeById, categoryData, typeData, getParentIdById, getTypes, countTypes, loadingCategories, loadingTypes, loading, error]);
 
     return (
-        <StaticHelpDataContext.Provider value={value}>
+        <StaticHelpDataContext.Provider value={contextValue}>
             {children}
         </StaticHelpDataContext.Provider>
     );
 }
+
+export default StaticHelpDataContext;

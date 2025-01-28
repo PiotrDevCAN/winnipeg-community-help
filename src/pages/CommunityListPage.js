@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { CommunityProvider, useCommunityContext } from '@/context/CommunityContext';
+import { CommunityProvider, useCommunityContext } from '@/context/mainTypes/CommunityContext';
 import ListTable from '@/components/Community/ListTable';
 import { usePageHeaderContext } from '@/context/PageHeaderContext';
 import CommunityFilter from '@/components/Filters/CommunityFilter';

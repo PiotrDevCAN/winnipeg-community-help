@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Button, Card } from 'antd';
-import { useAuthContext } from '@/context/AuthContext';
+import { useAuthContext } from '@/context/auth/AuthContext';
 import { useRouteContext } from '@/context/RouteContext';
 import { UserOutlined } from '@ant-design/icons';
 

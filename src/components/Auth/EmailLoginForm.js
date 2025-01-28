@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Checkbox, Divider, Typography } from 'antd';
-import { useAuthContext } from '@/context/AuthContext';
+import { useAuthContext } from '@/context/auth/AuthContext';
 import ResetPassword from '@/components/Buttons/ResetPassword';
 import CreateAccount from '@/components/Buttons/CreateAccount';
 

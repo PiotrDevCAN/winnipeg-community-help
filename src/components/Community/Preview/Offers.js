@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { Card, Button, Divider, Typography } from 'antd';
-import { useOfferContext } from '@/context/OfferContext';
+import { useOfferContext } from '@/context/mainTypes/OfferContext';
 import { useRouteContext } from '@/context/RouteContext';
+import { useUserContext } from '@/context/mainTypes/UserContext';
+import useLoadingMessage from '@/customHooks/useLoadingMessage';
 
 const { Text } = Typography;
 
 const Offers = ({ item }) => {
-    const { numberOfOffers, getOffersInCommunityNumber, loading, error } = useOfferContext();
+    const { numberOfOffers, loading, error } = useOfferContext();
+    const { getUsersInCommunityNumber } = useUserContext();
 
     const dividerStyle = {
         margin: "8px 0"
@@ -18,10 +21,11 @@ const Offers = ({ item }) => {
     };
 
     useEffect(() => {
-        getOffersInCommunityNumber(item.community_id);
-    }, [getOffersInCommunityNumber]);
+        getUsersInCommunityNumber(item.community_id);
+    }, [getUsersInCommunityNumber]);
 
-    if (loading) return <p>Loading...</p>;
+    useLoadingMessage(loading, 'Offers in Community');
+
     if (error) return <p>Error: {error}</p>;
     if (!item) return <p>Loading Help Offers amount in Community data...</p>;
 

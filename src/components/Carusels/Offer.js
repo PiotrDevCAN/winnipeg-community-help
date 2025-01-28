@@ -1,35 +1,33 @@
 import React, { useEffect } from 'react';
-import { Carousel } from 'antd';
+import { Carousel, Skeleton } from 'antd';
 import { Button, Flex, Typography, Avatar } from 'antd';
-
-import { useOfferContext } from '@/context/OfferContext';
-import { useRouteContext } from '@/context/RouteContext';
 import { MdVolunteerActivism } from "react-icons/md";
+
+import { useOfferContext } from '@/context/mainTypes/OfferContext';
+import { useRouteContext } from '@/context/RouteContext';
+import useLoadingMessage from '@/customHooks/useLoadingMessage';
 
 const { Title, Paragraph } = Typography;
 
 const avatarStyle = {
-    // backgroundColor: '#1677ff',
+    backgroundColor: 'red',
 }
 
 const Offer = () => {
 
-    const { currentItems: data, fetchData, loading, error } = useOfferContext();
+    const { currentItems: data, loading, error } = useOfferContext();
     const { offerHelpDetails } = useRouteContext();
 
     const handleCardClick = (id) => {
         offerHelpDetails(id);
     };
 
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+    useLoadingMessage(loading, 'Help Offers');
 
-    if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <>
+        !loading ?
             <Carousel autoplay arrows >
                 {data.map(
                     (item, index) => (
@@ -63,7 +61,8 @@ const Offer = () => {
                     )
                 )}
             </Carousel>
-        </>
+            :
+            <Skeleton active />
     )
 }
 

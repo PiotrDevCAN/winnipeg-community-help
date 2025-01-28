@@ -4,8 +4,8 @@ import { CombinedCommunityProvider } from '@/context/CombinedCommunityContext';
 import { CombinedCategoryProvider } from '@/context/CombinedCategoryContext';
 import Details from '@/components/Request/Preview/Details';
 import Map from '@/components/Request/Preview/Map';
-import RequestorDetails from '@/components/Request/Preview/RequestorDetails';
-import VolunteerDetails from '@/components/Request/Preview/VolunteerDetails';
+import NeedyPersonDetails from '@/components/User/Preview/NecessitousDetails';
+import VolunteerDetails from '@/components/User/Preview/VolunteerDetails';
 import Communities from '@/components/Boxes/Communities';
 import CategoryTypes from '@/components/Boxes/CategoryTypes';
 
@@ -25,8 +25,8 @@ const Preview = ({ item }) => {
             </Col>
             <Col xs={20} sm={16} md={12} lg={12} xl={12}>
                 <Flex gap="middle" vertical>
-                    <RequestorDetails item={item} />
-                    <VolunteerDetails item={item} />
+                    <NeedyPersonDetails userId={item.in_need_id} />
+                    <VolunteerDetails userId={item.volunteer_id} />
                     <CombinedCommunityProvider>
                         <Communities item={item} />
                     </CombinedCommunityProvider>

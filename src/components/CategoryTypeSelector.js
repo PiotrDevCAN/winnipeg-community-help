@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Divider, Row, Col, Card, Typography } from 'antd';
-import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
-import { useStaticCommunityContext } from '@/context/StaticCommunityContext';
+import { useStaticHelpDataContext } from '@/context/static/StaticHelpDataContext';
+import { useStaticCommunityContext } from '@/context/static/StaticCommunityContext';
 
 import CategoryCards from '@/components/CategoryCards';
 import TypeCards from '@/components/TypeCards';

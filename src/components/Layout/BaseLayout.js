@@ -7,8 +7,10 @@ import FooterContent from '@/components/Layout/Footer';
 import ContextMenu from '@/components/Layout/ContextMenu';
 import AppBreadcrumbHeader from '@/components/Layout/AppBreadcrumbHeader';
 import { useRouteContext } from '@/context/RouteContext';
-import { DonateProvider } from '@/context/DonateContext';
+import { DonateProvider } from '@/context/auxiliary/DonateContext';
 import { getCurrentRoute } from '@/services//routeHelpers';
+import { useAppMessageContext } from '@/context/auxiliary/AppMessageContext';
+import { useAppNotificationContext } from '@/context/auxiliary/AppNotificationContext';
 
 const { Header, Content, Footer } = Layout;
 
@@ -26,6 +28,10 @@ const styles = {
 };
 
 const BaseLayout = ({ children }) => {
+
+    const { contextHolder: messageHolder } = useAppMessageContext();
+    const { contextHolder: notificationHolder } = useAppNotificationContext();
+
     const location = useLocation();
     const { routes: availableRoutes } = useRouteContext();
 
@@ -38,6 +44,10 @@ const BaseLayout = ({ children }) => {
 
     return (
         <Layout>
+
+            {messageHolder}
+            {notificationHolder}
+
             {/* Header Section */}
             <Header style={styles.header}>
                 <HeaderContent />

@@ -1,35 +1,33 @@
 import React, { useEffect } from 'react';
-import { Carousel } from 'antd';
+import { Carousel, Skeleton } from 'antd';
 import { Button, Flex, Typography, Avatar } from 'antd';
-
-import { useCommunityContext } from '@/context/CommunityContext';
-import { useRouteContext } from '@/context/RouteContext';
 import { TbBuildingCommunity } from "react-icons/tb";
+
+import { useCommunityContext } from '@/context/mainTypes/CommunityContext';
+import { useRouteContext } from '@/context/RouteContext';
+import useLoadingMessage from '@/customHooks/useLoadingMessage';
 
 const { Title, Paragraph } = Typography;
 
 const avatarStyle = {
-    // backgroundColor: '#1677ff',
+    backgroundColor: 'orange',
 }
 
 const Community = () => {
 
-    const { currentItems: data, fetchData, loading, error } = useCommunityContext();
+    const { currentItems: data, loading, error } = useCommunityContext();
     const { communityDetails } = useRouteContext();
 
     const handleCardClick = (id) => {
         communityDetails(id);
     };
 
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+    useLoadingMessage(loading, 'Communities');
 
-    if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <>
+        !loading ?
             <Carousel autoplay arrows >
                 {data.map(
                     (item, index) => (
@@ -63,7 +61,8 @@ const Community = () => {
                     )
                 )}
             </Carousel>
-        </>
+            :
+            <Skeleton active />
     )
 }
 

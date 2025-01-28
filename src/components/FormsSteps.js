@@ -1,7 +1,7 @@
 // Footer.js
 import React from 'react';
 import { Card, Steps, notification } from 'antd';
-import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
+import { useStaticHelpDataContext } from '@/context/static/StaticHelpDataContext';
 
 // const FormsSteps = ({ percent, step, onChange }) => {
 const FormsSteps = ({ step, percent, onChange }) => {

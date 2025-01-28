@@ -9,7 +9,7 @@ import { LuLogIn } from "react-icons/lu";
 import { LuLogOut } from "react-icons/lu";
 
 import { useRouteContext } from '@/context/RouteContext';
-import { useAuthContext } from '@/context/AuthContext';
+import { useAuthContext } from '@/context/auth/AuthContext';
 
 const iconStyle = {
     margin: '0 8px',

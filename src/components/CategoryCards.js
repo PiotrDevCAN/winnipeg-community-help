@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Card, Divider, Col } from 'antd';
-import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
+import { useStaticHelpDataContext } from '@/context/static/StaticHelpDataContext';
 import { TbCategory } from "react-icons/tb";
 
 const { Meta } = Card;
@@ -8,7 +8,6 @@ const { Meta } = Card;
 const avatarStyle = {
     width: 35,
     height: 35,
-    // backgroundColor: '#1677ff',
 }
 
 const CategoryCards = ({ onSelect }) => {
@@ -39,6 +38,11 @@ const CategoryCards = ({ onSelect }) => {
                         >
                             <Meta
                                 avatar={<Avatar
+                                    style={{
+                                        backgroundColor: 'red',
+                                        verticalAlign: 'middle',
+                                    }}
+                                    size={48}
                                     icon={<TbCategory style={avatarStyle} />}
                                     shape='square'
                                 />}

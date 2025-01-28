@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuthContext } from '@/context/AuthContext';
+import { useAuthContext } from '@/context/auth/AuthContext';
 import AdminAccessOnly from '../AdminAccessOnly';
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {

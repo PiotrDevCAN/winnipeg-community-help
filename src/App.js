@@ -5,13 +5,15 @@ import '@/App.css';
 // import 'leaflet/dist/leaflet.css';
 
 // Providers
-import { AuthProvider } from '@/context/AuthContext';
-import { APIAuthProvider } from '@/context/APIAuthContext';
-import { StaticCommunityProvider } from '@/context/StaticCommunityContext';
-import { StaticHelpProvider } from '@/context/StaticHelpDataContext';
-import { UserProvider } from '@/context/UserContext';
-import { NeedyProvider } from './context/NeedyContext';
-import { VolunteerProvider } from '@/context/VolunteerContext';
+import { AppMessageProvider } from './context/auxiliary/AppMessageContext';
+import { AppNotificationProvider } from '@/context/auxiliary/AppNotificationContext';
+import { AuthProvider } from '@/context/auth/AuthContext';
+import { APIAuthProvider } from '@/context/auth/APIAuthContext';
+import { StaticCommunityProvider } from '@/context/static/StaticCommunityContext';
+import { StaticHelpProvider } from '@/context/static/StaticHelpDataContext';
+import { UserProvider } from '@/context/mainTypes/UserContext';
+import { NeedyProvider } from '@/context/mainTypes/NeedyContext';
+import { VolunteerProvider } from '@/context/mainTypes/VolunteerContext';
 import { RouteProvider } from '@/context/RouteContext';
 import { PageHeaderProvider } from '@/context/PageHeaderContext';
 
@@ -22,25 +24,29 @@ import CookieConsent from '@/components/CookieConsent';
 
 // Grouping all providers for clarity
 const AppProviders = ({ children }) => (
-    <AuthProvider>
-        <APIAuthProvider>
-            <RouteProvider>
-                <StaticCommunityProvider>
-                    <StaticHelpProvider>
-                        <UserProvider>
-                            <NeedyProvider>
-                                <VolunteerProvider>
-                                    <PageHeaderProvider>
-                                        {children}
-                                    </PageHeaderProvider>
-                                </VolunteerProvider>
-                            </NeedyProvider>
-                        </UserProvider>
-                    </StaticHelpProvider>
-                </StaticCommunityProvider>
-            </RouteProvider>
-        </APIAuthProvider>
-    </AuthProvider>
+    <AppMessageProvider>
+        <AppNotificationProvider>
+            <AuthProvider>
+                <APIAuthProvider>
+                    <RouteProvider>
+                        <StaticCommunityProvider>
+                            <StaticHelpProvider>
+                                <UserProvider>
+                                    <NeedyProvider>
+                                        <VolunteerProvider>
+                                            <PageHeaderProvider>
+                                                {children}
+                                            </PageHeaderProvider>
+                                        </VolunteerProvider>
+                                    </NeedyProvider>
+                                </UserProvider>
+                            </StaticHelpProvider>
+                        </StaticCommunityProvider>
+                    </RouteProvider>
+                </APIAuthProvider>
+            </AuthProvider>
+        </AppNotificationProvider>
+    </AppMessageProvider>
 );
 
 const App = () => {

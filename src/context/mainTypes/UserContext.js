@@ -1,16 +1,21 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import { useAPIAuth } from '@/context/APIAuthContext';
+import React, { createContext, useState, useCallback, useMemo, useEffect } from 'react';
+import { useAPIAuth } from '@/context/auth/APIAuthContext';
 import APIService from '@/services/APIService';
+import { useCrudCalls } from '@/customHooks/useCrudCalls';
+import useCustomContext from '@/customHooks/useCustomContext';
 // import { useAuthContext } from '@/context/AuthContext';
 
-const NeedyContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const apiService = new APIService(API_BASE_URL);
 
-export const useNeedyContext = () => useContext(NeedyContext);
+const UserContext = createContext();
+UserContext.displayName = 'User';
 
-export const NeedyProvider = ({ children }) => {
+export const useUserContext = () => useCustomContext(UserContext);
+
+export const UserProvider = ({ children }) => {
     const { isReady, getAccessToken } = useAPIAuth();
+    const { createRecord, readRecord, updateRecord, deleteRecord } = useCrudCalls();
 
     const [selectedUser, setSelectedUser] = useState(null);
 
@@ -26,17 +31,14 @@ export const NeedyProvider = ({ children }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     let filteredItems = data;
 
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-
-    // const { user } = useAuthContext();
-    const user = null;
 
     const fetchData = useCallback(async () => {
         if (isReady) {
@@ -44,7 +46,7 @@ export const NeedyProvider = ({ children }) => {
                 setLoading(true);
 
                 const accessToken = await getAccessToken();
-                const response = await apiService.makeRequest('/needy/', {}, accessToken);
+                const response = await apiService.makeRequest('/user/', {}, accessToken);
 
                 if (response.status === 'success') {
                     setData(response.data || []);
@@ -71,34 +73,25 @@ export const NeedyProvider = ({ children }) => {
         return user;
     };
 
-    const getItem = useCallback(async (id) => {
-        if (isReady) {
-            try {
-                const accessToken = await getAccessToken();
-                const response = await apiService.makeRequest(`/needy/${id}/`, {
-                    method: 'GET',
-                }, accessToken);
-
-                if (response.status === 'success') {
-                    const result = response.data
-                    setItem(result);
-                } else {
-                    console.error(response.message || 'Failed to fetch item');
-                    setError(response.message);
-                }
-            } catch (err) {
-                console.error('Error fetching item:', err);
-                setError(err.message || 'An error occurred while fetching an item');
-            }
-        }
-    }, [isReady, getAccessToken]);
+    const getItem = (id) => {
+        readRecord('user', id, setItem, setLoading, setError);
+    };
+    const createItem = (newItem) => {
+        createRecord('user', newItem);
+    };
+    const updateItem = (updatedData) => {
+        updateRecord('user', updatedData);
+    };
+    const deleteItem = (id) => {
+        deleteRecord('user', id);
+    };
 
     const getItemByFirebaseId = useCallback(async (firebaseId) => {
         if (isReady) {
             try {
                 const accessToken = await getAccessToken();
 
-                const response = await apiService.makeRequest(`/needy/firebase/${firebaseId}/`, {
+                const response = await apiService.makeRequest(`/user/firebase/${firebaseId}/`, {
                     method: 'GET',
                 }, accessToken);
 
@@ -117,70 +110,11 @@ export const NeedyProvider = ({ children }) => {
         }
     }, [isReady, getAccessToken]);
 
-    const createItem = async (newItem) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest('/needy/', {
-                method: 'POST',
-                body: JSON.stringify(newItem),
-            }, accessToken);
-
-            if (response.status === 'success') {
-                setData(prevData => [...prevData, response.data]);
-            } else {
-                console.error(response.message || 'Failed to create item');
-                setError(response.message);
-            }
-        } catch (err) {
-            console.error('Error creating item:', err);
-            setError(err.message || 'An error occurred while creating an item');
-        }
-    };
-
-    const updateItem = async (id, updatedData) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/needy/${id}/`, {
-                method: 'PUT',
-                body: JSON.stringify(updatedData),
-            }, accessToken);
-
-            if (response.status === 'success') {
-                setData(prevData => prevData.map(item => (item.id === id ? response.data : item)));
-            } else {
-                console.error(response.message || 'Failed to update item');
-                setError(response.message);
-            }
-        } catch (err) {
-            console.error('Error updating item:', err);
-            setError(err.message || 'An error occurred while updating an item');
-        }
-    };
-
-    const deleteItem = async (id) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/needy/${id}/`, {
-                method: 'DELETE',
-            }, accessToken);
-
-            if (response.status === 'success') {
-                setData(prevData => prevData.filter(item => item.id !== id));
-            } else {
-                console.error(response.message || 'Failed to delete item');
-                setError(response.message);
-            }
-        } catch (err) {
-            console.error('Error deleting item:', err);
-            setError(err.message || 'An error occurred while deleting an item');
-        }
-    };
-
     const getOffersNumber = useCallback(async (id) => {
         if (isReady) {
             try {
                 const accessToken = await getAccessToken();
-                const response = await apiService.makeRequest(`/needy/${id}/offers`, {
+                const response = await apiService.makeRequest(`/user/${id}/offers`, {
                     method: 'GET',
                 }, accessToken);
 
@@ -201,7 +135,7 @@ export const NeedyProvider = ({ children }) => {
         if (isReady) {
             try {
                 const accessToken = await getAccessToken();
-                const response = await apiService.makeRequest(`/needy/${id}/requests`, {
+                const response = await apiService.makeRequest(`/user/${id}/requests`, {
                     method: 'GET',
                 }, accessToken);
 
@@ -224,7 +158,7 @@ export const NeedyProvider = ({ children }) => {
                 setLoading(true);
 
                 const accessToken = await getAccessToken();
-                const response = await apiService.makeRequest(`/needy/list/community/${id}/`, {}, accessToken);
+                const response = await apiService.makeRequest(`/user/list/community/${id}/`, {}, accessToken);
 
                 if (response.status === 'success') {
                     setNumberOfUsers(response.data.amount || 0);
@@ -245,7 +179,11 @@ export const NeedyProvider = ({ children }) => {
         };
     }, [isReady, getAccessToken]);
 
-    const value = {
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    const contextValue = useMemo(() => ({
         data,
         setData,
         fetchData,
@@ -271,13 +209,13 @@ export const NeedyProvider = ({ children }) => {
         selectedUser, setSelectedUser,
         loading,
         error,
-    };
+    }), [data, item, currentItems, itemsPerPage, currentPage, loading, error, selectedUser]);
 
     return (
-        <NeedyContext.Provider value={value}>
+        <UserContext.Provider value={contextValue}>
             {children}
-        </NeedyContext.Provider >
+        </UserContext.Provider >
     );
 }
 
-export default NeedyContext;
+export default UserContext;

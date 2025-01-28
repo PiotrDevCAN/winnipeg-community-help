@@ -4,8 +4,9 @@ import { Select, Row, Col } from 'antd';
 import { TbCategory } from "react-icons/tb";
 import { VscTypeHierarchySub } from "react-icons/vsc";
 
-import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
+import { useStaticHelpDataContext } from '@/context/static/StaticHelpDataContext';
 import SelectAllOption from '@/components/SelectAllOption';
+import { prepareSelectData } from '@/services/prepareSelectData';
 
 const CategoryFilter = ({ preSelectedId }) => {
 
@@ -20,15 +21,8 @@ const CategoryFilter = ({ preSelectedId }) => {
         getParentIdById,
     } = useStaticHelpDataContext();
 
-    const updatedCategoriesData = categoryOptions.map(item => {
-        let value = item.id;
-        return { ...item, value };
-    });
-
-    const updatedTypesData = typeOptions.map(item => {
-        let value = item.id;
-        return { ...item, value };
-    });
+    const updatedCategoriesData = prepareSelectData(categoryOptions);
+    const updatedTypesData = prepareSelectData(typeOptions);
 
     const categoriesOptionsData = SelectAllOption.concat(updatedCategoriesData);
     const typeOptionsData = SelectAllOption.concat(updatedTypesData);

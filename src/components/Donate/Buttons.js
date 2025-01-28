@@ -1,6 +1,6 @@
 import React from "react";
 import { Space } from "antd";
-import { DonateProvider } from '@/context/DonateContext';
+import { DonateProvider } from '@/context/auxiliary/DonateContext';
 import BuyMeACoffee from "./BuyMeACoffee";
 import DonateWithPayPal from "./DonateWithPayPal";
 

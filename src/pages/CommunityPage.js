@@ -1,6 +1,6 @@
 import React from 'react';
-import { CommunityProvider } from '@/context/CommunityContext';
-import { useCommunityContext } from '@/context/CommunityContext';
+import { CommunityProvider } from '@/context/mainTypes/CommunityContext';
+import { useCommunityContext } from '@/context/mainTypes/CommunityContext';
 import CommunityPreview from '@/components/Community/Preview';
 import CommunityForm from '@/components/Community/Form';
 import GenericRecordPage from '@/components/Layout/GenericRecordPage';
@@ -8,7 +8,7 @@ import GenericRecordPage from '@/components/Layout/GenericRecordPage';
 const CommunityPage = ({ mode }) => (
   <CommunityProvider>
     <GenericRecordPage
-      objectType="community"
+      objectType="Community"
       useContextHook={useCommunityContext}
       mode={mode}
       PreviewComponent={CommunityPreview}

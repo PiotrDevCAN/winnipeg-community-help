@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'antd';
-import { useAuthContext } from '@/context/AuthContext';
-import { useUserContext } from '@/context/UserContext';
+import { useAuthContext } from '@/context/auth/AuthContext';
+import { useUserContext } from '@/context/mainTypes/UserContext';
 
 const UserInfo = () => {
 

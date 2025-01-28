@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useMemo } from 'react';
 import {
     APIAuthService,
     getAccessToken as getAccessTokenService,
@@ -8,14 +8,15 @@ import {
     setRefreshToken as setRefreshTokenService,
     removeRefreshToken as removeRefreshTokenService,
 } from '@/services/APIAuthService';
+import useCustomContext from '@/customHooks/useCustomContext';
 
 const appUser = process.env.REACT_APP_API_USER;
 const appPassword = process.env.REACT_APP_API_PASSWORD;
 
 export const APIAuthContext = createContext();
+APIAuthContext.displayName = 'API Auth';
 
-// Custom hook to use the APIAuthContext
-export const useAPIAuth = () => useContext(APIAuthContext);
+export const useAPIAuth = () => useCustomContext(APIAuthContext);
 
 export const APIAuthProvider = ({ children }) => {
     const [accessToken, setAccessToken] = useState(getAccessTokenService());
@@ -40,7 +41,6 @@ export const APIAuthProvider = ({ children }) => {
             setAccessTokenService(accessToken);
             setRefreshToken(refreshToken);
             setRefreshTokenService(refreshToken);
-            // setIsReady(true);
             return true;
         } catch (error) {
             handleError('Login', error);
@@ -109,14 +109,15 @@ export const APIAuthProvider = ({ children }) => {
         const loadData = async () => {
             if (!isAuthenticated()) {
                 console.log('No valid access token found. Attempting auto-login...');
-                await login(appUser, appPassword);
+                // await login(appUser, appPassword);
+                login(appUser, appPassword);
             }
             setIsReady(true);
         };
         loadData();
     }, []); // Empty dependency array ensures this runs only once on mount
 
-    const value = {
+    const contextValue = useMemo(() => ({
         login,
         logout,
         getAccessToken,
@@ -124,10 +125,10 @@ export const APIAuthProvider = ({ children }) => {
         loading,
         isReady,
         error,
-    };
+    }), [login, logout, getAccessToken, isAuthenticated, loading, isReady, error]);
 
     return (
-        <APIAuthContext.Provider value={value}>
+        <APIAuthContext.Provider value={contextValue}>
             {children}
         </APIAuthContext.Provider>
     );

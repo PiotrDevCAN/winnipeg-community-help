@@ -1,8 +1,10 @@
-import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import React, { createContext, useReducer, useCallback, useMemo } from 'react';
+import useCustomContext from '@/customHooks/useCustomContext';
 
 const PageHeaderContext = createContext();
+PageHeaderContext.displayName = 'PageHeader';
 
-export const usePageHeaderContext = () => useContext(PageHeaderContext);
+export const usePageHeaderContext = () => useCustomContext(PageHeaderContext);
 
 export const PageHeaderProvider = ({ children }) => {
 
@@ -14,9 +16,6 @@ export const PageHeaderProvider = ({ children }) => {
     ];
 
     function containersReducer(containers, action) {
-        console.log('ACTION')
-        console.log(action)
-
         switch (action.type) {
             // case 'insert': {
             //     return {
@@ -63,17 +62,17 @@ export const PageHeaderProvider = ({ children }) => {
         updateComponent(3, component);
     }, []);
 
-    const value = {
+    const contextValue = useMemo(() => ({
         components,
         dispatch,
         setComponent1,
         setComponent2,
         setComponent3,
         setComponent4,
-    };
+    }), [components, dispatch, setComponent1, setComponent2, setComponent3, setComponent4]);
 
     return (
-        <PageHeaderContext.Provider value={value}>
+        <PageHeaderContext.Provider value={contextValue}>
             {children}
         </PageHeaderContext.Provider>
     );

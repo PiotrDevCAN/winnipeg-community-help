@@ -7,7 +7,7 @@ import {
     Select,
 } from 'antd';
 
-import { FormCommunityProvider } from '@/context/FormCommunityContext';
+import { FormCommunityProvider } from '@/context/auxiliary/FormCommunityContext';
 import MainCommunity from '../Selects/MainCommunity';
 
 const { Option } = Select;

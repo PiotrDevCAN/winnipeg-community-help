@@ -1,6 +1,6 @@
 import React from 'react';
 import { message, Form, Input, Divider, Flex } from 'antd';
-import { useAuthContext } from '@/context/AuthContext';
+import { useAuthContext } from '@/context/auth/AuthContext';
 import CreateAccount from '@/components/Buttons/CreateAccount';
 import Login from '@/components/Buttons/Login';
 import ResetPassword from '@/components/Buttons/ResetPassword';

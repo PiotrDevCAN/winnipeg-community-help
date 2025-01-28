@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import { FormCommunityProvider } from '@/context/FormCommunityContext';
+import { FormCommunityProvider } from '@/context/auxiliary/FormCommunityContext';
 import MainCommunity from '../Selects/MainCommunity';
 import SubCommunity from '../Selects/SubCommunity';
 

@@ -1,16 +1,21 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import { useAPIAuth } from '@/context/APIAuthContext';
+import React, { createContext, useState, useCallback, useMemo, useEffect } from 'react';
+import { useAPIAuth } from '@/context/auth/APIAuthContext';
 import APIService from '@/services/APIService';
+import { useCrudCalls } from '@/customHooks/useCrudCalls';
+import useCustomContext from '@/customHooks/useCustomContext';
 // import { useAuthContext } from '@/context/AuthContext';
 
-const UserContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const apiService = new APIService(API_BASE_URL);
 
-export const useUserContext = () => useContext(UserContext);
+const NeedyContext = createContext();
+NeedyContext.displayName = 'Needy';
 
-export const UserProvider = ({ children }) => {
+export const useNeedyContext = () => useCustomContext(NeedyContext);
+
+export const NeedyProvider = ({ children }) => {
     const { isReady, getAccessToken } = useAPIAuth();
+    const { createRecord, readRecord, updateRecord, deleteRecord } = useCrudCalls();
 
     const [selectedUser, setSelectedUser] = useState(null);
 
@@ -26,17 +31,14 @@ export const UserProvider = ({ children }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     let filteredItems = data;
 
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
-
-    // const { user } = useAuthContext();
-    const user = null;
 
     const fetchData = useCallback(async () => {
         if (isReady) {
@@ -44,7 +46,7 @@ export const UserProvider = ({ children }) => {
                 setLoading(true);
 
                 const accessToken = await getAccessToken();
-                const response = await apiService.makeRequest('/user/', {}, accessToken);
+                const response = await apiService.makeRequest('/needy/', {}, accessToken);
 
                 if (response.status === 'success') {
                     setData(response.data || []);
@@ -71,116 +73,24 @@ export const UserProvider = ({ children }) => {
         return user;
     };
 
-    const getItem = useCallback(async (id) => {
-        if (isReady) {
-            try {
-                const accessToken = await getAccessToken();
-                const response = await apiService.makeRequest(`/user/${id}/`, {
-                    method: 'GET',
-                }, accessToken);
-
-                if (response.status === 'success') {
-                    const result = response.data
-                    setItem(result);
-                } else {
-                    console.error(response.message || 'Failed to fetch item');
-                    setError(response.message);
-                }
-            } catch (err) {
-                console.error('Error fetching item:', err);
-                setError(err.message || 'An error occurred while fetching an item');
-            }
-        }
-    }, [isReady, getAccessToken]);
-
-    const getItemByFirebaseId = useCallback(async (firebaseId) => {
-        if (isReady) {
-            try {
-                const accessToken = await getAccessToken();
-
-                const response = await apiService.makeRequest(`/user/firebase/${firebaseId}/`, {
-                    method: 'GET',
-                }, accessToken);
-
-                if (response.status === 'success') {
-                    const result = response.data
-                    setItem(result);
-                    // return result;
-                } else {
-                    console.error(response.message || 'Failed to fetch item');
-                    setError(response.message);
-                }
-            } catch (err) {
-                console.error('Error fetching item:', err);
-                setError(err.message || 'An error occurred while fetching an item');
-            }
-        }
-    }, [isReady, getAccessToken]);
-
-    const createItem = async (newItem) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest('/user/', {
-                method: 'POST',
-                body: JSON.stringify(newItem),
-            }, accessToken);
-
-            if (response.status === 'success') {
-                setData(prevData => [...prevData, response.data]);
-            } else {
-                console.error(response.message || 'Failed to create item');
-                setError(response.message);
-            }
-        } catch (err) {
-            console.error('Error creating item:', err);
-            setError(err.message || 'An error occurred while creating an item');
-        }
+    const getItem = (id) => {
+        readRecord('needy', id, setItem, setLoading, setError);
     };
-
-    const updateItem = async (id, updatedData) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/user/${id}/`, {
-                method: 'PUT',
-                body: JSON.stringify(updatedData),
-            }, accessToken);
-
-            if (response.status === 'success') {
-                setData(prevData => prevData.map(item => (item.id === id ? response.data : item)));
-            } else {
-                console.error(response.message || 'Failed to update item');
-                setError(response.message);
-            }
-        } catch (err) {
-            console.error('Error updating item:', err);
-            setError(err.message || 'An error occurred while updating an item');
-        }
+    const createItem = (newItem) => {
+        createRecord('needy', newItem);
     };
-
-    const deleteItem = async (id) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/user/${id}/`, {
-                method: 'DELETE',
-            }, accessToken);
-
-            if (response.status === 'success') {
-                setData(prevData => prevData.filter(item => item.id !== id));
-            } else {
-                console.error(response.message || 'Failed to delete item');
-                setError(response.message);
-            }
-        } catch (err) {
-            console.error('Error deleting item:', err);
-            setError(err.message || 'An error occurred while deleting an item');
-        }
+    const updateItem = (updatedData) => {
+        updateRecord('needy', updatedData);
+    };
+    const deleteItem = (id) => {
+        deleteRecord('needy', id);
     };
 
     const getOffersNumber = useCallback(async (id) => {
         if (isReady) {
             try {
                 const accessToken = await getAccessToken();
-                const response = await apiService.makeRequest(`/user/${id}/offers`, {
+                const response = await apiService.makeRequest(`/needy/${id}/offers`, {
                     method: 'GET',
                 }, accessToken);
 
@@ -201,7 +111,7 @@ export const UserProvider = ({ children }) => {
         if (isReady) {
             try {
                 const accessToken = await getAccessToken();
-                const response = await apiService.makeRequest(`/user/${id}/requests`, {
+                const response = await apiService.makeRequest(`/needy/${id}/requests`, {
                     method: 'GET',
                 }, accessToken);
 
@@ -224,7 +134,7 @@ export const UserProvider = ({ children }) => {
                 setLoading(true);
 
                 const accessToken = await getAccessToken();
-                const response = await apiService.makeRequest(`/user/list/community/${id}/`, {}, accessToken);
+                const response = await apiService.makeRequest(`/needy/list/community/${id}/`, {}, accessToken);
 
                 if (response.status === 'success') {
                     setNumberOfUsers(response.data.amount || 0);
@@ -245,7 +155,11 @@ export const UserProvider = ({ children }) => {
         };
     }, [isReady, getAccessToken]);
 
-    const value = {
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    const contextValue = useMemo(() => ({
         data,
         setData,
         fetchData,
@@ -257,7 +171,6 @@ export const UserProvider = ({ children }) => {
         paginate,
         item,
         getItem,
-        getItemByFirebaseId,
         getUser,
         createItem,
         updateItem,
@@ -271,13 +184,13 @@ export const UserProvider = ({ children }) => {
         selectedUser, setSelectedUser,
         loading,
         error,
-    };
+    }), [data, fetchData, filteredItems, currentItems, itemsPerPage, currentPage, item, selectedUser, numberOfOffers, numberOfRequests, numberOfUsers, loading, error]);
 
     return (
-        <UserContext.Provider value={value}>
+        <NeedyContext.Provider value={contextValue}>
             {children}
-        </UserContext.Provider >
+        </NeedyContext.Provider >
     );
 }
 
-export default UserContext;
+export default NeedyContext;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { OfferProvider, useOfferContext } from '@/context/OfferContext';
+import { OfferProvider, useOfferContext } from '@/context/mainTypes/OfferContext';
 import ListTable from '@/components/Offer/ListTable';
 import { usePageHeaderContext } from '@/context/PageHeaderContext';
 import CategoryFilter from '@/components/Filters/CategoryFilter';

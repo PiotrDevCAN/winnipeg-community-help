@@ -1,11 +1,18 @@
-import React, { useEffect } from 'react';
-import { Card, Button, Typography } from 'antd';
-import { useVolunteerContext } from '@/context/VolunteerContext';
+import React, { useCallback, useEffect } from 'react';
+import { Card, Button, Typography, Flex, Avatar, message } from 'antd';
+import { useVolunteerContext } from '@/context/mainTypes/VolunteerContext';
 import { useRouteContext } from '@/context/RouteContext';
+import { RiUserHeartLine } from "react-icons/ri";
+import { useAPIAuth } from '@/context/auth/APIAuthContext';
+import useLoadingMessage from '@/customHooks/useLoadingMessage';
 
+const avatarStyle = {
+    width: 35,
+    height: 35,
+}
 const { Text } = Typography;
 
-const VolunteerDetails = ({ item }) => {
+const VolunteerDetails = ({ userId }) => {
 
     const { volunteerDetails, requestHelpByVolunteer, offerHelpByVolunteer } = useRouteContext();
     const handleViewProfile = (id) => {
@@ -18,23 +25,24 @@ const VolunteerDetails = ({ item }) => {
         offerHelpByVolunteer(id);
     };
 
-    const { item: volunteer, getItem, loading, error } = useVolunteerContext();
-    const userId = item.volunteer_id;
+    const { isReady } = useAPIAuth();
+    const { item, getItem, loading, error } = useVolunteerContext();
+
     useEffect(() => {
         const loadData = async () => {
-            if (userId && !volunteer) {
-                await getItem(userId);
-            }
+            await getItem(userId);
         };
-        loadData();
-        console.log(volunteer);
-    }, [userId, volunteer, getItem]);
+        if (isReady && userId && !item) {
+            loadData();
+        }
+    }, [isReady, userId]);
 
-    if (loading) return <p>Loading...</p>;
+    useLoadingMessage(loading, 'Volunteer');
+
     if (error) return <p>Error: {error}</p>;
 
     return (
-        volunteer ? (
+        item ? (
             <Card
                 className="card-with-colorful-header"
                 title="Volunteer Details"
@@ -68,16 +76,35 @@ const VolunteerDetails = ({ item }) => {
                     </Button>
                 ]}
             >
-                <p>First Name: <Text strong>{volunteer.first_name}</Text></p>
-                <p>Last Name: <Text strong>{volunteer.last_name}</Text></p>
-                <p>Nickname: <Text strong>{volunteer.nickname}</Text></p>
-                <p>E-mail: <Text strong>{volunteer.email}</Text></p>
-                <p>Phone: <Text strong>{volunteer.phone_number}</Text></p>
+                <Flex
+                    horizontal="true"
+                    align="flex-start"
+                    justify="space-around"
+                >
+                    <Avatar
+                        style={{
+                            backgroundColor: 'red',
+                            verticalAlign: 'middle',
+                        }}
+                        size={64}
+                        icon={<RiUserHeartLine style={avatarStyle} />}
+                        shape='square'
+                    />
+                    <div>
+                        <p>First Name: <Text strong>{item.first_name}</Text></p>
+                        <p>Last Name: <Text strong>{item.last_name}</Text></p>
+                        <p>Nickname: <Text strong>{item.nickname}</Text></p>
+                        <p>E-mail: <Text strong>{item.email}</Text></p>
+                        <p>Phone: <Text strong>{item.phone_number}</Text></p>
+                    </div>
+                    <div></div>
+                    <div></div>
+                </Flex>
             </Card>
         ) : <Card
             className="card-with-colorful-header"
             title="Volunteer Details">
-            Unable to retrieve data of requestor
+            Unable to retrieve data
         </Card >
     );
 };

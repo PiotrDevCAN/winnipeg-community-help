@@ -1,13 +1,16 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 
-import { useAPIAuth } from '@/context/APIAuthContext';
+import { useAPIAuth } from '@/context/auth/APIAuthContext';
 import APIService from '@/services/APIService';
+import useCustomContext from '@/customHooks/useCustomContext';
 
-const StaticCommunityContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const apiService = new APIService(API_BASE_URL);
 
-export const useStaticCommunityContext = () => useContext(StaticCommunityContext);
+const StaticCommunityContext = createContext();
+StaticCommunityContext.displayName = 'Static Community';
+
+export const useStaticCommunityContext = () => useCustomContext(StaticCommunityContext);
 
 export const StaticCommunityProvider = ({ children }) => {
     const { isReady, getAccessToken } = useAPIAuth();
@@ -77,8 +80,6 @@ export const StaticCommunityProvider = ({ children }) => {
 
                 if (response.status === 'success') {
                     setSubCommunitiesData(response.data || []);
-                    // select main community first
-                    // setSubCommunityOptions(response.data || []);
                 } else {
                     console.error(response.message || 'Unknown error occurred');
                     setError(response.message);
@@ -161,7 +162,6 @@ export const StaticCommunityProvider = ({ children }) => {
 
     const getParentIdById = (id) => {
         const communityId = parseInt(id);
-        console.log('subCommunitiesData:', subCommunitiesData);
         const subCommunity = subCommunitiesData.find(item => item.id === communityId);
         if (subCommunity) {
             return subCommunity.community_id;
@@ -184,10 +184,13 @@ export const StaticCommunityProvider = ({ children }) => {
 
     useEffect(() => {
         fetchMainCommunityData();
-        fetchSubCommunityData();
-    }, [fetchMainCommunityData, fetchSubCommunityData]);
+    }, [fetchMainCommunityData]);
 
-    const value = {
+    useEffect(() => {
+        fetchSubCommunityData();
+    }, [fetchSubCommunityData]);
+
+    const contextValue = useMemo(() => ({
         mainCommunitiesData, setMainCommunitiesData,
         subCommunitiesData, setSubCommunitiesData,
         communityOptions, setCommunityOptions,
@@ -207,10 +210,10 @@ export const StaticCommunityProvider = ({ children }) => {
         loadingSubCommunities,
         loading,
         error
-    };
+    }), [mainCommunitiesData, setMainCommunitiesData, subCommunitiesData, setSubCommunitiesData, communityOptions, setCommunityOptions, subCommunityOptions, setSubCommunityOptions, selectedCommunityId, setSelectedCommunityId, selectedSubCommunityId, setSelectedSubCommunityId, mainCommunityData, subCommunityData, getCommunity, getCommunityById, getSubCommunity, getSubCommunityById, getParentIdById, getSubCommunities, countSubCommunities, loadingCommunities, loadingSubCommunities, loading, error]);
 
     return (
-        <StaticCommunityContext.Provider value={value}>
+        <StaticCommunityContext.Provider value={contextValue}>
             {children}
         </StaticCommunityContext.Provider >
     );

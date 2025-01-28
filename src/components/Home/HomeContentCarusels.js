@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card } from 'antd';
 
-import { OfferProvider } from '@/context/OfferContext';
-import { RequestProvider } from '@/context/RequestContext';
-import { CommunityProvider } from '@/context/CommunityContext';
+import { OfferProvider } from '@/context/mainTypes/OfferContext';
+import { RequestProvider } from '@/context/mainTypes/RequestContext';
+import { CommunityProvider } from '@/context/mainTypes/CommunityContext';
 
 import OffersCarusel from '@/components/Carusels/Offer';
 import RequestsCarusel from '@/components/Carusels/Request';
@@ -49,7 +49,7 @@ const HomeContentCarusels = () => {
                 align="center"
                 style={wrapperStyle}
             >
-                    <VolunteersCarusel />
+                <VolunteersCarusel />
             </Card>
 
             <Card

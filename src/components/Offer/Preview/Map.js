@@ -2,12 +2,15 @@ import React from 'react';
 import { Card, Button } from 'antd';
 import { useRouteContext } from '@/context/RouteContext';
 import PreviewMap from '@/components/Map/PreviewMap';
+import { useAppNotificationContext } from '@/context/auxiliary/AppNotificationContext';
 
 const Map = ({ item }) => {
 
+    const { showInfo } = useAppNotificationContext();
+
     const { communityEdit } = useRouteContext();
     const handleMapPreview = () => {
-        alert('Functionality not implemented yet');
+        showInfo('Functionality not implemented yet');
     };
 
     return (

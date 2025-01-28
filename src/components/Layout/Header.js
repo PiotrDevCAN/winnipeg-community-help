@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Row, Col, Menu } from 'antd';
 import { useRouteContext } from '@/context/RouteContext';
-import { useAuthContext } from '@/context/AuthContext';
+import { useAuthContext } from '@/context/auth/AuthContext';
 import QuickActions from '@/components/QuickActions';
 import UserActions from '@/components/UserActions';
 import { filterMenuData } from '@/services/filterMenuData';

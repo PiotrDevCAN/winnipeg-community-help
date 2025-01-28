@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { RequestProvider, useRequestContext } from '@/context/RequestContext';
+import { RequestProvider, useRequestContext } from '@/context/mainTypes/RequestContext';
 import Cards from '@/components/Request/Cards';
 import { usePageHeaderContext } from '@/context/PageHeaderContext';
 import CategoryFilter from '@/components/Filters/CategoryFilter';
@@ -11,7 +11,6 @@ import { useRouteContext } from '@/context/RouteContext';
 import { useParams } from 'react-router-dom';
 
 const HelpRequestCardsPage = () => {
-  console.log('HelpRequestCardsPage');
 
   const { communityId, typeId, volunteerId, needyId } = useParams();
 

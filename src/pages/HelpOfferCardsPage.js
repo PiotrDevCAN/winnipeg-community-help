@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { OfferProvider, useOfferContext } from '@/context/OfferContext';
+import { OfferProvider, useOfferContext } from '@/context/mainTypes/OfferContext';
 import Cards from '@/components/Offer/Cards';
 import { usePageHeaderContext } from '@/context/PageHeaderContext';
 import CategoryFilter from '@/components/Filters/CategoryFilter';

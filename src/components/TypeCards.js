@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Card, Divider, Col } from 'antd';
-import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
+import { useStaticHelpDataContext } from '@/context/static/StaticHelpDataContext';
 import { VscTypeHierarchySub } from "react-icons/vsc";
 
 const { Meta } = Card;
@@ -8,7 +8,6 @@ const { Meta } = Card;
 const avatarStyle = {
     width: 35,
     height: 35,
-    // backgroundColor: '#1677ff',
 }
 
 const TypeCards = ({ onSelect }) => {

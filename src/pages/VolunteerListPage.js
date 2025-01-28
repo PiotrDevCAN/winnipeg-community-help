@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ListTable from '@/components/Volunteer/ListTable';
 import { usePageHeaderContext } from '@/context/PageHeaderContext';
-import { useVolunteerContext } from '@/context/VolunteerContext';
+import { useVolunteerContext } from '@/context/mainTypes/VolunteerContext';
 import CommunityFilter from '@/components/Filters/CommunityFilter';
 import ClearFilters from '@/components/Filters/ClearFilters';
 import GenericListPage from '@/components/Layout/GenericListPage';

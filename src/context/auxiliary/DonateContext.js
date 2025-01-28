@@ -1,8 +1,10 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useMemo } from 'react';
+import useCustomContext from '@/customHooks/useCustomContext';
 
 const DonateContex = createContext();
+DonateContex.displayName = 'Donate';
 
-export const useDonateContex = () => useContext(DonateContex);
+export const useDonateContex = () => useCustomContext(DonateContex);
 
 export const DonateProvider = ({ children }) => {
 
@@ -21,13 +23,13 @@ export const DonateProvider = ({ children }) => {
         openInNewTab(url);
     };
 
-    const value = {
+    const contextValue = useMemo(() => ({
         handleBuyCoffee,
         handlePayPal
-    };
+    }), []);
 
     return (
-        <DonateContex.Provider value={value}>
+        <DonateContex.Provider value={contextValue}>
             {children}
         </DonateContex.Provider>
     );

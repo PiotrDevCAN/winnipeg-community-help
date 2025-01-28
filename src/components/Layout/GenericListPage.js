@@ -10,11 +10,7 @@ const GenericListPage = ({
   useContextHook,
   ListTableComponent,
 }) => {
-  const { currentItems: data, fetchData, loading, error } = useContextHook();
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+  const { currentItems: data, loading, error } = useContextHook();
 
   // If still loading, return a loading state
   const loadingMsg = 'Loading table data...';

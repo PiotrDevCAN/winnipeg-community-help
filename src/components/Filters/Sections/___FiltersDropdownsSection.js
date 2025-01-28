@@ -11,8 +11,8 @@ import { TbBuildingCommunity } from "react-icons/tb";
 // Sub Community
 import { RiCommunityLine } from "react-icons/ri";
 
-import { useStaticHelpDataContext } from '@/context/StaticHelpDataContext';
-import { useStaticCommunityContext } from '@/context/StaticCommunityContext';
+import { useStaticHelpDataContext } from '@/context/static/StaticHelpDataContext';
+import { useStaticCommunityContext } from '@/context/static/StaticCommunityContext';
 
 const handleButtonClick = (e) => {
     message.info('Click on left button.');

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Button, Divider, Typography } from 'antd';
-import { useVolunteerContext } from '@/context/VolunteerContext';
+import { useVolunteerContext } from '@/context/mainTypes/VolunteerContext';
 import { useRouteContext } from '@/context/RouteContext';
+import useLoadingMessage from '@/customHooks/useLoadingMessage';
 
 const { Text } = Typography;
 
@@ -21,7 +22,8 @@ const Volunteers = ({ item }) => {
         getVolunteersInCommunityNumber(item.community_id);
     }, [getVolunteersInCommunityNumber]);
 
-    if (loading) return <p>Loading...</p>;
+    useLoadingMessage(loading, 'Volunteers in Community');
+
     if (error) return <p>Error: {error}</p>;
     if (!item) return <p>Loading Volunteers amount in Community data...</p>;
 

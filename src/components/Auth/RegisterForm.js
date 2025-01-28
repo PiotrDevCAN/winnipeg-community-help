@@ -15,8 +15,8 @@ import {
     Flex,
     message,
 } from 'antd';
-import { useAuthContext } from '@/context/AuthContext';
-import { useUserContext } from '@/context/UserContext';
+import { useAuthContext } from '@/context/auth/AuthContext';
+import { useUserContext } from '@/context/mainTypes/UserContext';
 import { useRouteContext } from '@/context/RouteContext';
 import ReCAPTCHA from 'react-google-recaptcha';
 import ResetPassword from '@/components/Buttons/ResetPassword';

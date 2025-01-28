@@ -1,15 +1,21 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import { useStaticCommunityContext } from '@/context/StaticCommunityContext';
-import { useAPIAuth } from '@/context/APIAuthContext';
+import React, { createContext, useState, useCallback, useMemo, useEffect } from 'react';
+import { useStaticCommunityContext } from '@/context/static/StaticCommunityContext';
+import { useAPIAuth } from '@/context/auth/APIAuthContext';
 import APIService from '@/services/APIService';
+import { useCrudCalls } from '@/customHooks/useCrudCalls';
+import useCustomContext from '@/customHooks/useCustomContext';
 
-const VolunteerContext = createContext();
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const apiService = new APIService(API_BASE_URL);
 
-export const useVolunteerContext = () => useContext(VolunteerContext);
+const VolunteerContext = createContext();
+VolunteerContext.displayName = 'Volunteer';
+
+export const useVolunteerContext = () => useCustomContext(VolunteerContext);
 
 export const VolunteerProvider = ({ children }) => {
+    const { createRecord, readRecord, updateRecord, deleteRecord } = useCrudCalls();
+
     const { isReady, getAccessToken } = useAPIAuth();
 
     const [selectedVolunteer, setSelectedVolunteer] = useState(null);
@@ -26,10 +32,10 @@ export const VolunteerProvider = ({ children }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const { selectedCommunityId: communityId, selectedSubCommunityId: subCommunityId } = useStaticCommunityContext();
 
@@ -77,89 +83,17 @@ export const VolunteerProvider = ({ children }) => {
         return volunteer;
     };
 
-    const getItem = useCallback(async (id) => {
-        if (isReady) {
-            try {
-                setLoading(true);
-
-                const accessToken = await getAccessToken();
-                const response = await apiService.makeRequest(`/volunteer/${id}/`, {
-                    method: 'GET',
-                }, accessToken);
-
-                if (response.status === 'success') {
-                    const result = response.data
-                    setItem(result);
-                } else {
-                    console.error(response.message || 'Failed to fetch item');
-                    setError(response.message);
-                }
-            } catch (err) {
-                console.error('Error fetching item:', err);
-                setError(err.message || 'An error occurred while fetching an item');
-            } finally {
-                setLoading(false);
-            }
-        }
-    }, [isReady, getAccessToken]);
-
-    const createItem = async (newItem) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest('/volunteer/', {
-                method: 'POST',
-                body: JSON.stringify(newItem),
-            }, accessToken);
-
-            if (response.status === 'success') {
-                setData(prevData => [...prevData, response.data]);
-            } else {
-                console.error(response.message || 'Failed to create item');
-                setError(response.message);
-            }
-        } catch (err) {
-            console.error('Error creating item:', err);
-            setError(err.message || 'An error occurred while creating an item');
-        }
+    const getItem = (id) => {
+        readRecord('volunteer', id, setItem, setLoading, setError);
     };
-
-    const updateItem = async (id, updatedData) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/volunteer/${id}/`, {
-                method: 'PUT',
-                body: JSON.stringify(updatedData),
-            }, accessToken);
-
-            if (response.status === 'success') {
-                setData(prevData => prevData.map(item => (item.id === id ? response.data : item)));
-            } else {
-                console.error(response.message || 'Failed to update item');
-                setError(response.message);
-            }
-        } catch (err) {
-            console.error('Error updating item:', err);
-            setError(err.message || 'An error occurred while updating an item');
-        }
+    const createItem = (newItem) => {
+        createRecord('volunteer', newItem);
     };
-
-    const deleteItem = async (id) => {
-        try {
-            const accessToken = await getAccessToken();
-            const response = await apiService.makeRequest(`/volunteer/${id}/`, {
-                method: 'DELETE',
-            }, accessToken);
-
-            if (response.status === 'success') {
-                setData(prevData => prevData.filter(item => item.id !== id));
-            } else {
-                console.error(response.message || 'Failed to delete item');
-                setError(response.message);
-            }
-        } catch (err) {
-            console.error('Error deleting item:', err);
-            setError(err.message || 'An error occurred while deleting an item');
-        }
+    const updateItem = (updatedData) => {
+        updateRecord('volunteer', updatedData);
+    };
+    const deleteItem = (id) => {
+        deleteRecord('volunteer', id);
     };
 
     const getOffersNumber = useCallback(async (id) => {
@@ -231,7 +165,11 @@ export const VolunteerProvider = ({ children }) => {
         };
     }, [isReady, getAccessToken]);
 
-    const value = {
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
+    const contextValue = useMemo(() => ({
         data,
         setData,
         fetchData,
@@ -256,10 +194,10 @@ export const VolunteerProvider = ({ children }) => {
         selectedVolunteer, setSelectedVolunteer,
         loading,
         error,
-    };
+    }), [data, fetchData, filteredItems, currentItems, itemsPerPage, currentPage, item, numberOfOffers, numberOfRequests, numberOfVolunteers, selectedVolunteer, loading, error]);
 
     return (
-        <VolunteerContext.Provider value={value}>
+        <VolunteerContext.Provider value={contextValue}>
             {children}
         </VolunteerContext.Provider >
     );

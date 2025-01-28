@@ -4,9 +4,10 @@ import { Select, Row, Col } from 'antd';
 import { MdVolunteerActivism } from "react-icons/md";
 import { MdOutlineVolunteerActivism } from "react-icons/md";
 
-import { useNeedyContext } from '@/context/NeedyContext';
-import { useVolunteerContext } from '@/context/VolunteerContext';
+import { useNeedyContext } from '@/context/mainTypes/NeedyContext';
+import { useVolunteerContext } from '@/context/mainTypes/VolunteerContext';
 import SelectAllOption from '@/components/SelectAllOption';
+import { prepareUserSelectData } from '@/services/prepareUserSelectData';
 
 const PeopleFilter = ({ preSelectedVolunteerId, preSelectedNeedyId }) => {
 
@@ -25,16 +26,8 @@ const PeopleFilter = ({ preSelectedVolunteerId, preSelectedNeedyId }) => {
         error: errorVolunteers,
     } = useVolunteerContext();
 
-    const updatedUsersData = usersData.map(item => {
-        let value = item.id;
-        let label = item.first_name + ' ' + item.last_name;
-        return { ...item, value, label };
-    });
-    const updatedVolunteersData = volunteersData.map(item => {
-        let value = item.id;
-        let label = item.first_name + ' ' + item.last_name;
-        return { ...item, value, label };
-    });
+    const updatedUsersData = prepareUserSelectData(usersData);
+    const updatedVolunteersData = prepareUserSelectData(volunteersData);
 
     const usersOptionsData = SelectAllOption.concat(updatedUsersData);
     const volunteersDataOptionsData = SelectAllOption.concat(updatedVolunteersData);
@@ -69,7 +62,6 @@ const PeopleFilter = ({ preSelectedVolunteerId, preSelectedNeedyId }) => {
         fetchVolunteerData();
         if (preSelectedNeedyId) {
             const needyId = parseInt(preSelectedNeedyId);
-            alert(typeof needyId);
             setSelectedUser(needyId);
         }
         if (preSelectedVolunteerId) {
