@@ -93,31 +93,8 @@ export const getRequestsNumber = createAsyncThunk(
   }
 );
 
-export const getUsers = createAsyncThunk("community/getUsers", async (id) => {
-  const accessToken = await getAccessToken();
-  const response = await apiService.makeRequest(
-    `/users/list/community/${id}/`,
-    {},
-    accessToken
-  );
-  return response;
-});
-
-export const getVolunteers = createAsyncThunk(
-  "community/getVolunteers",
-  async (id) => {
-    const accessToken = await getAccessToken();
-    const response = await apiService.makeRequest(
-      `/volunteers/list/community/${id}/`,
-      {},
-      accessToken
-    );
-    return response;
-  }
-);
-
-export const getPeopleInNeed = createAsyncThunk(
-  "community/getPeopleInNeed",
+export const getPeopleInNeedNumber = createAsyncThunk(
+  "community/getPeopleInNeedNumber",
   async (id) => {
     const accessToken = await getAccessToken();
     const response = await apiService.makeRequest(
@@ -129,15 +106,38 @@ export const getPeopleInNeed = createAsyncThunk(
   }
 );
 
+export const getVolunteersNumber = createAsyncThunk(
+  "community/getVolunteersNumber",
+  async (id) => {
+    const accessToken = await getAccessToken();
+    const response = await apiService.makeRequest(
+      `/volunteer/list/community/${id}/`,
+      {},
+      accessToken
+    );
+    return response;
+  }
+);
+
+export const getUsersNumber = createAsyncThunk("community/getUsersNumber", async (id) => {
+  const accessToken = await getAccessToken();
+  const response = await apiService.makeRequest(
+    `/user/list/community/${id}/`,
+    {},
+    accessToken
+  );
+  return response;
+});
+
 const communitySlice = createSlice({
   name: "community",
   initialState: {
     ...reduxInitialState,
     numberOfRequests: 0,
     numberOfOffers: 0,
-    numberOfUsers: 0, // USERS IN COMMUNITY
-    numberOfPeopleInNeed: 0, // PERSON IN NEED IN COMMUNITY
-    numberOfVolunteers: 0, // VOLUNTEERS IN COMMUNITY
+    numberOfPeopleInNeed: 0,
+    numberOfVolunteers: 0,
+    numberOfUsers: 0,
   },
   reducers: {
     increment: (state) => state + 1,
@@ -182,7 +182,40 @@ const communitySlice = createSlice({
         state.data = state.data.filter(
           (community) => community.id !== action.payload
         );
-      });
+      })
+      // .addCase(getPeopleInNeedNumber.pending, (state) => {
+      //   state.status = "loading";
+      //   state.isLoading = true;
+      // })
+      .addCase(getPeopleInNeedNumber.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isLoading = false;
+        const { data } = action.payload;
+        const { amount } = data;
+        state.numberOfPeopleInNeed = amount;
+      })
+      // .addCase(getVolunteersNumber.pending, (state) => {
+      //   state.status = "loading";
+      //   state.isLoading = true;
+      // })
+      .addCase(getVolunteersNumber.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isLoading = false;
+        const { data } = action.payload;
+        const { amount } = data;
+        state.numberOfVolunteers = amount;
+      })
+      // .addCase(getUsersNumber.pending, (state) => {
+      //   state.status = "loading";
+      //   state.isLoading = true;
+      // })
+      .addCase(getUsersNumber.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isLoading = false;
+        const { data } = action.payload;
+        const { amount } = data;
+        state.numberOfUsers = amount;
+      })
   },
 });
 

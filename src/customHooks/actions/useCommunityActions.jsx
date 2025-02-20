@@ -6,9 +6,9 @@ import {
   deleteRecord,
   getOffersNumber,
   getRequestsNumber,
-  getUsers,
-  getVolunteers,
-  getPeopleInNeed,
+  getPeopleInNeedNumber,
+  getVolunteersNumber,
+  getUsersNumber,
 } from "@/redux/features/community/communitySlice";
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -29,9 +29,9 @@ const useCommunityActions = () => {
     getOffersNumber: (id) => dispatch(getOffersNumber(id)),
     getRequestsNumber: (id) => dispatch(getRequestsNumber(id)),
 
-    getUsers: (id) => dispatch(getUsers(id)),
-    getVolunteers: (id) => dispatch(getVolunteers(id)),
-    getPeopleInNeed: (id) => dispatch(getPeopleInNeed(id)),
+    getPeopleInNeedNumber: (id) => dispatch(getPeopleInNeedNumber(id)),
+    getVolunteersNumber: (id) => dispatch(getVolunteersNumber(id)),
+    getUsersNumber: (id) => dispatch(getUsersNumber(id)),
   };
 };
 

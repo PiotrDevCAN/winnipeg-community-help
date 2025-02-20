@@ -9,10 +9,10 @@ import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
 const { Text } = Typography;
 
 const Users = ({ item }) => {
-  const { numberOfUsers: numberOfUsers } = useSelector(
+  const { numberOfUsers } = useSelector(
     (state) => state.communities
   );
-  const { getUsers, loading, error } = useCommunityActions();
+  const { getUsersNumber, loading, error } = useCommunityActions();
 
   const dividerStyle = {
     margin: "8px 0",
@@ -21,8 +21,8 @@ const Users = ({ item }) => {
   const { userInCommunity } = useAppRoutes();
 
   useEffect(() => {
-    getUsers(item.community_id);
-  }, [getUsers]);
+    getUsersNumber(item.community_id);
+  }, [getUsersNumber]);
 
   useLoadingMessage(loading, "Users in Community");
 

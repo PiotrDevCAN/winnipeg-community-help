@@ -9,10 +9,10 @@ import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
 const { Text } = Typography;
 
 const PeopleInNeed = ({ item }) => {
-  const { numberOfPeopleInNeed: numberOfPeopleInNeed } = useSelector(
+  const { numberOfPeopleInNeed } = useSelector(
     (state) => state.communities
   );
-  const { getPeopleInNeed, loading, error } = useCommunityActions();
+  const { getPeopleInNeedNumber, loading, error } = useCommunityActions();
 
   const dividerStyle = {
     margin: "8px 0",
@@ -21,8 +21,8 @@ const PeopleInNeed = ({ item }) => {
   const { needyInCommunity } = useAppRoutes();
 
   useEffect(() => {
-    getPeopleInNeed(item.community_id);
-  }, [getPeopleInNeed]);
+    getPeopleInNeedNumber(item.community_id);
+  }, [getPeopleInNeedNumber]);
 
   useLoadingMessage(loading, "People in Need in Community");
 
