@@ -8,7 +8,7 @@ import {
 } from 'antd';
 
 import { FormCommunityProvider } from '@/context/auxiliary/FormCommunityContext';
-import MainCommunity from '../Selects/Community/MainCommunity';
+import MainCommunity from '@/components/Selects/Community/MainCommunity';
 
 const { Option } = Select;
 const formItemLayout = {

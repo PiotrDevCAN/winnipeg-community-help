@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Tooltip } from 'antd';
-import CreateHelpOffer from '../Buttons/CreateHelpOffer';
-import CreateHelpRequest from '../Buttons/CreateHelpRequest';
+import { Tooltip } from 'antd';
+import CreateHelpOffer from '@/components/Buttons/CreateHelpOffer';
+import CreateHelpRequest from '@/components/Buttons/CreateHelpRequest';
 
 const Buttons = (size = 'small') => {
 

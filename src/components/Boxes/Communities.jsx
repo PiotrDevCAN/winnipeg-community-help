@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Card, Button, Divider, Typography, Skeleton } from "antd";
 import useCommunity from "@/customHooks/useCommunity";
-import ViewAllOffers from "../Buttons/ViewAllOffers";
-import ViewAllRequests from "../Buttons/ViewAllRequests";
-import ViewAllRequestors from "../Buttons/ViewAllRequestors";
-import ViewAllVolunteers from "../Buttons/ViewAllVolunteers";
+import ViewAllOffers from "@/components/Buttons/ViewAllOffers";
+import ViewAllRequests from "@/components/Buttons/ViewAllRequests";
+import ViewAllRequestors from "@/components/Buttons/ViewAllRequestors";
+import ViewAllVolunteers from "@/components/Buttons/ViewAllVolunteers";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
 
 const { Text } = Typography;
