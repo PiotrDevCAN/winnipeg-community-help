@@ -133,8 +133,8 @@ const communitySlice = createSlice({
   name: "community",
   initialState: {
     ...reduxInitialState,
-    numberOfRequests: 0,
-    numberOfOffers: 0,
+    numberOfRequests: 999,
+    numberOfOffers: 888,
     numberOfPeopleInNeed: 0,
     numberOfVolunteers: 0,
     numberOfUsers: 0,
@@ -183,6 +183,31 @@ const communitySlice = createSlice({
           (community) => community.id !== action.payload
         );
       })
+
+      // .addCase(getOffersNumber.pending, (state) => {
+      //   state.status = "loading";
+      //   state.isLoading = true;
+      // })
+      .addCase(getOffersNumber.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isLoading = false;
+        const { data } = action.payload;
+        const { amount } = data;
+        state.numberOfOffers = amount;
+      })
+
+      // .addCase(getRequestsNumber.pending, (state) => {
+      //   state.status = "loading";
+      //   state.isLoading = true;
+      // })
+      .addCase(getRequestsNumber.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isLoading = false;
+        const { data } = action.payload;
+        const { amount } = data;
+        state.numberOfRequests = amount;
+      })
+
       // .addCase(getPeopleInNeedNumber.pending, (state) => {
       //   state.status = "loading";
       //   state.isLoading = true;
