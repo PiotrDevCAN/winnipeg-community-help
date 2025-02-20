@@ -1,0 +1,32 @@
+
+/* Navigation bar styles */
+.navbar {
+    background-color: #007bb5; /* Blue color */
+    padding: 10px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  
+  .navbar li {
+    margin-right: 20px;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+  }
+  
+  .navbar a:hover {
+    text-decoration: underline;
+  }
+  
