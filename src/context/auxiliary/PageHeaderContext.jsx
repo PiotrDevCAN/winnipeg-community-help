@@ -42,25 +42,25 @@ export const PageHeaderProvider = ({ children }) => {
     }
     const [components, dispatch] = useReducer(containersReducer, initialContainers);
 
-    const updateComponent = (id, component) => {
+    const updateComponent = useCallback((id, component) => {
         dispatch({
             type: 'update',
             id: id,
             content: component,
         });
-    }
+    }, []);
     const setComponent1 = useCallback((component) => {
         updateComponent(0, component);
-    }, []);
+    }, [updateComponent]);
     const setComponent2 = useCallback((component) => {
         updateComponent(1, component);
-    }, []);
+    }, [updateComponent]);
     const setComponent3 = useCallback((component) => {
         updateComponent(2, component);
-    }, []);
+    }, [updateComponent]);
     const setComponent4 = useCallback((component) => {
         updateComponent(3, component);
-    }, []);
+    }, [updateComponent]);
 
     const contextValue = useMemo(() => ({
         components,

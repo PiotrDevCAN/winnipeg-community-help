@@ -13,8 +13,7 @@ import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
 const HelpOfferCardsPage = () => {
   const { communityId, typeId, volunteerId, needyId } = useParams();
 
-  const { setComponent1, setComponent2, setComponent3, setComponent4 } =
-    usePageHeaderContext();
+  const { setComponent1, setComponent2, setComponent3, setComponent4 } = usePageHeaderContext();
 
   useEffect(() => {
     setComponent1(<CategoryFilter preSelectedId={typeId} />);
