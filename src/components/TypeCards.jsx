@@ -12,10 +12,10 @@ const avatarStyle = {
 
 const TypeCards = ({ onSelect }) => {
   const {
+    selectedCategoryId: catId,
+    selectedTypeId: typeId,
     getCategory,
     getTypes,
-    selectedCategoryId: catId,
-    selectedType: typeId,
   } = useStaticHelpDataContext();
 
   const handleCardClick = (id) => {
@@ -37,11 +37,11 @@ const TypeCards = ({ onSelect }) => {
               bordered
               style={{
                 marginBottom: 16,
-                backgroundColor: typeId === item.id ? "#e6f7ff" : "#fff", // Change background if selected
+                backgroundColor: typeId === item.id ? "#e6f7ff" : "#fff",
                 border:
                   typeId === item.id
                     ? "2px solid #1890ff"
-                    : "1px solid #d9d9d9", // Optional: change border color
+                    : "1px solid #d9d9d9",
                 cursor: "pointer",
               }}
               onClick={() => handleCardClick(item.id)}
@@ -49,6 +49,11 @@ const TypeCards = ({ onSelect }) => {
               <Meta
                 avatar={
                   <Avatar
+                    style={{
+                      backgroundColor: "red",
+                      verticalAlign: "middle",
+                    }}
+                    size={48}
                     icon={<VscTypeHierarchySub style={avatarStyle} />}
                     shape="square"
                   />

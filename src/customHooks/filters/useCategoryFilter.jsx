@@ -15,7 +15,6 @@ const useCategoryFilter = () => {
     loadingTypes,
     getParentIdById,
     getTypes,
-
     categoriesOptions,
     setCategoriesOptions,
     typesOptions,

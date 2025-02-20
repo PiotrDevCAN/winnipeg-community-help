@@ -17,12 +17,12 @@ const CategoryTypeSelector = ({ children }) => {
   const subCommunityId = 1;
 
   const {
+    selectedCategoryId: catId,
+    setSelectedCategoryId,
+    selectedTypeId: typeId,
+    setSelectedTypeId,
     getCategory,
     getType,
-    selectedCategoryId: catId,
-    setSelectedCategory,
-    selectedType: typeId,
-    setSelectedType,
   } = useStaticHelpDataContext();
   const { getCommunity, getSubCommunity } = useStaticCommunityContext();
 
@@ -52,13 +52,13 @@ const CategoryTypeSelector = ({ children }) => {
   };
 
   const categorySelect = (id) => {
-    setSelectedCategory(id);
+    setSelectedCategoryId(id);
     setPercent(50);
     setCurrentStep(1);
   };
 
   const typeSelect = (id) => {
-    setSelectedType(id);
+    setSelectedTypeId(id);
     setPercent(75);
     setCurrentStep(2);
   };

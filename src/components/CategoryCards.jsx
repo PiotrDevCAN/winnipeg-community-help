@@ -13,8 +13,8 @@ const avatarStyle = {
 const CategoryCards = ({ onSelect }) => {
   const {
     categoriesData: data,
-    countTypes,
     selectedCategoryId: catId,
+    countTypes,
   } = useStaticHelpDataContext();
 
   const handleCardClick = (id) => {
@@ -33,9 +33,11 @@ const CategoryCards = ({ onSelect }) => {
               bordered
               style={{
                 marginBottom: 16,
-                backgroundColor: catId === item.id ? "#e6f7ff" : "#fff", // Change background if selected
+                backgroundColor: catId === item.id ? "#e6f7ff" : "#fff",
                 border:
-                  catId === item.id ? "2px solid #1890ff" : "1px solid #d9d9d9", // Optional: change border color
+                  catId === item.id
+                    ? "2px solid #1890ff"
+                    : "1px solid #d9d9d9",
                 cursor: "pointer",
               }}
               onClick={() => handleCardClick(item.id)}

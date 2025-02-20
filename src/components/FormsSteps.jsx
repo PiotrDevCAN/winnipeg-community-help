@@ -2,28 +2,10 @@
 import React from 'react';
 import { Card, Steps, notification } from 'antd';
 import { useStaticHelpDataContext } from '@/context/static/StaticHelpDataContext';
+import steps from '@/data/formStepsData';
 
 // const FormsSteps = ({ percent, step, onChange }) => {
 const FormsSteps = ({ step, percent, onChange }) => {
-    const items = [
-        {
-            title: 'Categories',
-            description: 'Select category of help you request for',
-        },
-        {
-            title: 'Types',
-            description: 'Select type of help you request for',
-        },
-        {
-            title: 'Additional Details',
-            description: 'Provide additional details about your request',
-        },
-        {
-            title: 'Submitted',
-            disabled: true,
-        },
-    ];
-
     const [api, contextHolder] = notification.useNotification();
     const openNotification = (placement, info = '') => {
         api.info({
@@ -33,10 +15,8 @@ const FormsSteps = ({ step, percent, onChange }) => {
         });
     };
 
-    const { selectedCategoryId: catId, selectedType: typeId } = useStaticHelpDataContext();
+    const { selectedCategoryId: catId, selectedTypeId: typeId } = useStaticHelpDataContext();
 
-    // const [percent, setPercent] = useState(25);
-    // const [currentStep, setCurrentStep] = useState(0);
     const handleStepChange = (value) => {
         switch (value) {
             case 0:
@@ -45,7 +25,7 @@ const FormsSteps = ({ step, percent, onChange }) => {
                 onChange(value);
                 break;
             case 1:
-                if (catId === "") {
+                if (!catId) {
                     openNotification('top', 'Please select category first');
                 } else {
                     // setCurrentStep(value);
@@ -53,7 +33,7 @@ const FormsSteps = ({ step, percent, onChange }) => {
                 }
                 break;
             case 2:
-                if (catId === "" || typeId === "") {
+                if (!catId || !typeId) {
                     openNotification('top', 'Please select category and type first');
                 } else {
                     // setCurrentStep(value);
@@ -81,7 +61,7 @@ const FormsSteps = ({ step, percent, onChange }) => {
             onChange={handleStepChange}
             size="small"
             labelPlacement="vertical"
-            items={items}
+            items={steps}
         />
     </Card>
     );
