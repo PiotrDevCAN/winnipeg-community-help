@@ -4,7 +4,7 @@ import {
   createRecord,
   updateRecord,
   deleteRecord,
-} from "@/redux/features/HelpCategory/helpCategorySlice";
+} from "@/redux/features/helpCategory/helpCategorySlice";
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
