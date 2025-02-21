@@ -30,7 +30,7 @@ const Community = () => {
     return [
       {
         label: <Title level={4}>Name</Title>,
-        children: <Title level={4}>item.label</Title>,
+        children: <Title level={4}>{item.label}</Title>,
       },
       {
         label: "Alias",

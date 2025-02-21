@@ -47,7 +47,7 @@ const PeopleInNeed = () => {
       {
         label: "Description",
         children: item.description,
-        span: 2,
+        // span: 2,
       },
       {
         label: "Website",
