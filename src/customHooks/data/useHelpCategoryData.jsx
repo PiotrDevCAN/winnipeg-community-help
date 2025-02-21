@@ -12,8 +12,7 @@ const useHelpCategoryData = () => {
     if (data.length === 0) {
       fetchAllRecords();
     }
-  }, [data]);
-  // }, [data, fetchAllRecords]);
+  }, [data, fetchAllRecords]);
 
   return { data, error, isError, isLoading, selectedRecord, status };
 };

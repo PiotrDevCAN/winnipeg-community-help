@@ -108,7 +108,7 @@ const volunteerSlice = createSlice({
       })
       .addCase(fetchAllRecords.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.data = action.payload;
+        state.data = action.payload.data;
       })
       .addCase(fetchAllRecords.rejected, (state, action) => {
         state.status = "failed";

@@ -1,7 +1,6 @@
 import React, {
   createContext,
   useState,
-  useEffect,
   useMemo,
 } from "react";
 import useCustomContext from "@/customHooks/useCustomContext";
@@ -16,7 +15,7 @@ export const useStaticPeopleContext = () =>
 
 export const StaticPeopleProvider = ({ children }) => {
   const {
-    data: needyDataRaw,
+    data: needyData,
     error: errorPeopleInNeed,
     isError: isErrorPeopleInNeed,
     isLoading: loadingPeopleInNeed,
@@ -24,18 +23,13 @@ export const StaticPeopleProvider = ({ children }) => {
     status: statusPeopleInNeed,
   } = useNeedyData();
   const {
-    data: volunteersDataRaw,
+    data: volunteersData,
     error: errorVolunteer,
     isError: isErrorVolunteers,
     isLoading: loadingVolunteers,
     selectedRecord: selectedVolunteerRaw,
     status: statusVolunteers,
   } = useVolunteerData();
-
-  // MUST STAY
-  // store the data fetched from API
-  const [needyData, setNeedyData] = useState([]);
-  const [volunteersData, setVolunteersData] = useState([]);
 
   // MUST STAY
   // used to filter out the selected people
@@ -45,14 +39,6 @@ export const StaticPeopleProvider = ({ children }) => {
   // main loading and error states
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
-    setNeedyData(needyDataRaw.data || []);
-  }, [needyDataRaw]);
-
-  useEffect(() => {
-    setVolunteersData(volunteersDataRaw.data || []);
-  }, [volunteersDataRaw]);
 
   const contextValue = useMemo(
     () => ({

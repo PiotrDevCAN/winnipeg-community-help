@@ -1,9 +1,9 @@
 import React, {
   createContext,
   useState,
-  useEffect,
   useCallback,
   useMemo,
+  useEffect,
 } from "react";
 import { useAPIAuthContext } from "@/context/auth/APIAuthContext";
 import APIService from "@/services/APIService";
@@ -24,7 +24,7 @@ export const StaticHelpProvider = ({ children }) => {
   const { isReady, getAccessToken } = useAPIAuthContext();
 
   const {
-    data: categoriesDataRaw,
+    data: categoriesData,
     error: errorCategories,
     isError: isErrorCategories,
     isLoading: loadingCategories,
@@ -32,18 +32,13 @@ export const StaticHelpProvider = ({ children }) => {
     status: statusCategories,
   } = useHelpCategoryData();
   const {
-    data: typesDataRaw,
+    data: typesData,
     error: errorTypes,
     isError: isErrorTypes,
     isLoading: loadingTypes,
     selectedRecord: selectedTypeRaw,
     status: statusTypes,
   } = useHelpTypeData();
-
-  // MUST STAY
-  // store the data fetched from API 
-  const [categoriesData, setCategoriesData] = useState([]);
-  const [typesData, setTypesData] = useState([]);
 
   // MUST STAY
   // used to filter out the selected category
@@ -161,12 +156,12 @@ export const StaticHelpProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    setCategoriesData(categoriesDataRaw.data || []);
-  }, [categoriesDataRaw]);
+  //   setMainCommunitiesData(mainCommunitiesDataRaw || []);
+  }, []);
 
   useEffect(() => {
-    setTypesData(typesDataRaw.data || []);
-  }, [typesDataRaw]);
+  //   setSubCommunitiesData(subCommunitiesDataRaw || []);
+  }, []);
 
   const contextValue = useMemo(
     () => ({

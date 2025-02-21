@@ -1,9 +1,9 @@
 import React, {
   createContext,
   useState,
-  useEffect,
   useCallback,
   useMemo,
+  useEffect,
 } from "react";
 import { useAPIAuthContext } from "@/context/auth/APIAuthContext";
 import APIService from "@/services/APIService";
@@ -24,7 +24,7 @@ export const StaticCommunityProvider = ({ children }) => {
   const { isReady, getAccessToken } = useAPIAuthContext();
 
   const {
-    data: mainCommunitiesDataRaw,
+    data: mainCommunitiesData,
     error: errorMainCommunities,
     isError: isErrorMainCommunities,
     isLoading: loadingMainCommunities,
@@ -32,7 +32,7 @@ export const StaticCommunityProvider = ({ children }) => {
     status: statusMainCommunities,
   } = useMainCommunityData();
   const {
-    data: subCommunitiesDataRaw,
+    data: subCommunitiesData,
     error: errorSubCommunities,
     isError: isErrorSubCommunities,
     isLoading: loadingSubCommunities,
@@ -41,23 +41,12 @@ export const StaticCommunityProvider = ({ children }) => {
   } = useCommunityData();
 
   // MUST STAY
-  // store the data fetched from API
-  const [mainCommunitiesData, setMainCommunitiesData] = useState([]);
-  const [subCommunitiesData, setSubCommunitiesData] = useState([]);
-
-  // MUST STAY
   // used to filter out the selected community
   const [selectedCommunityId, setSelectedCommunityId] = useState(null);
   const [selectedSubCommunityId, setSelectedSubCommunityId] = useState(null);
 
-
-  const [mainCommunitiesOptions, setMainCommunitiesOptions] = useState(
-    []
-  );
-  const [subCommunitiesOptions, setSubCommunitiesOptions] = useState(
-    []
-  );
-
+  const [mainCommunitiesOptions, setMainCommunitiesOptions] = useState([]);
+  const [subCommunitiesOptions, setSubCommunitiesOptions] = useState([]);
 
   // store the selected community data
   const [mainCommunityData, setMainCommunityData] = useState(null);
@@ -174,12 +163,12 @@ export const StaticCommunityProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    setMainCommunitiesData(mainCommunitiesDataRaw.data || []);
-  }, [mainCommunitiesDataRaw]);
+  //   setMainCommunitiesData(mainCommunitiesDataRaw || []);
+  }, []);
 
   useEffect(() => {
-    setSubCommunitiesData(subCommunitiesDataRaw.data || []);
-  }, [subCommunitiesDataRaw]);
+  //   setSubCommunitiesData(subCommunitiesDataRaw || []);
+  }, []);
 
   const contextValue = useMemo(
     () => ({

@@ -13,8 +13,7 @@ const GenericCardsPage = ({
   CardsComponent,
 }) => {
 
-  const { data: dataRaw, isLoading, error } = useDataHook();
-  const { data: items } = dataRaw;
+  const { data: items, isLoading, error } = useDataHook();
 
   const { filteredItems } = useApplyFilters(items);
   const [currentItems, setCurrentItems] = useState([]);

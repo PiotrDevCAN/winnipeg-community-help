@@ -7,6 +7,7 @@ import useLoadingMessage from "@/customHooks/useLoadingMessage";
 import dayjs from "dayjs";
 import useOfferData from "@/customHooks/data/useOfferData";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
+import ViewRecord from "../Buttons/ViewRecord";
 
 const { Title, Paragraph } = Typography;
 
@@ -27,7 +28,7 @@ const Offer = () => {
   if (data.length === 0) return <p>EMPTY: {error}</p>;
   if (error) return <p>Error: {error}</p>;
 
-  const caruselData = data.data.map((item, index) => {
+  const caruselData = data.map((item, index) => {
     return [
       {
         label: <Title level={4}>Title</Title>,
@@ -89,13 +90,7 @@ const Offer = () => {
                 />
               </Col>
               <Col xs={24} sm={24} md={24} lg={3} xl={3}>
-                <Button
-                  type="primary"
-                  size="large"
-                  onClick={() => handleCardClick(item.id)}
-                >
-                  View
-                </Button>
+                <ViewRecord id={item.id} onClick={handleCardClick} />
               </Col>
             </Row>
           </div>

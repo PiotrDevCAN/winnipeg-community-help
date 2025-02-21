@@ -6,6 +6,7 @@ import { RiUserHeartLine } from "react-icons/ri";
 import useLoadingMessage from "@/customHooks/useLoadingMessage";
 import useVolunteerData from "@/customHooks/data/useVolunteerData";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
+import ViewRecord from "../Buttons/ViewRecord";
 
 const { Title, Paragraph } = Typography;
 
@@ -26,7 +27,7 @@ const Volunteer = () => {
   if (data.length === 0) return <p>EMPTY: {error}</p>;
   if (error) return <p>Error: {error}</p>;
 
-  const caruselData = data.data.map((item, index) => {
+  const caruselData = data.map((item, index) => {
     return [
       {
         label: <Title level={4}>Full Name</Title>,
@@ -80,13 +81,7 @@ const Volunteer = () => {
                 />
               </Col>
               <Col xs={2} sm={2} md={2} lg={2} xl={3}>
-                <Button
-                  type="primary"
-                  size="large"
-                  onClick={() => handleCardClick(item.id)}
-                >
-                  View
-                </Button>
+                <ViewRecord id={item.id} onClick={handleCardClick} />
               </Col>
             </Row>
           </div>
