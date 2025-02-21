@@ -15,16 +15,17 @@ const avatarStyle = {
 };
 
 const Request = () => {
-  const { data, loading, error } = useRequestData();
+  const { data, isLoading, error } = useRequestData();
   const { requestHelpDetails } = useAppRoutes();
 
   const handleCardClick = (id) => {
     requestHelpDetails(id);
   };
 
-  useLoadingMessage(loading, "Help Requests");
+  useLoadingMessage(isLoading, "Help Requests");
 
-  if (data.length === 0) return <p>EMPTY: {error}</p>;
+  if (isLoading) return <Skeleton active />
+  // if (data.length === 0) return <p>EMPTY: {error}</p>;
   if (error) return <p>Error: {error}</p>;
 
   const caruselData = data.map((item, index) => {
@@ -65,7 +66,7 @@ const Request = () => {
     ];
   });
 
-  return !loading ? (
+  return !isLoading ? (
     <Carousel autoplay arrows>
       {caruselData.map((item, index) => {
         return (

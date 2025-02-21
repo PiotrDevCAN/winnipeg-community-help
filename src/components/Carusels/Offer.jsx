@@ -16,16 +16,17 @@ const avatarStyle = {
 };
 
 const Offer = () => {
-  const { data, loading, error } = useOfferData();
+  const { data, isLoading, error } = useOfferData();
   const { offerHelpDetails } = useAppRoutes();
 
   const handleCardClick = (id) => {
     offerHelpDetails(id);
   };
 
-  useLoadingMessage(loading, "Help Offers");
+  useLoadingMessage(isLoading, "Help Offers");
 
-  if (data.length === 0) return <p>EMPTY: {error}</p>;
+  if (isLoading) return <Skeleton active />
+  // if (data.length === 0) return <p>EMPTY: {error}</p>;
   if (error) return <p>Error: {error}</p>;
 
   const caruselData = data.map((item, index) => {
@@ -66,7 +67,7 @@ const Offer = () => {
     ];
   });
 
-  return !loading ? (
+  return !isLoading ? (
     <Carousel autoplay arrows>
       {caruselData.map((item, index) => {
         return (

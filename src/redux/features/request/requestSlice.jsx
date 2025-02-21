@@ -76,16 +76,25 @@ const requestSlice = createSlice({
     builder
       .addCase(fetchAllRecords.pending, (state) => {
         state.status = "loading";
+        state.isLoading = true;
       })
       .addCase(fetchAllRecords.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.isLoading = false;
         state.data = action.payload.data;
       })
       .addCase(fetchAllRecords.rejected, (state, action) => {
         state.status = "failed";
+        state.isLoading = false;
         state.error = action.error.message;
       })
+      .addCase(getRecordById.pending, (state) => {
+        state.status = "loading";
+        state.isLoading = true;
+      })
       .addCase(getRecordById.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isLoading = false;
         state.selectedRecord = action.payload;
       })
       .addCase(createRecord.fulfilled, (state, action) => {

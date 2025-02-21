@@ -9,10 +9,10 @@ import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
 const { Text } = Typography;
 
 const Volunteers = ({ item }) => {
-  const { numberOfVolunteers } = useSelector(
+  const { numberOfVolunteers, isLoading: loading, error } = useSelector(
     (state) => state.communities
   );
-  const { getVolunteersNumber, loading, error } = useCommunityActions();
+  const { getVolunteersNumber } = useCommunityActions();
 
   const dividerStyle = {
     margin: "8px 0",

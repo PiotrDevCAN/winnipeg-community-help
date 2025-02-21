@@ -65,6 +65,7 @@ const authAPISlice = createSlice({
     builder
       .addCase(refreshTokenAction.pending, (state) => {
         state.status = "loading";
+        state.isLoading = true;
       })
       .addCase(refreshTokenAction.fulfilled, (state, action) => {
         state.status = "succeeded";
@@ -76,6 +77,7 @@ const authAPISlice = createSlice({
       })
       .addCase(loginAction.pending, (state) => {
         state.status = "loading";
+        state.isLoading = true;
       })
       .addCase(loginAction.fulfilled, (state, action) => {
         state.status = "succeeded";

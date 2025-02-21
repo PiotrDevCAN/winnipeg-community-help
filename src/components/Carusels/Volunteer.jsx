@@ -15,16 +15,21 @@ const avatarStyle = {
 };
 
 const Volunteer = () => {
-  const { data, loading, error } = useVolunteerData();
+  const { data, isLoading, error } = useVolunteerData();
   const { volunteerDetails } = useAppRoutes();
 
   const handleCardClick = (id) => {
     volunteerDetails(id);
   };
 
-  useLoadingMessage(loading, "Volunteers");
+  useLoadingMessage(isLoading, "Volunteers");
 
-  if (data.length === 0) return <p>EMPTY: {error}</p>;
+  useEffect(() => {
+    console.log('current isLoading ' + isLoading);
+  }, [isLoading]);
+
+  if (isLoading) return <Skeleton active />
+  // if (data.length === 0) return <p>EMPTY: {error}</p>;
   if (error) return <p>Error: {error}</p>;
 
   const caruselData = data.map((item, index) => {
@@ -57,7 +62,7 @@ const Volunteer = () => {
     ];
   });
 
-  return !loading ? (
+  return !isLoading ? (
     <Carousel autoplay arrows>
       {caruselData.map((item, index) => {
         return (

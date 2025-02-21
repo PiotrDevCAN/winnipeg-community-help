@@ -15,17 +15,17 @@ const avatarStyle = {
 };
 
 const Community = () => {
-  const { data, loading, error } = useCommunityData();
+  const { data, isLoading, error } = useCommunityData();
   const { communityDetails } = useAppRoutes();
 
   const handleCardClick = (id) => {
     communityDetails(id);
   };
 
-  useLoadingMessage(loading, "Communities");
+  useLoadingMessage(isLoading, "Communities");
 
-  if (loading) return <Skeleton active />
-  if (data.length === 0) return <p>EMPTY: {error}</p>;
+  if (isLoading) return <Skeleton active />
+  // if (data.length === 0) return <p>EMPTY: {error}</p>;
   if (error) return <p>Error: {error}</p>;
 
   const caruselData = data.map((item, index) => {
@@ -54,7 +54,7 @@ const Community = () => {
     ];
   });
 
-  return !loading ? (
+  return !isLoading ? (
     <Carousel autoplay arrows>
       {caruselData.map((item, index) => {
         return (

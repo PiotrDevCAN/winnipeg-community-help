@@ -9,8 +9,8 @@ import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
 const { Text } = Typography;
 
 const Offers = ({ item }) => {
-  const { numberOfOffers } = useSelector((state) => state.volunteers);
-  const { getOffersNumber, loading, error } = useVolunteerActions();
+  const { numberOfOffers, isLoading: loading, error } = useSelector((state) => state.volunteers);
+  const { getOffersNumber } = useVolunteerActions();
 
   const dividerStyle = {
     margin: "8px 0",

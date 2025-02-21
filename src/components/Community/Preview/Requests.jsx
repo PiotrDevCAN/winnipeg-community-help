@@ -9,8 +9,8 @@ import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
 const { Text } = Typography;
 
 const Requests = ({ item }) => {
-  const { numberOfRequests } = useSelector((state) => state.communities);
-  const { getRequestsNumber, loading, error } = useCommunityActions();
+  const { numberOfRequests, isLoading: loading, error } = useSelector((state) => state.communities);
+  const { getRequestsNumber } = useCommunityActions();
 
   const dividerStyle = {
     margin: "8px 0",

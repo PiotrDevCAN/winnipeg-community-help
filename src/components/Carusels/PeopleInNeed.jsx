@@ -15,16 +15,17 @@ const avatarStyle = {
 };
 
 const PeopleInNeed = () => {
-  const { data, loading, error } = useNeedyData();
+  const { data, isLoading, error } = useNeedyData();
   const { volunteerDetails } = useAppRoutes();
 
   const handleCardClick = (id) => {
     volunteerDetails(id);
   };
 
-  useLoadingMessage(loading, "Volunteers");
+  useLoadingMessage(isLoading, "Volunteers");
 
-  if (data.length === 0) return <p>EMPTY: {error}</p>;
+  if (isLoading) return <Skeleton active />
+  // if (data.length === 0) return <p>EMPTY: {error}</p>;
   if (error) return <p>Error: {error}</p>;
 
   const caruselData = data.map((item, index) => {
@@ -57,7 +58,7 @@ const PeopleInNeed = () => {
     ];
   });
 
-  return !loading ? (
+  return !isLoading ? (
     <Carousel autoplay arrows>
       {caruselData.map((item, index) => {
         return (
