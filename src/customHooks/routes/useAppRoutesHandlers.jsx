@@ -13,6 +13,9 @@ const useAppRoutesHandlers = () => {
   const listRequest = () => {
     navigate("/request/list");
   };
+  const cardsRequest = () => {
+    navigate("/request/cards");
+  };
   const requestHelpDetails = (id) => {
     navigate("/request/" + id + "/details");
   };
@@ -37,6 +40,9 @@ const useAppRoutesHandlers = () => {
   };
   const listOffer = () => {
     navigate("/offer/list");
+  };
+  const cardsOffer = () => {
+    navigate("/offer/cards");
   };
   const offerHelpDetails = (id) => {
     navigate("/offer/" + id + "/details");
@@ -63,6 +69,9 @@ const useAppRoutesHandlers = () => {
   const listVolunteer = () => {
     navigate("/volunteer/list");
   };
+  const cardsVolunteer = () => {
+    navigate("/volunteer/cards");
+  };
   const volunteerDetails = (id) => {
     navigate("/volunteer/" + id + "/details");
   };
@@ -79,6 +88,9 @@ const useAppRoutesHandlers = () => {
   const listNeedy = () => {
     navigate("/needy/list");
   };
+  const cardsNeedy = () => {
+    navigate("/needy/cards");
+  };
   const needyDetails = (id) => {
     navigate("/needy/" + id + "/details");
   };
@@ -94,6 +106,9 @@ const useAppRoutesHandlers = () => {
   };
   const listCommunity = () => {
     navigate("/community/list");
+  };
+  const cardsCommunity = () => {
+    navigate("/community/cards");
   };
   const communityDetails = (id) => {
     navigate("/community/" + id + "/details");
@@ -147,6 +162,7 @@ const useAppRoutesHandlers = () => {
     home,
     askForHelp,
     listRequest,
+    cardsRequest,
     requestHelpDetails,
     requestHelpEdit,
     requestHelpInCommunity,
@@ -155,6 +171,7 @@ const useAppRoutesHandlers = () => {
     requestHelpByVolunteer,
     offerHelp,
     listOffer,
+    cardsOffer,
     offerHelpDetails,
     offerHelpEdit,
     offerHelpInCommunity,
@@ -163,16 +180,19 @@ const useAppRoutesHandlers = () => {
     offerHelpByVolunteer,
     newVolunteer,
     listVolunteer,
+    cardsVolunteer,
     volunteerDetails,
     volunteerEdit,
     volunteerInCommunity,
     newNeedy,
     listNeedy,
+    cardsNeedy,
     needyDetails,
     needyEdit,
     needyInCommunity,
     newCommunity,
     listCommunity,
+    cardsCommunity,
     communityDetails,
     communityEdit,
     userDetails,
