@@ -11,30 +11,26 @@ import CategoryTypes from "@/components/Boxes/CategoryTypes";
 
 const Preview = ({ item }) => {
   return (
-    <Row gutter={16} style={{ marginBottom: "16px" }}>
-      <Col xs={20} sm={16} md={12} lg={12} xl={12}>
-        <Flex gap="middle" vertical style={{ height: "100%" }}>
-          <CombinedCommunityProvider>
-            <CombinedCategoryProvider>
+    <CombinedCommunityProvider>
+      <CombinedCategoryProvider>
+        <Row gutter={16} style={{ marginBottom: "16px" }}>
+          <Col xs={20} sm={16} md={12} lg={12} xl={12}>
+            <Flex gap="middle" vertical style={{ height: "100%" }}>
               <Details item={item} />
-            </CombinedCategoryProvider>
-          </CombinedCommunityProvider>
-          <Map item={item} />
-        </Flex>
-      </Col>
-      <Col xs={20} sm={16} md={12} lg={12} xl={12}>
-        <Flex gap="middle" vertical>
-          <NeedyPersonDetails userId={item.in_need_id} />
-          <VolunteerDetails userId={item.volunteer_id} />
-          <CombinedCommunityProvider>
-            <Communities item={item} />
-          </CombinedCommunityProvider>
-          <CombinedCategoryProvider>
-            <CategoryTypes item={item} />
-          </CombinedCategoryProvider>
-        </Flex>
-      </Col>
-    </Row>
+              <Map item={item} />
+            </Flex>
+          </Col>
+          <Col xs={20} sm={16} md={12} lg={12} xl={12}>
+            <Flex gap="middle" vertical>
+              <NeedyPersonDetails userId={item.in_need_id} />
+              <VolunteerDetails userId={item.volunteer_id} />
+              <Communities item={item} />
+              <CategoryTypes item={item} />
+            </Flex>
+          </Col>
+        </Row>
+      </CombinedCategoryProvider>
+    </CombinedCommunityProvider>
   );
 };
 export default Preview;

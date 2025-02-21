@@ -20,18 +20,30 @@ const useCommunityActions = () => {
     fetchAllRecords: useCallback(async () => {
       dispatch(fetchAllRecords());
     }, [dispatch]),
-    fetchRecordById: (id) => dispatch(getRecordById(id)),
+    fetchRecordById: useCallback(async (id) => {
+      dispatch(getRecordById(id))
+    }, [dispatch]),
     addRecord: (record) => dispatch(createRecord(record)),
     modifyRecord: (id, updatedData) =>
       dispatch(updateRecord({ id, updatedData })),
     removeRecord: (id) => dispatch(deleteRecord(id)),
 
-    getOffersNumber: (id) => dispatch(getOffersNumber(id)),
-    getRequestsNumber: (id) => dispatch(getRequestsNumber(id)),
+    getOffersNumber: useCallback((id) => {
+      dispatch(getOffersNumber(id))
+    }, [dispatch]),
+    getRequestsNumber: useCallback((id) => {
+      dispatch(getRequestsNumber(id))
+    }, [dispatch]),
 
-    getPeopleInNeedNumber: (id) => dispatch(getPeopleInNeedNumber(id)),
-    getVolunteersNumber: (id) => dispatch(getVolunteersNumber(id)),
-    getUsersNumber: (id) => dispatch(getUsersNumber(id)),
+    getPeopleInNeedNumber: useCallback((id) => {
+      dispatch(getPeopleInNeedNumber(id))
+    }, [dispatch]),
+    getVolunteersNumber: useCallback((id) => {
+      dispatch(getVolunteersNumber(id))
+    }, [dispatch]),
+    getUsersNumber: useCallback((id) => {
+      dispatch(getUsersNumber(id))
+    }, [dispatch]),
   };
 };
 

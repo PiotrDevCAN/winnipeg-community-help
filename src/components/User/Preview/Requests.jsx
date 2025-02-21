@@ -23,7 +23,7 @@ const Requests = ({ item }) => {
 
   useEffect(() => {
     getRequestsNumber(item.id);
-  }, [getRequestsNumber]);
+  }, [getRequestsNumber, item.id]);
 
   useLoadingMessage(loading, "Users Help Requests");
 

@@ -22,7 +22,7 @@ const Users = ({ item }) => {
 
   useEffect(() => {
     getUsersNumber(item.community_id);
-  }, [getUsersNumber]);
+  }, [getUsersNumber, item.community_id]);
 
   useLoadingMessage(loading, "Users in Community");
 

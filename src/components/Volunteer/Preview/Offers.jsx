@@ -20,7 +20,7 @@ const Offers = ({ item }) => {
 
   useEffect(() => {
     getOffersNumber(item.id);
-  }, [getOffersNumber]);
+  }, [getOffersNumber, item.id]);
 
   useLoadingMessage(loading, "Volunteers Help Offers");
 

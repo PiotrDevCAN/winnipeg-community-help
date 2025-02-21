@@ -17,7 +17,9 @@ const useVolunteerActions = () => {
     fetchAllRecords: useCallback(async () => {
       dispatch(fetchAllRecords());
     }, [dispatch]),
-    fetchRecordById: (id) => dispatch(getRecordById(id)),
+    fetchRecordById: useCallback((id) => {
+      dispatch(getRecordById(id))
+    }, [dispatch]),
     addRecord: (record) => dispatch(createRecord(record)),
     modifyRecord: (id, updatedData) =>
       dispatch(updateRecord({ id, updatedData })),

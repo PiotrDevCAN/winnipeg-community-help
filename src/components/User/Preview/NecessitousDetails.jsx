@@ -9,7 +9,6 @@ import {
   Skeleton,
 } from "antd";
 import { TbUserHeart } from "react-icons/tb";
-import { useAPIAuthContext } from "@/context/auth/APIAuthContext";
 import useLoadingMessage from "@/customHooks/useLoadingMessage";
 import ViewAllOffers from "@/components/Buttons/ViewAllOffers";
 import ViewAllRequests from "@/components/Buttons/ViewAllRequests";
@@ -30,7 +29,6 @@ const NeedyPersonDetails = ({ userId }) => {
     offerHelpByNeedy: handleOffers,
   } = useAppRoutes();
 
-  const { isReady } = useAPIAuthContext();
   const {
     selectedRecord: item,
     fetchRecordById,
@@ -42,10 +40,10 @@ const NeedyPersonDetails = ({ userId }) => {
     const loadData = async () => {
       await fetchRecordById(userId);
     };
-    if (isReady && userId && !item) {
+    if (userId && !item) {
       loadData();
     }
-  }, [isReady, userId]);
+  }, [item, userId, fetchRecordById]);
 
   useLoadingMessage(loading, "Person in Need");
 

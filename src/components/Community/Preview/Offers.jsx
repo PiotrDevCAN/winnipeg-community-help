@@ -20,7 +20,7 @@ const Offers = ({ item }) => {
 
   useEffect(() => {
     getOffersNumber(item.community_id);
-  }, [getOffersNumber]);
+  }, [getOffersNumber, item.community_id]);
 
   useLoadingMessage(loading, "Offers in Community");
 

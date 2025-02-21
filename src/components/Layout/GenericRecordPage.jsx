@@ -28,10 +28,13 @@ const GenericRecordPage = ({
   } = useContextHook();
 
   useEffect(() => {
+    const loadData = async () => {
+      await fetchRecordById(itemId);
+    };
     if (itemId && !item) {
-      fetchRecordById(itemId);
+      loadData();
     }
-  }, [item, itemId]);
+  }, [item, itemId, fetchRecordById]);
 
   useLoadingMessage(isLoading, objectType);
 

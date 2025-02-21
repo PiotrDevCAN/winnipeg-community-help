@@ -22,7 +22,7 @@ const PeopleInNeed = ({ item }) => {
 
   useEffect(() => {
     getPeopleInNeedNumber(item.community_id);
-  }, [getPeopleInNeedNumber]);
+  }, [getPeopleInNeedNumber, item.community_id]);
 
   useLoadingMessage(loading, "People in Need in Community");
 

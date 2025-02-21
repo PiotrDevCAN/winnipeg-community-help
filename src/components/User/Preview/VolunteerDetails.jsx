@@ -9,7 +9,6 @@ import {
   Skeleton,
 } from "antd";
 import { RiUserHeartLine } from "react-icons/ri";
-import { useAPIAuthContext } from "@/context/auth/APIAuthContext";
 import useLoadingMessage from "@/customHooks/useLoadingMessage";
 import ViewAllOffers from "@/components/Buttons/ViewAllOffers";
 import ViewAllRequests from "@/components/Buttons/ViewAllRequests";
@@ -30,7 +29,6 @@ const VolunteerDetails = ({ userId }) => {
     offerHelpByVolunteer: handleOffers,
   } = useAppRoutes();
 
-  const { isReady } = useAPIAuthContext();
   const {
     selectedRecord: item,
     fetchRecordById,
@@ -42,10 +40,10 @@ const VolunteerDetails = ({ userId }) => {
     const loadData = async () => {
       await fetchRecordById(userId);
     };
-    if (isReady && userId && !item) {
+    if (userId && !item) {
       loadData();
     }
-  }, [isReady, userId]);
+  }, [item, userId, fetchRecordById]);
 
   useLoadingMessage(loading, "Volunteer");
 

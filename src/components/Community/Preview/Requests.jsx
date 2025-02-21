@@ -20,7 +20,7 @@ const Requests = ({ item }) => {
 
   useEffect(() => {
     getRequestsNumber(item.community_id);
-  }, [getRequestsNumber]);
+  }, [getRequestsNumber, item.community_id]);
 
   useLoadingMessage(loading, "Help Requests in Community");
 

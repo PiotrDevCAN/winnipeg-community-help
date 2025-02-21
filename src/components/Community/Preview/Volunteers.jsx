@@ -22,7 +22,7 @@ const Volunteers = ({ item }) => {
 
   useEffect(() => {
     getVolunteersNumber(item.community_id);
-  }, [getVolunteersNumber]);
+  }, [getVolunteersNumber, item.community_id]);
 
   useLoadingMessage(loading, "Volunteers in Community");
 

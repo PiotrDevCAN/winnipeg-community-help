@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Card, Button, Divider, Typography, Skeleton } from "antd";
+import React from "react";
+import { Card, Divider, Typography, Skeleton } from "antd";
 import useTypeCategory from "@/customHooks/useTypeCategory";
 import ViewAllOffers from "@/components/Buttons/ViewAllOffers";
 import ViewAllRequests from "@/components/Buttons/ViewAllRequests";
