@@ -7,7 +7,7 @@ import useLoadingMessage from "@/customHooks/useLoadingMessage";
 import dayjs from "dayjs";
 import useOfferData from "@/customHooks/data/useOfferData";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
-import ViewRecord from "../Buttons/ViewRecord";
+import ViewRecord from "@/components/Buttons/ViewRecord";
 
 const { Title, Paragraph } = Typography;
 
@@ -26,7 +26,6 @@ const Offer = () => {
   useLoadingMessage(isLoading, "Help Offers");
 
   if (isLoading) return <Skeleton active />
-  // if (data.length === 0) return <p>EMPTY: {error}</p>;
   if (error) return <p>Error: {error}</p>;
 
   const caruselData = data.map((item, index) => {

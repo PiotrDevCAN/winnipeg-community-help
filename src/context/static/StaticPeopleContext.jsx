@@ -19,7 +19,6 @@ export const StaticPeopleProvider = ({ children }) => {
     error: errorPeopleInNeed,
     isError: isErrorPeopleInNeed,
     isLoading: loadingPeopleInNeed,
-    selectedRecord: selectedNeedyRaw,
     status: statusPeopleInNeed,
   } = useNeedyData();
   const {
@@ -27,7 +26,6 @@ export const StaticPeopleProvider = ({ children }) => {
     error: errorVolunteer,
     isError: isErrorVolunteers,
     isLoading: loadingVolunteers,
-    selectedRecord: selectedVolunteerRaw,
     status: statusVolunteers,
   } = useVolunteerData();
 

@@ -13,8 +13,9 @@ const useCategoryFilter = () => {
     setSelectedTypeId,
     loadingCategories,
     loadingTypes,
-    getParentIdById,
     getTypes,
+    typeData,
+    getTypeById,
     categoriesOptions,
     setCategoriesOptions,
     typesOptions,
@@ -26,16 +27,16 @@ const useCategoryFilter = () => {
       const updatedCategoriesData = prepareSelectData(categoriesData);
       setCategoriesOptions(SelectAllOption.concat(updatedCategoriesData));
     }
-  }, [categoriesData]);
+  }, [categoriesData, setCategoriesOptions]);
 
   // useEffect(() => {
   //   if (typesData.length !== 0) {
   //     const updatedTypesData = prepareSelectData(typesData);
   //     setTypesOptions(SelectAllOption.concat(updatedTypesData));
   //   }
-  // }, [typesData]);
+  // }, [typesData, setTypesOptions]);
 
-  const updateCategory = useCallback((value, second) => {
+  const updateCategory = useCallback((value, second = null) => {
     if (value !== null) {
       const categoryId = parseInt(value);
       if (String(value).includes("all")) {
@@ -76,10 +77,19 @@ const useCategoryFilter = () => {
   const triggerTypeChange = useCallback(async (newTypeId) => {
     if (newTypeId) {
       const typeId = parseInt(newTypeId);
-      const categoryId = getParentIdById(typeId);
-      updateCategory(categoryId, typeId);
+      console.log('typeData START ' + typeId);
+      console.log(typeData);
+      if (typeData === null) {
+        console.log('LOAD');
+        await getTypeById(typeId);
+      } else {
+        console.log('SKIP');
+        const categoryId = typeData.category_id;
+        console.log(typeData);
+        updateCategory(categoryId, typeId);
+      }
     }
-  }, [getParentIdById, updateCategory]);
+  }, [typeData, getTypeById, updateCategory]);
 
   return useMemo(
     () => ({

@@ -6,7 +6,7 @@ import { MdOutlineVolunteerActivism } from "react-icons/md";
 import useLoadingMessage from "@/customHooks/useLoadingMessage";
 import useRequestData from "@/customHooks/data/useRequestData";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
-import ViewRecord from "../Buttons/ViewRecord";
+import ViewRecord from "@/components/Buttons/ViewRecord";
 
 const { Title, Paragraph } = Typography;
 
@@ -25,7 +25,6 @@ const Request = () => {
   useLoadingMessage(isLoading, "Help Requests");
 
   if (isLoading) return <Skeleton active />
-  // if (data.length === 0) return <p>EMPTY: {error}</p>;
   if (error) return <p>Error: {error}</p>;
 
   const caruselData = data.map((item, index) => {

@@ -3,7 +3,6 @@ import React, {
   useState,
   useCallback,
   useMemo,
-  useEffect,
 } from "react";
 import { useAPIAuthContext } from "@/context/auth/APIAuthContext";
 import APIService from "@/services/APIService";
@@ -28,7 +27,6 @@ export const StaticHelpProvider = ({ children }) => {
     error: errorCategories,
     isError: isErrorCategories,
     isLoading: loadingCategories,
-    selectedRecord: selectedCategoryRaw,
     status: statusCategories,
   } = useHelpCategoryData();
   const {
@@ -36,7 +34,6 @@ export const StaticHelpProvider = ({ children }) => {
     error: errorTypes,
     isError: isErrorTypes,
     isLoading: loadingTypes,
-    selectedRecord: selectedTypeRaw,
     status: statusTypes,
   } = useHelpTypeData();
 
@@ -45,23 +42,22 @@ export const StaticHelpProvider = ({ children }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [selectedTypeId, setSelectedTypeId] = useState(null);
 
-  // MUST STAY
   const [categoriesOptions, setCategoriesOptions] = useState([]);
   const [typesOptions, setTypesOptions] = useState([]);
 
   // store the selected community data
-  const [categoryData, setCategoryData] = useState([]);
-  const [typeData, setTypeData] = useState([]);
+  const [categoryData, setCategoryData] = useState(null);
+  const [typeData, setTypeData] = useState(null);
 
   // main loading and error states
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const getCategory = (id) => {
+  const getCategory = useCallback((id) => {
     const categoryId = parseInt(id);
     const category = categoriesData.find((item) => item.id === categoryId);
     return category;
-  };
+  }, [categoriesData]);
 
   const getCategoryById = useCallback(
     async (id) => {
@@ -95,11 +91,11 @@ export const StaticHelpProvider = ({ children }) => {
     [isReady, getAccessToken]
   );
 
-  const getType = (id) => {
+  const getType = useCallback((id) => {
     const typeId = parseInt(id);
     const type = typesData.find((item) => item.id === typeId);
     return type;
-  };
+  }, [typesData]);
 
   const getTypeById = useCallback(
     async (id) => {
@@ -133,35 +129,27 @@ export const StaticHelpProvider = ({ children }) => {
     [isReady, getAccessToken]
   );
 
-  const getParentIdById = (id) => {
+  const getParentIdById = useCallback((id) => {
     const typeId = parseInt(id);
     const type = typesData.find((item) => item.id === typeId);
     if (type) {
       return type.category_id;
     } else {
-      return 0;
+      return null;
     }
-  };
+  }, [typesData]);
 
-  const getTypes = (id) => {
+  const getTypes = useCallback((id) => {
     const categoryId = parseInt(id);
     const result = typesData.filter((item) => item.category_id === categoryId);
     return result;
-  };
+  }, [typesData]);
 
-  const countTypes = (id) => {
+  const countTypes = useCallback((id) => {
     const categoryId = parseInt(id);
     const result = getTypes(categoryId);
     return result.length;
-  };
-
-  useEffect(() => {
-  //   setMainCommunitiesData(mainCommunitiesDataRaw || []);
-  }, []);
-
-  useEffect(() => {
-  //   setSubCommunitiesData(subCommunitiesDataRaw || []);
-  }, []);
+  }, [getTypes]);
 
   const contextValue = useMemo(
     () => ({

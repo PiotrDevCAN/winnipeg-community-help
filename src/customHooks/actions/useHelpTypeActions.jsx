@@ -5,17 +5,17 @@ import {
   updateRecord,
   deleteRecord,
 } from "@/redux/features/helpType/helpTypeSlice";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 
-const useHelpCategoryActions = () => {
+const useHelpTypeActions = () => {
   const dispatch = useDispatch();
 
   return {
     fetchAllRecords: useCallback(async () => {
       dispatch(fetchAllRecords());
     }, [dispatch]),
-    fetchRecordById: useCallback((id) => {
+    fetchRecordById: useCallback(async (id) => {
       dispatch(getRecordById(id))
     }, [dispatch]),
     addRecord: (record) => dispatch(createRecord(record)),
@@ -25,4 +25,4 @@ const useHelpCategoryActions = () => {
   };
 };
 
-export default useHelpCategoryActions;
+export default useHelpTypeActions;

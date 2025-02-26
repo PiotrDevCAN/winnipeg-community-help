@@ -45,7 +45,8 @@ const tailFormItemLayout = {
 const EditForm = () => {
 
     const { user } = useAuthContext();
-    const { item } = useUserContext();
+    // const { item } = useUserContext();
+    const item = {};
 
     const [form] = Form.useForm();
     const onFinish = (values) => {

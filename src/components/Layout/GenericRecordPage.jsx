@@ -39,9 +39,9 @@ const GenericRecordPage = ({
   useLoadingMessage(isLoading, objectType);
 
   if (mode !== "new") {
+    if (isLoading) return <Skeleton active />;
     if (error) return <RecordNotFound error={error} />;
-    // if (!item) return <p>Record data not ready yet</p>;
-    if (!item || isLoading) return <Skeleton active />;
+    if (!item) return <p>Record data not ready yet</p>;
   }
 
   return (

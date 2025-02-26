@@ -5,6 +5,7 @@ import ViewAllRequests from "@/components/Buttons/ViewAllRequests";
 import useCommunityActions from "@/customHooks/actions/useCommunityActions";
 import { useSelector } from "react-redux";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
+import useItemsCounter from "@/customHooks/counters/useItemsCounter";
 
 const { Text } = Typography;
 
@@ -23,6 +24,7 @@ const Requests = ({ item }) => {
   }, [getRequestsNumber, item.community_id]);
 
   useLoadingMessage(loading, "Help Requests in Community");
+  const itemsCounter = useItemsCounter(numberOfRequests);
 
   if (error) return <p>Error: {error}</p>;
   if (!item) return <p>Loading Help Requests amount in Community data...</p>;
@@ -41,9 +43,7 @@ const Requests = ({ item }) => {
     >
       <p>List of Help Requests in Community</p>
       <Divider style={dividerStyle} />
-      <p>
-        Number of items: <Text strong>{numberOfRequests}</Text>
-      </p>
+      {itemsCounter}
     </Card>
   ) : (
     <Skeleton active />

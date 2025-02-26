@@ -2,6 +2,10 @@ import { getAccessToken } from "@/services/APIAuthService";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import APIService from "@/services/APIService";
 import reduxInitialState from "@/data/reduxInitialState";
+import usePendingCallback from "@/customHooks/redux/usePendingCallback";
+import useSucceededCallback from "@/customHooks/redux/useSucceededCallback";
+import useFailedCallback from "@/customHooks/redux/useFailedCallback";
+import useSucceededRecordCallback from "@/customHooks/redux/useSucceededRecordCallback";
 
 const API_URL = import.meta.env.VITE_APP_API_BASE_URL;
 const apiService = new APIService(API_URL);
@@ -30,7 +34,7 @@ export const getRecordById = createAsyncThunk(
       {},
       accessToken
     );
-    return response.data;
+    return response;
   }
 );
 
@@ -103,29 +107,14 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllRecords.pending, (state) => {
-        state.status = "loading";
-        state.isLoading = true;
-      })
-      .addCase(fetchAllRecords.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.isLoading = false;
-        state.data = action.payload.data;
-      })
-      .addCase(fetchAllRecords.rejected, (state, action) => {
-        state.status = "failed";
-        state.isLoading = false;
-        state.error = action.error.message;
-      })
-      .addCase(getRecordById.pending, (state) => {
-        state.status = "loading";
-        state.isLoading = true;
-      })
-      .addCase(getRecordById.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.isLoading = false;
-        state.selectedRecord = action.payload;
-      })
+      .addCase(fetchAllRecords.pending, usePendingCallback)
+      .addCase(fetchAllRecords.fulfilled, useSucceededCallback)
+      .addCase(fetchAllRecords.rejected, useFailedCallback)
+
+      .addCase(getRecordById.pending, usePendingCallback)
+      .addCase(getRecordById.fulfilled, useSucceededRecordCallback)
+      .addCase(getRecordById.rejected, useFailedCallback)
+
       .addCase(createRecord.fulfilled, (state, action) => {
         state.data.push(action.payload);
       })

@@ -7,7 +7,7 @@ import {
   getOffersNumber,
   getRequestsNumber,
 } from "@/redux/features/volunteer/volunteerSlice";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 
 const useVolunteerActions = () => {
@@ -17,7 +17,7 @@ const useVolunteerActions = () => {
     fetchAllRecords: useCallback(async () => {
       dispatch(fetchAllRecords());
     }, [dispatch]),
-    fetchRecordById: useCallback((id) => {
+    fetchRecordById: useCallback(async (id) => {
       dispatch(getRecordById(id))
     }, [dispatch]),
     addRecord: (record) => dispatch(createRecord(record)),

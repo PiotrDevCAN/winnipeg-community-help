@@ -5,6 +5,7 @@ import ViewAllNeedies from "@/components/Buttons/ViewAllNeedies";
 import { useSelector } from "react-redux";
 import useCommunityActions from "@/customHooks/actions/useCommunityActions";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
+import useItemsCounter from "@/customHooks/counters/useItemsCounter";
 
 const { Text } = Typography;
 
@@ -25,6 +26,7 @@ const PeopleInNeed = ({ item }) => {
   }, [getPeopleInNeedNumber, item.community_id]);
 
   useLoadingMessage(loading, "People in Need in Community");
+  const itemsCounter = useItemsCounter(numberOfPeopleInNeed);
 
   if (error) return <p>Error: {error}</p>;
   if (!item) return <p>Loading People in Need amount in Community data...</p>;
@@ -39,9 +41,7 @@ const PeopleInNeed = ({ item }) => {
     >
       <p>List of People in Need in Community</p>
       <Divider style={dividerStyle} />
-      <p>
-        Number of items: <Text strong>{numberOfPeopleInNeed}</Text>
-      </p>
+      {itemsCounter}
     </Card>
   ) : (
     <Skeleton active />

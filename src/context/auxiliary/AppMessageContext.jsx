@@ -15,7 +15,7 @@ export const AppMessageProvider = ({ children }) => {
       contextHolder,
       messageApi,
     }),
-    []
+    [contextHolder, messageApi]
   );
 
   return (

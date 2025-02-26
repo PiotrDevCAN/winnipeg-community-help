@@ -4,9 +4,10 @@ import { Button, Flex, Typography, Avatar } from "antd";
 import { TbBuildingCommunity } from "react-icons/tb";
 
 import useLoadingMessage from "@/customHooks/useLoadingMessage";
+import useLoadingNotification from "@/customHooks/useLoadingNotification";
 import useCommunityData from "@/customHooks/data/useCommunityData";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
-import ViewRecord from "../Buttons/ViewRecord";
+import ViewRecord from "@/components/Buttons/ViewRecord";
 
 const { Title, Paragraph } = Typography;
 
@@ -25,7 +26,6 @@ const Community = () => {
   useLoadingMessage(isLoading, "Communities");
 
   if (isLoading) return <Skeleton active />
-  // if (data.length === 0) return <p>EMPTY: {error}</p>;
   if (error) return <p>Error: {error}</p>;
 
   const caruselData = data.map((item, index) => {

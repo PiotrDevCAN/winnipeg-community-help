@@ -5,6 +5,7 @@ import ViewAllOffers from "@/components/Buttons/ViewAllOffers";
 import useCommunityActions from "@/customHooks/actions/useCommunityActions";
 import { useSelector } from "react-redux";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
+import useItemsCounter from "@/customHooks/counters/useItemsCounter";
 
 const { Text } = Typography;
 
@@ -23,6 +24,7 @@ const Offers = ({ item }) => {
   }, [getOffersNumber, item.community_id]);
 
   useLoadingMessage(loading, "Offers in Community");
+  const itemsCounter = useItemsCounter(numberOfOffers);
 
   if (error) return <p>Error: {error}</p>;
   if (!item) return <p>Loading Help Offers amount in Community data...</p>;
@@ -37,9 +39,7 @@ const Offers = ({ item }) => {
     >
       <p>List of Help Offers in Community</p>
       <Divider style={dividerStyle} />
-      <p>
-        Number of items: <Text strong>{numberOfOffers}</Text>
-      </p>
+      {itemsCounter}
     </Card>
   ) : (
     <Skeleton active />

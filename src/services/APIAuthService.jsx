@@ -5,6 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
 // Get the stored access token
 export const getAccessToken = () => {
     return getFromLocalStorage('access_token'); // or HTTP-only cookies
+    // return false;
 };
 
 // Set the new access token

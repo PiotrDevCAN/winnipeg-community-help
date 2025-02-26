@@ -5,6 +5,7 @@ import ViewAllRequests from "@/components/Buttons/ViewAllRequests";
 import useNeedyActions from "@/customHooks/actions/useNeedyActions";
 import { useSelector } from "react-redux";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
+import useItemsCounter from "@/customHooks/counters/useItemsCounter";
 
 const { Text } = Typography;
 
@@ -23,6 +24,7 @@ const Requests = ({ item }) => {
   }, [getRequestsNumber, item.id]);
 
   useLoadingMessage(loading, "Person in Need Help Requests");
+  const itemsCounter = useItemsCounter(numberOfRequests);
 
   if (error) return <p>Error: {error}</p>;
 
@@ -36,9 +38,7 @@ const Requests = ({ item }) => {
     >
       <p>List of Help Requests responded by Needy</p>
       <Divider style={dividerStyle} />
-      <p>
-        Number of items: <Text strong>{numberOfRequests}</Text>
-      </p>
+      {itemsCounter}
     </Card>
   ) : (
     <Skeleton active />

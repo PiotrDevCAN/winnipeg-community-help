@@ -3,7 +3,6 @@ import React, {
   useState,
   useCallback,
   useMemo,
-  useEffect,
 } from "react";
 import { useAPIAuthContext } from "@/context/auth/APIAuthContext";
 import APIService from "@/services/APIService";
@@ -28,7 +27,6 @@ export const StaticCommunityProvider = ({ children }) => {
     error: errorMainCommunities,
     isError: isErrorMainCommunities,
     isLoading: loadingMainCommunities,
-    selectedRecord: selectedMainCommunityRaw,
     status: statusMainCommunities,
   } = useMainCommunityData();
   const {
@@ -36,7 +34,6 @@ export const StaticCommunityProvider = ({ children }) => {
     error: errorSubCommunities,
     isError: isErrorSubCommunities,
     isLoading: loadingSubCommunities,
-    selectedRecord: selectedSubCommunityRaw,
     status: statusSubCommunities,
   } = useCommunityData();
 
@@ -56,13 +53,13 @@ export const StaticCommunityProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const getCommunity = (id) => {
+  const getCommunity = useCallback((id) => {
     const communityId = parseInt(id);
     const community = mainCommunitiesData.find(
       (item) => item.id === communityId
     );
     return community;
-  };
+  }, [mainCommunitiesData]);
 
   const getCommunityById = useCallback(
     async (id) => {
@@ -96,13 +93,13 @@ export const StaticCommunityProvider = ({ children }) => {
     [isReady, getAccessToken]
   );
 
-  const getSubCommunity = (id) => {
+  const getSubCommunity = useCallback((id) => {
     const communityId = parseInt(id);
     const subCommunity = subCommunitiesData.find(
       (item) => item.id === communityId
     );
     return subCommunity;
-  };
+  }, [subCommunitiesData]);
 
   const getSubCommunityById = useCallback(
     async (id) => {
@@ -136,7 +133,7 @@ export const StaticCommunityProvider = ({ children }) => {
     [isReady, getAccessToken]
   );
 
-  const getParentIdById = (id) => {
+  const getParentIdById = useCallback((id) => {
     const communityId = parseInt(id);
     const subCommunity = subCommunitiesData.find(
       (item) => item.id === communityId
@@ -144,31 +141,23 @@ export const StaticCommunityProvider = ({ children }) => {
     if (subCommunity) {
       return subCommunity.community_id;
     } else {
-      return 0;
+      return null;
     }
-  };
+  }, [subCommunitiesData]);
 
-  const getSubCommunities = (id) => {
+  const getSubCommunities = useCallback((id) => {
     const communityId = parseInt(id);
     const result = subCommunitiesData.filter(
       (item) => item.community_id === communityId
     );
     return result;
-  };
+  }, [subCommunitiesData]);
 
-  const countSubCommunities = (id) => {
+  const countSubCommunities = useCallback((id) => {
     const communityId = parseInt(id);
     const result = getSubCommunities(communityId);
     return result.length;
-  };
-
-  useEffect(() => {
-  //   setMainCommunitiesData(mainCommunitiesDataRaw || []);
-  }, []);
-
-  useEffect(() => {
-  //   setSubCommunitiesData(subCommunitiesDataRaw || []);
-  }, []);
+  }, [getSubCommunities]);
 
   const contextValue = useMemo(
     () => ({
@@ -228,8 +217,6 @@ export const StaticCommunityProvider = ({ children }) => {
 
       loadingMainCommunities,
       loadingSubCommunities,
-      errorMainCommunities,
-      errorSubCommunities,
       loading,
       error,
     ]

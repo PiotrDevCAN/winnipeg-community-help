@@ -10,7 +10,7 @@ import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
 const { Text } = Typography;
 
 const Communities = ({ item }) => {
-  const { mainCommunityData, subCommunityData } = useCommunity(item);
+  const { mainCommunity, subCommunity } = useCommunity(item);
 
   const {
     requestHelpInCommunity,
@@ -23,7 +23,7 @@ const Communities = ({ item }) => {
     margin: "8px 0",
   };
 
-  return mainCommunityData && subCommunityData ? (
+  return mainCommunity && subCommunity ? (
     <Card
       className="card-with-colorful-header"
       title="Related Main and Sub Community"
@@ -43,21 +43,21 @@ const Communities = ({ item }) => {
       ]}
     >
       <p>
-        Main Community: <Text strong>{mainCommunityData?.label}</Text>
+        Main Community: <Text strong>{mainCommunity?.label}</Text>
       </p>
       <p>
         Main Community Description:{" "}
-        <Text strong>{mainCommunityData?.description}</Text>
+        <Text strong>{mainCommunity?.description}</Text>
       </p>
       <Divider style={dividerStyle} />
       <p>
-        Community: <Text strong>{subCommunityData?.label}</Text>
+        Community: <Text strong>{subCommunity?.label}</Text>
       </p>
       <p>
-        Alias: <Text strong>{subCommunityData?.alias}</Text>
+        Alias: <Text strong>{subCommunity?.alias}</Text>
       </p>
       <p>
-        Description: <Text strong>{subCommunityData?.description}</Text>
+        Description: <Text strong>{subCommunity?.description}</Text>
       </p>
     </Card>
   ) : (

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import useHelpCategoryActions from "@/customHooks/actions/useHelpCategoryActions";
 
 const useHelpCategoryData = () => {
-  const { data, error, isError, isLoading, selectedRecord, status } =
+  const { data, error, isError, isLoading, status } =
     useSelector((state) => state.helpCategories);
 
   const { fetchAllRecords } = useHelpCategoryActions();
@@ -14,7 +14,7 @@ const useHelpCategoryData = () => {
     }
   }, [data, fetchAllRecords]);
 
-  return { data, error, isError, isLoading, selectedRecord, status };
+  return { data, error, isError, isLoading, status };
 };
 
 export default useHelpCategoryData;

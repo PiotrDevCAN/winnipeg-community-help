@@ -1,32 +1,36 @@
 import React, { useEffect } from "react";
-import { useCombinedCategoryContext } from "@/context/preview/CombinedCategoryContext";
 import useLoadingMessage from "@/customHooks/useLoadingMessage";
+import useHelpCategoryRecord from "@/customHooks/record/useHelpCategoryRecord";
+import useHelpTypeRecord from "@/customHooks/record/useHelpTypeRecord";
 
 const useTypeCategory = (item) => {
   const {
-    loadCategoriesData,
-    category,
-    type,
-    loadingCategory,
-    loadingType,
-    errorCategory,
-    errorType,
-  } = useCombinedCategoryContext();
+    fetchRecordById: getTypeById,
+    selectedRecord: type,
+    isLoading: loadingType,
+  } = useHelpTypeRecord();
+  const {
+    fetchRecordById: getCategoryById,
+    selectedRecord: category,
+    isLoading: loadingCategory,
+  } = useHelpCategoryRecord();
 
   useEffect(() => {
     if (item) {
       const typeId = item.type_id;
-      loadCategoriesData(typeId);
+      getTypeById(typeId);
     }
-  }, [item, loadCategoriesData]);
+  }, [item, getTypeById]);
+
+  useEffect(() => {
+    if (type) {
+      const category_id = type.category_id;
+      getCategoryById(category_id);
+    }
+  }, [type, getCategoryById]);
 
   useLoadingMessage(loadingType, "Type");
   useLoadingMessage(loadingCategory, "Category");
-
-  // if (loadingCategory || !category) return <p>Loading category data...</p>;
-  // if (loadingType || !type) return <p>Loading type data...</p>;
-  // if (errorCategory) return <p>Error in obtaining category</p>;
-  // if (errorType) return <p>Error in obtaining type data</p>;
 
   return { category, type };
 };

@@ -62,7 +62,7 @@ const RegisterForm = () => {
     const [password, setPassword] = useState('');
 
     const { user, isAdmin, emailRegister, updateProfile, emailDelete } = useAuthContext();
-    const { createItem } = useUserContext();
+    // const { createItem } = useUserContext();
     const [messageApi, contextHolder] = message.useMessage();
 
     const [captchaToken, setCaptchaToken] = useState(null);

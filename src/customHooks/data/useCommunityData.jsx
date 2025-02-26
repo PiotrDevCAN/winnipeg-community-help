@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import useCommunityActions from "@/customHooks/actions/useCommunityActions";
 
 const useCommunityData = () => {
-  const { data, error, isError, isLoading, selectedRecord, status } =
+  const { data, error, isError, isLoading, status } =
     useSelector((state) => state.communities);
 
   const { fetchAllRecords } = useCommunityActions();
@@ -14,7 +14,7 @@ const useCommunityData = () => {
     }
   }, [data, fetchAllRecords]);
 
-  return { data, error, isError, isLoading, selectedRecord, status };
+  return { data, error, isError, isLoading, status };
 };
 
 export default useCommunityData;

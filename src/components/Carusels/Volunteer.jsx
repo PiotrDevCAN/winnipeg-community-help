@@ -6,7 +6,7 @@ import { RiUserHeartLine } from "react-icons/ri";
 import useLoadingMessage from "@/customHooks/useLoadingMessage";
 import useVolunteerData from "@/customHooks/data/useVolunteerData";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
-import ViewRecord from "../Buttons/ViewRecord";
+import ViewRecord from "@/components/Buttons/ViewRecord";
 
 const { Title, Paragraph } = Typography;
 
@@ -24,12 +24,7 @@ const Volunteer = () => {
 
   useLoadingMessage(isLoading, "Volunteers");
 
-  useEffect(() => {
-    console.log('current isLoading ' + isLoading);
-  }, [isLoading]);
-
   if (isLoading) return <Skeleton active />
-  // if (data.length === 0) return <p>EMPTY: {error}</p>;
   if (error) return <p>Error: {error}</p>;
 
   const caruselData = data.map((item, index) => {

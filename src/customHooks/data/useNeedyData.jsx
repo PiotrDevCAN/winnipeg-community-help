@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import useNeedyActions from "@/customHooks/actions/useNeedyActions";
 
 const useNeedyData = () => {
-  const { data, error, isError, isLoading, selectedRecord, status } =
+  const { data, error, isError, isLoading, status } =
     useSelector((state) => state.peopleInNeed);
 
   const { fetchAllRecords } = useNeedyActions();
@@ -14,7 +14,7 @@ const useNeedyData = () => {
     }
   }, [data, fetchAllRecords]);
 
-  return { data, error, isError, isLoading, selectedRecord, status };
+  return { data, error, isError, isLoading, status };
 };
 
 export default useNeedyData;

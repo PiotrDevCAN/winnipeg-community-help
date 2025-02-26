@@ -8,7 +8,7 @@ import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
 const { Text } = Typography;
 
 const Details = ({ item }) => {
-  const { mainCommunityData, subCommunityData } = useCommunity(item);
+  const { mainCommunity, subCommunity } = useCommunity(item);
   const { category, type } = useTypeCategory(item);
 
   const { offerHelpEdit } = useAppRoutes();
@@ -21,7 +21,7 @@ const Details = ({ item }) => {
   };
   const formattedDate = dayjs(item.created_at).format("YYYY-MM-DD HH:mm:ss");
 
-  return mainCommunityData && subCommunityData && category && type ? (
+  return mainCommunity && subCommunity && category && type ? (
     <Card
       className="card-with-colorful-header"
       title="Help Offer Details"
@@ -51,10 +51,10 @@ const Details = ({ item }) => {
       </p>
       <Divider style={dividerStyle} />
       <p>
-        Community: <Text strong>{mainCommunityData.label}</Text>
+        Community: <Text strong>{mainCommunity.label}</Text>
       </p>
       <p>
-        Sub Community: <Text strong>{subCommunityData.label}</Text>
+        Sub Community: <Text strong>{subCommunity.label}</Text>
       </p>
       <Divider style={dividerStyle} />
       <p>
@@ -65,7 +65,8 @@ const Details = ({ item }) => {
       </p>
     </Card>
   ) : (
-    <Skeleton active />
+    // <Skeleton active />
+    <>Not loaded yet</>
   );
 };
 export default Details;

@@ -29,7 +29,7 @@ const useReduxSlice = (endpoint) => {
         {},
         accessToken
       );
-      return response.data;
+      return response;
     }
   );
 

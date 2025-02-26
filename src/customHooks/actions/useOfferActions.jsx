@@ -5,7 +5,7 @@ import {
   updateRecord,
   deleteRecord,
 } from "@/redux/features/offer/offerSlice";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 
 const useOfferActions = () => {
@@ -15,7 +15,7 @@ const useOfferActions = () => {
     fetchAllRecords: useCallback(async () => {
       dispatch(fetchAllRecords());
     }, [dispatch]),
-    fetchRecordById: useCallback((id) => {
+    fetchRecordById: useCallback(async (id) => {
       dispatch(getRecordById(id))
     }, [dispatch]),
     addRecord: (record) => dispatch(createRecord(record)),

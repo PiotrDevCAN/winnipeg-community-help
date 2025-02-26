@@ -5,7 +5,7 @@ import {
   updateRecord,
   deleteRecord,
 } from "@/redux/features/mainCommunity/mainCommunitySlice";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 
 const useMainCommunityActions = () => {
@@ -15,7 +15,7 @@ const useMainCommunityActions = () => {
     fetchAllRecords: useCallback(async () => {
       dispatch(fetchAllRecords());
     }, [dispatch]),
-    fetchRecordById: useCallback((id) => {
+    fetchRecordById: useCallback(async (id) => {
       dispatch(getRecordById(id))
     }, [dispatch]),
     addRecord: (record) => dispatch(createRecord(record)),

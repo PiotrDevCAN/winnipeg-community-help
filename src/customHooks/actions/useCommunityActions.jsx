@@ -10,7 +10,7 @@ import {
   getVolunteersNumber,
   getUsersNumber,
 } from "@/redux/features/community/communitySlice";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 
 const useCommunityActions = () => {

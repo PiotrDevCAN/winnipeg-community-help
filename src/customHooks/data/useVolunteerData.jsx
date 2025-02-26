@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import useVolunteerActions from "@/customHooks/actions/useVolunteerActions";
 
 const useVolunteerData = () => {
-  const { data, error, isError, isLoading, selectedRecord, status } =
+  const { data, error, isError, isLoading, status } =
     useSelector((state) => state.volunteers);
 
   const { fetchAllRecords } = useVolunteerActions();
@@ -14,7 +14,7 @@ const useVolunteerData = () => {
     }
   }, [data, fetchAllRecords]);
 
-  return { data, error, isError, isLoading, selectedRecord, status };
+  return { data, error, isError, isLoading, status };
 };
 
 export default useVolunteerData;

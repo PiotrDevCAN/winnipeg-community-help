@@ -35,7 +35,7 @@ export const AppNotificationProvider = ({ children }) => {
       setThreshold,
       showInfo,
     }),
-    []
+    [contextHolder, notificationApi, placement, setPlacement, setThreshold, showInfo]
   );
 
   return (

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import useUserActions from "@/customHooks/actions/useUserActions";
 
 const useUserData = () => {
-  const { data, error, isError, isLoading, selectedRecord, status } =
+  const { data, error, isError, isLoading, status } =
     useSelector((state) => state.users);
 
   const { fetchAllRecords } = useUserActions();
@@ -14,7 +14,7 @@ const useUserData = () => {
     }
   }, [data, fetchAllRecords]);
 
-  return { data, error, isError, isLoading, selectedRecord, status };
+  return { data, error, isError, isLoading, status };
 };
 
 export default useUserData;

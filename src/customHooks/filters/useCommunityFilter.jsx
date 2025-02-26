@@ -13,9 +13,9 @@ const useCommunityFilter = () => {
     setSelectedSubCommunityId,
     loadingCommunities,
     loadingSubCommunities,
-    getParentIdById,
     getSubCommunities,
-
+    subCommunityData,
+    getSubCommunityById,
     mainCommunitiesOptions,
     setMainCommunitiesOptions,
     subCommunitiesOptions,
@@ -29,7 +29,7 @@ const useCommunityFilter = () => {
         SelectAllOption.concat(updatedMainCommunitiesData)
       );
     }
-  }, [mainCommunitiesData]);
+  }, [mainCommunitiesData, setMainCommunitiesOptions]);
 
   // useEffect(() => {
   //   if (subCommunitiesData.length !== 0) {
@@ -38,9 +38,9 @@ const useCommunityFilter = () => {
   //       SelectAllOption.concat(updatedSubCommunitiesData)
   //     );
   //   }
-  // }, [subCommunitiesData]);
+  // }, [subCommunitiesData, setSubCommunitiesOptions]);
 
-  const updateCommunity = useCallback((value, second) => {
+  const updateCommunity = useCallback((value, second = null) => {
     if (value !== null) {
       const communityId = parseInt(value);
       if (String(value).includes("all")) {
@@ -83,10 +83,18 @@ const useCommunityFilter = () => {
   const triggerCommunityChange = useCallback(async (newCommunityId) => {
     if (newCommunityId) {
       const subCommunityId = parseInt(newCommunityId);
-      const mainCommunityId = getParentIdById(subCommunityId);
-      updateCommunity(mainCommunityId, subCommunityId);
+      console.log('subCommunityData START');
+      console.log(subCommunityData);
+      if (subCommunityData === null) {
+        console.log('LOAD');
+        await getSubCommunityById(subCommunityId);
+      } else {
+        console.log('SKIP');
+        const mainCommunityId = subCommunityData.community_id;
+        updateCommunity(mainCommunityId, subCommunityId);
+      }
     }
-  }, [getParentIdById, updateCommunity]);
+  }, [getSubCommunityById, updateCommunity, subCommunityData]);
 
   return useMemo(
     () => ({

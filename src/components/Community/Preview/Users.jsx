@@ -5,6 +5,7 @@ import ViewAllUsers from "@/components/Buttons/ViewAllUsers";
 import useCommunityActions from "@/customHooks/actions/useCommunityActions";
 import { useSelector } from "react-redux";
 import useAppRoutes from "@/customHooks/routes/useAppRoutesHandlers";
+import useItemsCounter from "@/customHooks/counters/useItemsCounter";
 
 const { Text } = Typography;
 
@@ -25,6 +26,7 @@ const Users = ({ item }) => {
   }, [getUsersNumber, item.community_id]);
 
   useLoadingMessage(loading, "Users in Community");
+  const itemsCounter = useItemsCounter(numberOfUsers);
 
   if (error) return <p>Error: {error}</p>;
   if (!item) return <p>Loading Users amount in Community data...</p>;
@@ -39,9 +41,7 @@ const Users = ({ item }) => {
     >
       <p>List of Users in Community</p>
       <Divider style={dividerStyle} />
-      <p>
-        Number of items: <Text strong>{numberOfUsers}</Text>
-      </p>
+      {itemsCounter}
     </Card>
   ) : (
     <Skeleton active />
